@@ -1,0 +1,6 @@
+package accountManagement;
+
+public class Caretaker extends User {
+    private Patient patients[];
+    private boolean hasPermission();
+}
