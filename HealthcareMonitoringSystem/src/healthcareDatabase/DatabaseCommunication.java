@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+
+
+
 public class DatabaseCommunication {
     Connection con;
     Statement statement;
@@ -39,7 +42,38 @@ public class DatabaseCommunication {
     // checks if the input provided is valid and can be inserted into database
     public String checkIfInputIsValid(String name, String email, String password, String contact, String userType, String emergencyContact) {
       
-      return "";
+      char[] chars = name.toCharArray();
+
+      for (char c : chars) {
+          if(!Character.isLetter(c) && c != ' ' && c != '-') {
+              
+              return "Found invalid character " + "'" + c +"' Try again with no special characters or numbers";
+          }
+        }
+      char[] chars2 = password.toCharArray();
+      int digits = 0;
+      int specials = 0;
+      for (char c : chars2) {
+          if(!Character.isLetter(c)) {
+              if (!Character.isDigit(c))
+                specials++;
+              else 
+                digits++;
+          }
+      }
+      if(specials == 0 || digits == 0 || password.length() < 5)
+        return "Password must have atleast 1 number, 1 special character and must be longer than 5 characters";
+        char[] chars3 = contact.toCharArray();
+
+        for (char c : chars3) {
+            if(!Character.isDigit(c)) {
+                return "Contact information must only contain numbers"; 
+            }
+          }
+
+        if(!email.contains(".") || !email.contains("@"))
+          return "Please enter an appropriate email";
+      return "Valid info";
     }
 
     // finds user in database and returs the resultset, result.next() will be false if the user was not found
@@ -128,22 +162,23 @@ public class DatabaseCommunication {
       }
       return userList;
     }
-    public static void main(String args[]) throws SQLException {
-      String username = "admin";
-      String password = "coe420project";
+  //   public static void main(String args[]) throws SQLException {
+  //     String username = "admin";
+  //     String password = "coe420project";
 
-      DatabaseCommunication db = new DatabaseCommunication(username, password);
-      String[] userInfo = db.validateUser("test@gmail.com", "1234");
+  //     DatabaseCommunication db = new DatabaseCommunication(username, password);
+  //     String[] userInfo = db.validateUser("test@gmail.com", "1234");
       
-      if (userInfo.length == 0) {
-        System.out.println("Empty");
-      }
-      else {
-        System.out.println(userInfo[0]);
-      }
-
-      db.addUser("Karim Hodroj-Remmel", "test@gmail.com", "1234", "0501112222", "Admin", "");
-      db.modifyUser("test@gmail.com", "Karim Hodroj-Remmel", "test3@gmail", "123456", "0501112224", "Admin", "");
-      // comm.deleteUser("test@gmail.com");
-  }
+  //     if (userInfo.length == 0) {
+  //       System.out.println("Empty");
+  //     }
+  //     else {
+  //       System.out.println(userInfo[0]);
+  //     }
+  //     String inputerror = db.checkIfInputIsValid("Karim Hodroj-Remmel", "testgmail.com", "12345@d", "0501112222", "Admin", "");
+  //     System.out.println(inputerror);
+  //     // db.addUser("Karim Hodroj-Remmel", "test@gmail.com", "1234", "0501112222", "Admin", "");
+  //     db.modifyUser("test3@gmail", "Karim Hodroj-Remmel", "test3@gmail.com", "123456", "0501112224", "Admin", "");
+  //     // comm.deleteUser("test@gmail.com");
+  // }
 }
