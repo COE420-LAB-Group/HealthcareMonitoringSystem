@@ -52,7 +52,7 @@ public class DatabaseCommunication {
       for (char c : chars) {
           if(!Character.isLetter(c) && c != ' ' && c != '-') {
               
-              return "Found invalid character " + "'" + c +"' Try again with no special characters or numbers";
+              throw new InputErrorException( "Found invalid character " + "'" + c +"' Try again with no special characters or numbers");
           }
         }
       char[] chars2 = password.toCharArray();
@@ -78,7 +78,7 @@ public class DatabaseCommunication {
           }
 
         if(!email.contains(".") || !email.contains("@"))
-          return "Please enter an appropriate email";
+          throw new InputErrorException("Please enter an appropriate email");
       return "Valid info";
     }
 
@@ -93,8 +93,8 @@ public class DatabaseCommunication {
   
     // adds a user to the database, if the user is not a Patient then emergency contact is empty
     public int addUser(String name, String email, String password, String contact, String userType, String emergencyContact)
-        throws SQLException {
-      //checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
+        throws SQLException, InputErrorException {
+      checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
       ResultSet result = findUser(email); // check if user already exists
 
       // if an account with that email already exists, do not add user
@@ -117,7 +117,7 @@ public class DatabaseCommunication {
     }
 
       // deletes user with that email
-    public int deleteUser(String email) throws SQLException, UserNotFoundException {
+    public int deleteUser(String email) throws SQLException {
       ResultSet result = findUser(email);
       // if user was found, delete it, else return -1 because user was not found
       if (result.next()) {
@@ -128,13 +128,14 @@ public class DatabaseCommunication {
         // need to remove user from other tables (if they are in other tables)
       }
       else {
-        throw new UserNotFoundException("User was not found in database.");
+        System.out.print("User not found!");
+        return -1;
       }
     }
 
     public int modifyUser(String currentEmail, String name, String email, String password, String contact, String userType, String emergencyContact)
-        throws SQLException, UserNotFoundException {
-      // checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
+        throws SQLException, InputErrorException {
+      checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
       ResultSet result = findUser(currentEmail); // check if user already exists
 
       // if an account with that email already exists, do not add user
@@ -149,7 +150,8 @@ public class DatabaseCommunication {
         // add implentation to remove user from other tables (if they are in other tables)
       }
       else {
-        throw new UserNotFoundException("User was not found in database.");
+        System.out.println("User not found!");
+        return -1;
       }
     }
 
