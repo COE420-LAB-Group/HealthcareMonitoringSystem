@@ -33,9 +33,13 @@ public class DatabaseCommunication {
         String[] temp = {
           result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5)
         };
+
         userInfo = temp;
       }
 
+      else {
+        System.out.println("User not found in database!");
+      }
       return userInfo;
     }
 
@@ -162,6 +166,7 @@ public class DatabaseCommunication {
       }
       return userList;
     }
+<<<<<<< HEAD
   //   public static void main(String args[]) throws SQLException {
   //     String username = "admin";
   //     String password = "coe420project";
@@ -181,4 +186,6 @@ public class DatabaseCommunication {
   //     db.modifyUser("test3@gmail", "Karim Hodroj-Remmel", "test3@gmail.com", "123456", "0501112224", "Admin", "");
   //     // comm.deleteUser("test@gmail.com");
   // }
+=======
+>>>>>>> 0deaf9244ff8fd55035a28961782048f33a2fb09
 }
