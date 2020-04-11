@@ -1,4 +1,0 @@
-INDEX VERSION 1.131+G:\COE420_Project\.metadata\.plugins\org.eclipse.jdt.core
-3705611006.index
-2774636794.index
-1860891807.index

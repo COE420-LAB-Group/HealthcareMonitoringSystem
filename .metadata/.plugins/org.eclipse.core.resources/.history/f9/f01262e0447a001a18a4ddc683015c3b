@@ -1,5 +1,0 @@
-package accountManagement;
-
-public class User {
-    protected String name, email, password, contact;
-}

@@ -1,8 +1,0 @@
-package accountManagement;
-import recordManagement.*;  
-
-public class Patient extends User {
-    private Record records[];
-    private Caretaker caretakers[];
-    private String emergencyContact;
-}

@@ -1,5 +1,0 @@
-package accountManagement;
-
-public class Account {
-    private User u;
-}
