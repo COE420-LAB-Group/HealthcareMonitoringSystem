@@ -25,5 +25,7 @@ public class Driver {
             User u = userList.get(i);
             System.out.println(u.getEmail());
         }
+
+        ((Admin) user).deleteUser(new Caretaker("Saif AlNajjar", "test6@gmail.com", "1234", "0521112224"));
     }
 }

@@ -166,26 +166,4 @@ public class DatabaseCommunication {
       }
       return userList;
     }
-<<<<<<< HEAD
-  //   public static void main(String args[]) throws SQLException {
-  //     String username = "admin";
-  //     String password = "coe420project";
-
-  //     DatabaseCommunication db = new DatabaseCommunication(username, password);
-  //     String[] userInfo = db.validateUser("test@gmail.com", "1234");
-      
-  //     if (userInfo.length == 0) {
-  //       System.out.println("Empty");
-  //     }
-  //     else {
-  //       System.out.println(userInfo[0]);
-  //     }
-  //     String inputerror = db.checkIfInputIsValid("Karim Hodroj-Remmel", "testgmail.com", "12345@d", "0501112222", "Admin", "");
-  //     System.out.println(inputerror);
-  //     // db.addUser("Karim Hodroj-Remmel", "test@gmail.com", "1234", "0501112222", "Admin", "");
-  //     db.modifyUser("test3@gmail", "Karim Hodroj-Remmel", "test3@gmail.com", "123456", "0501112224", "Admin", "");
-  //     // comm.deleteUser("test@gmail.com");
-  // }
-=======
->>>>>>> 0deaf9244ff8fd55035a28961782048f33a2fb09
 }

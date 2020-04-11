@@ -77,7 +77,8 @@ public class Admin extends User {
         return 0;
     }
 
-    public int deleteUser(User user) {
+    public int deleteUser(User user) throws SQLException {
+        db.deleteUser(user.getEmail());
         userListChanged = true;
         return 0;
     }
