@@ -93,8 +93,8 @@ public class DatabaseCommunication {
   
     // adds a user to the database, if the user is not a Patient then emergency contact is empty
     public int addUser(String name, String email, String password, String contact, String userType, String emergencyContact)
-        throws SQLException {
-      //checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
+        throws SQLException, InputErrorException {
+      checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
       ResultSet result = findUser(email); // check if user already exists
 
       // if an account with that email already exists, do not add user
@@ -133,8 +133,8 @@ public class DatabaseCommunication {
     }
 
     public int modifyUser(String currentEmail, String name, String email, String password, String contact, String userType, String emergencyContact)
-        throws SQLException, UserNotFoundException {
-      // checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
+        throws SQLException, UserNotFoundException, InputErrorException {
+      checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
       ResultSet result = findUser(currentEmail); // check if user already exists
 
       // if an account with that email already exists, do not add user
