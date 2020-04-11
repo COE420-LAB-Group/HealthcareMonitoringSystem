@@ -44,7 +44,8 @@ public class DatabaseCommunication {
     }
 
     // checks if the input provided is valid and can be inserted into database
-    public String checkIfInputIsValid(String name, String email, String password, String contact, String userType, String emergencyContact) {
+    public String checkIfInputIsValid(String name, String email, String password, String contact, String userType, String emergencyContact)
+        throws InputErrorException {
       
       char[] chars = name.toCharArray();
 
@@ -66,12 +67,13 @@ public class DatabaseCommunication {
           }
       }
       if(specials == 0 || digits == 0 || password.length() < 5)
-        return "Password must have atleast 1 number, 1 special character and must be longer than 5 characters";
+        throw new InputErrorException( "Password must have atleast 1 number, 1 special character and must be longer than 5 characters");
+
         char[] chars3 = contact.toCharArray();
 
         for (char c : chars3) {
             if(!Character.isDigit(c)) {
-                return "Contact information must only contain numbers"; 
+                throw new InputErrorException("Contact information must only contain numbers"); 
             }
           }
 
@@ -166,7 +168,6 @@ public class DatabaseCommunication {
       }
       return userList;
     }
-<<<<<<< HEAD
   //   public static void main(String args[]) throws SQLException {
   //     String username = "admin";
   //     String password = "coe420project";
@@ -186,6 +187,4 @@ public class DatabaseCommunication {
   //     db.modifyUser("test3@gmail", "Karim Hodroj-Remmel", "test3@gmail.com", "123456", "0501112224", "Admin", "");
   //     // comm.deleteUser("test@gmail.com");
   // }
-=======
->>>>>>> 0deaf9244ff8fd55035a28961782048f33a2fb09
 }
