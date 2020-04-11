@@ -9,7 +9,7 @@ public class Account {
     private DatabaseCommunication comm;
 
     Account() throws SQLException {
-        comm = new DatabaseCommunication("system", "coe420project");
+        comm = new DatabaseCommunication("admin", "coe420project");
     }
 
 	public User getUser() {

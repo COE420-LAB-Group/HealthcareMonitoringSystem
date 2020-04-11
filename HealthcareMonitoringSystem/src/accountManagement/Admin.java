@@ -1,12 +1,16 @@
 package accountManagement;
 
+import java.util.ArrayList;
+
 import healthcareDatabase.DatabaseCommunication;
 
 public class Admin extends User {
     DatabaseCommunication db;
-    
+    ArrayList<User> userList;
+    boolean userListChanged;
     public Admin(String name, String email, String password, String contact) {
         super(name, email, password, contact);
+        userListChanged = false;
     }
     
     public int addUser(User user) {
