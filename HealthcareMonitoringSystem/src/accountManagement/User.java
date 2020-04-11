@@ -7,7 +7,7 @@ public abstract class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.contact = contact;
+		this.contact = contact;
     }
 
 	public String getName() {
@@ -41,4 +41,5 @@ public abstract class User {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
+	
 }
