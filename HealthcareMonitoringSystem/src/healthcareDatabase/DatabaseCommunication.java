@@ -44,7 +44,8 @@ public class DatabaseCommunication {
     }
 
     // checks if the input provided is valid and can be inserted into database
-    public String checkIfInputIsValid(String name, String email, String password, String contact, String userType, String emergencyContact) {
+    public String checkIfInputIsValid(String name, String email, String password, String contact, String userType, String emergencyContact)
+        throws InputErrorException {
       
       char[] chars = name.toCharArray();
 
@@ -66,12 +67,13 @@ public class DatabaseCommunication {
           }
       }
       if(specials == 0 || digits == 0 || password.length() < 5)
-        return "Password must have atleast 1 number, 1 special character and must be longer than 5 characters";
+        throw new InputErrorException( "Password must have atleast 1 number, 1 special character and must be longer than 5 characters");
+
         char[] chars3 = contact.toCharArray();
 
         for (char c : chars3) {
             if(!Character.isDigit(c)) {
-                return "Contact information must only contain numbers"; 
+                throw new InputErrorException("Contact information must only contain numbers"); 
             }
           }
 
@@ -115,7 +117,7 @@ public class DatabaseCommunication {
     }
 
       // deletes user with that email
-    public int deleteUser(String email) throws SQLException {
+    public int deleteUser(String email) throws SQLException, UserNotFoundException {
       ResultSet result = findUser(email);
       // if user was found, delete it, else return -1 because user was not found
       if (result.next()) {
@@ -126,13 +128,12 @@ public class DatabaseCommunication {
         // need to remove user from other tables (if they are in other tables)
       }
       else {
-        System.out.print("User not found!");
-        return -1;
+        throw new UserNotFoundException("User was not found in database.");
       }
     }
 
     public int modifyUser(String currentEmail, String name, String email, String password, String contact, String userType, String emergencyContact)
-        throws SQLException {
+        throws SQLException, UserNotFoundException {
       // checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
       ResultSet result = findUser(currentEmail); // check if user already exists
 
@@ -148,8 +149,7 @@ public class DatabaseCommunication {
         // add implentation to remove user from other tables (if they are in other tables)
       }
       else {
-        System.out.println("User not found!");
-        return -1;
+        throw new UserNotFoundException("User was not found in database.");
       }
     }
 
@@ -166,4 +166,23 @@ public class DatabaseCommunication {
       }
       return userList;
     }
+  //   public static void main(String args[]) throws SQLException {
+  //     String username = "admin";
+  //     String password = "coe420project";
+
+  //     DatabaseCommunication db = new DatabaseCommunication(username, password);
+  //     String[] userInfo = db.validateUser("test@gmail.com", "1234");
+      
+  //     if (userInfo.length == 0) {
+  //       System.out.println("Empty");
+  //     }
+  //     else {
+  //       System.out.println(userInfo[0]);
+  //     }
+  //     String inputerror = db.checkIfInputIsValid("Karim Hodroj-Remmel", "testgmail.com", "12345@d", "0501112222", "Admin", "");
+  //     System.out.println(inputerror);
+  //     // db.addUser("Karim Hodroj-Remmel", "test@gmail.com", "1234", "0501112222", "Admin", "");
+  //     db.modifyUser("test3@gmail", "Karim Hodroj-Remmel", "test3@gmail.com", "123456", "0501112224", "Admin", "");
+  //     // comm.deleteUser("test@gmail.com");
+  // }
 }
