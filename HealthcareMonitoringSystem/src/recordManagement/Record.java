@@ -11,6 +11,7 @@ public abstract class Record {
     protected String patientEmail;
     protected boolean createdByPatientObject;
     Date current = new Date();
+
     public Date StringToDate(String s){
 
         Date result = null;
@@ -23,7 +24,7 @@ public abstract class Record {
             e.printStackTrace();
     
         }
-        return result ;
+        return result;
     }
 
 
