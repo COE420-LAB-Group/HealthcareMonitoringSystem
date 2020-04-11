@@ -92,10 +92,11 @@ public class Admin extends User {
         try {
             db.deleteUser(user.getEmail());
             userListChanged = true;
-            return 0;
+            return 1;
         }
         catch (UserNotFoundException exception) {
             System.out.println(exception.getMessage());
+            return -1;
         }
     }
 

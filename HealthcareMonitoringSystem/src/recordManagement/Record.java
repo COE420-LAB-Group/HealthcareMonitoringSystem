@@ -9,6 +9,7 @@ public abstract class Record {
     protected Calendar calendar = Calendar.getInstance();
     protected ArrayList<Date> datesToTake;
     protected String patientEmail;
+    protected boolean createdByPatientObject;
     Date current = new Date();
     public Date StringToDate(String s){
 
@@ -31,10 +32,11 @@ public abstract class Record {
         this.patientEmail = patientEmail;
         datesToTake = new ArrayList<Date>();
     }
-    public boolean checkDate(Date d){
+
+    public boolean compareDate(Date d){
         System.out.println(current.toLocaleString());
-        if (current.compareTo(d) == 0  )
-        return true;
+        if (current.compareTo(d) == 0)
+            return true;
         return false;
     }
     
@@ -48,7 +50,7 @@ public abstract class Record {
        Prescription x = new Prescription ("n ", "n@n.n");
        while(true){
        Date d = x.StringToDate("2020-04-11 21:09:00");
-              if(x.checkDate(d))
+              if(x.compareDate(d))
               System.out.println("Please take the medicine now");
         
        }
