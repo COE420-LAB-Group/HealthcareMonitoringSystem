@@ -52,7 +52,7 @@ public class DatabaseCommunication {
       for (char c : chars) {
           if(!Character.isLetter(c) && c != ' ' && c != '-') {
               
-              return "Found invalid character " + "'" + c +"' Try again with no special characters or numbers";
+              throw new InputErrorException( "Found invalid character " + "'" + c +"' Try again with no special characters or numbers");
           }
         }
       char[] chars2 = password.toCharArray();
@@ -78,7 +78,7 @@ public class DatabaseCommunication {
           }
 
         if(!email.contains(".") || !email.contains("@"))
-          return "Please enter an appropriate email";
+          throw new InputErrorException("Please enter an appropriate email");
       return "Valid info";
     }
 
@@ -128,7 +128,7 @@ public class DatabaseCommunication {
         // need to remove user from other tables (if they are in other tables)
       }
       else {
-        throw new UserNotFoundException("User was not found in database.");
+        throw new UserNotFoundException("User was not found in database");
       }
     }
 
@@ -149,7 +149,7 @@ public class DatabaseCommunication {
         // add implentation to remove user from other tables (if they are in other tables)
       }
       else {
-        throw new UserNotFoundException("User was not found in database.");
+        throw new UserNotFoundException("User was not found in database");
       }
     }
 
