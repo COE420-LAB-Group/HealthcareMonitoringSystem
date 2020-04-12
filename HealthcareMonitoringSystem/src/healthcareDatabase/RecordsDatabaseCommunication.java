@@ -24,7 +24,32 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
         }
         return recordList;
       }
-  
+      public String checkIfInputIsValid(String patientEmail, String doctorEmail, String frequency, String recordType, String recordName)
+      throws InputErrorException {
+        if(patientEmail.length() == 0 || doctorEmail.length() == 0 || frequency.length() == 0 || recordType.length() == 0 || recordName.length() == 0)
+          throw new InputErrorException( "One of the inputs was empty. Please fill all inputs.");
+        if (!patientEmail.contains(".") || !patientEmail.contains("@"))
+          throw new InputErrorException("Please enter an appropriate patient email");
+        if (!doctorEmail.contains(".") || !doctorEmail.contains("@"))
+          throw new InputErrorException("Please enter an appropriate doctor email");
+        char[] chars = frequency.toCharArray();
+         for (char c : chars) {
+             if(!Character.isDigit(c)) {
+                throw new InputErrorException("Frequency information must only contain numbers"); 
+              }
+            }
+            if (!recordType.equals("Vital") && !recordType.equals("Prescription")) {
+              throw new InputErrorException("Incorrect record type");
+            }
+            char[] chars2 = recordName.toCharArray();
+            for (char c : chars2) {
+              if(!Character.isLetter(c) && c != ' ' && c != '-') {
+                  
+                  throw new InputErrorException( "Found invalid character " + "'" + c +"' Try again with no special characters or numbers");
+              }
+              }
+        return "Valid record input ";
+      }
       public ResultSet findRecord(String patientEmail, String recordName) throws SQLException {
         String findDuplicatesQuery = String.format(
           "SELECT * FROM Records WHERE (email = '%s' AND recordName = '%s' AND ROWNUM <= 1)", patientEmail, recordName
