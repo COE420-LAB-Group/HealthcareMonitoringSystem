@@ -1,20 +1,21 @@
 package accountManagement;
 
 import java.sql.SQLException;
+import healthcareDatabase.UserDatabaseCommunication;
+import healthcareDatabase.UserNotFoundException;
 
-import healthcareDatabase.DatabaseCommunication;
 
 public class Account {
     private User user;
-    private DatabaseCommunication db;
+    private UserDatabaseCommunication db;
 
     Account() throws SQLException {
-        db = new DatabaseCommunication("admin", "coe420project");
+        db = new UserDatabaseCommunication("admin", "coe420project");
     }
 
     Account(User user) throws SQLException {
         this.user = user;
-        db = new DatabaseCommunication("admin", "coe420project");
+        db = new UserDatabaseCommunication("admin", "coe420project");
     }
 
 	public User getUser() {
@@ -25,7 +26,7 @@ public class Account {
 		this.user = user;
     }
 
-    public User validateUser(String email, String password) throws SQLException { // change return type to user
+    public User validateUser(String email, String password) throws SQLException, UserNotFoundException { // change return type to user
         // do validation of user, if validated create User
         // type of user created depends on type in database
         // after creating User with correct type, return it

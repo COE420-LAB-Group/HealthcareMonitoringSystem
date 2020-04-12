@@ -3,8 +3,10 @@ package accountManagement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import healthcareDatabase.UserNotFoundException;
+
 public class Driver {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, UserNotFoundException {
         Account acc = new Account();
         User user = acc.validateUser("test3@gmail.com", "1234");
 
@@ -16,7 +18,7 @@ public class Driver {
             System.out.println(u.getEmail());
         }
 
-        ((Admin) user).addUser(new Caretaker("Saif AlNajjar", "test6@gmail.com", "1234", "0521112224"));
+        ((Admin) user).addUser(new Patient("Saif AlNajjar", "test6@gmail.com", "12345_", "0521112224", "0501234567"));
 
         ((Admin) user).getUserList();
         userList = ((Admin) user).userList;
@@ -26,6 +28,6 @@ public class Driver {
             System.out.println(u.getEmail());
         }
 
-        ((Admin) user).deleteUser(new Caretaker("Saif AlNajjar", "test6@gmail.com", "1234", "0521112224"));
+       // ((Admin) user).deleteUser(new Patient("Saif AlNajjar", "test6@gmail.com", "12345_", "0521112224", "0501234567"));
     }
 }

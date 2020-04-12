@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import healthcareDatabase.*;
 
 public class Admin extends User {
-    DatabaseCommunication db;
+    UserDatabaseCommunication db;
     ArrayList<User> userList;
     boolean userListChanged;
 
     public Admin(String name, String email, String password, String contact) throws SQLException {
         super(name, email, password, contact);
-        db = new DatabaseCommunication("admin", "coe420project");
+        db = new UserDatabaseCommunication("admin", "coe420project");
         userListChanged = true;
     }
     

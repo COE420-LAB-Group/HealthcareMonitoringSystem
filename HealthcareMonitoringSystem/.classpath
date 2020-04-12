@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:\Users\karim\Desktop\project\HealthcareMonitoringSystem\ojdbc10-full\ojdbc10.jar"/>
+	<classpathentry kind="lib" path="G:\COE420_Project\ojdbc10-full\ojdbc10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
