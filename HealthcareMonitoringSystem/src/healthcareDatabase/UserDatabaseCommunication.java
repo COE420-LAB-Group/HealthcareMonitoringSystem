@@ -46,12 +46,25 @@ public class UserDatabaseCommunication extends DatabaseCommunication{
           throws InputErrorException {
         
         char[] chars = name.toCharArray();
-  
+        if(name.length() == 0 || email.length() == 0 || contact.length() == 0 || userType.length() == 0)
+          throw new InputErrorException( "One of the inputs was empty. Please fill all inputs.");
         for (char c : chars) {
           if(!Character.isLetter(c) && c != ' ' && c != '-') {
               
               throw new InputErrorException( "Found invalid character " + "'" + c +"' Try again with no special characters or numbers");
           }
+          }
+        if( userType.equals("Patient") )
+          if(emergencyContact.length() == 0)
+            throw new InputErrorException("Please fill in the emergency Contact no.");
+          else {
+            char[] chars4 = emergencyContact.toCharArray();
+            for (char c : chars4) {
+              if(!Character.isDigit(c)) {
+                  throw new InputErrorException("Emergency contact information must only contain numbers"); 
+              }
+            }
+
           }
         char[] chars2 = password.toCharArray();
         int digits = 0;
