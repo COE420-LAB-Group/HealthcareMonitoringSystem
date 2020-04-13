@@ -10,16 +10,26 @@ public abstract class Record {
     protected ArrayList<Date> datesToTake;
     protected String patientEmail;
     protected boolean createdByPatientObject;
-    protected String frequency;
+    protected int frequency;
+    protected int ID;
 
-
-    public String getFrequency() {
+    public int getFrequency() {
         return this.frequency;
     }
 
-    public void setFrequency(String frequency) {
+    public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
+
+    public int getID() {
+        return this.ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    
 
     Date current = new Date();
 
@@ -79,12 +89,12 @@ public abstract class Record {
         return result;
     }
 
-    public Record(String name, ArrayList<Date> datesToTake, String patientEmail, boolean createdByPatientObject, String frequency, String recordType) {
+    public Record(String name, ArrayList<Date> datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
         this.name = name;
         this.patientEmail = patientEmail;
         this.createdByPatientObject = true;
         this.frequency = frequency;
-        this.recordType = recordType;
+        this.ID = ID;
         datesToTake = new ArrayList<Date>();
     }
 
