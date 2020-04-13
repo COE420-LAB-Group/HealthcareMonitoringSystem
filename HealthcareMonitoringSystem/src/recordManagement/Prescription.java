@@ -1,10 +1,13 @@
 package recordManagement;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 public class Prescription extends Record {
     private double reading = -1;
-    
-    public Prescription(String name, String patientEmail) {
-        super(name, patientEmail);
+
+    public Prescription(String name, ArrayList<Date> datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
+        super(name, datesToTake, patientEmail, createdByPatientObject, frequency, ID);
     }
 
     @Override
