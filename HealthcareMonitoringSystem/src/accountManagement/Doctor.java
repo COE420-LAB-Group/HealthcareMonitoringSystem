@@ -12,7 +12,7 @@ import healthcareDatabase.UserNotFoundException;
 public class Doctor extends User {
     private ArrayList<Record> records;
     private RecordsDatabaseCommunication db;
-    private boolean RecordListChanged = false;
+    private boolean recordListChanged = false;
 
     public Doctor(String name, String email, String password, String contact) {
         super(name, email, password, contact);
@@ -37,7 +37,7 @@ public class Doctor extends User {
         // if Record is a patient, modify emergency contact as well
         try {
 
-            db.modifyRecord(currentRecord.getPatientEmail(), currentRecord.getName(), newRecord.getPatientEmail(), newRecord.getName(), newRecord.getFrequency(), newRecordType);
+            db.modifyRecord(currentRecord.getID(), currentRecord.getName(), newRecord.getPatientEmail(), newRecord.getName(), newRecord.getFrequency(), newRecordType);
             RecordListChanged = true;
         } catch (InputErrorException exception) {
             System.out.println(exception.getMessage());
