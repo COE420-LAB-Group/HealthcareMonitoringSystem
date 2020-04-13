@@ -22,7 +22,6 @@ public class Doctor extends User {
         records = new ArrayList<Record>();
     }
     public Date StringToDate(String s){
-
         Date result = null;
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
