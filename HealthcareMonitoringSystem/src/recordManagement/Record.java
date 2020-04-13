@@ -27,7 +27,6 @@ public abstract class Record {
         return result;
     }
 
-
     public Record(String name, String patientEmail) {
         this.name = name;
         this.patientEmail = patientEmail;

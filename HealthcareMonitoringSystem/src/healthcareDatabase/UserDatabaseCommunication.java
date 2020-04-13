@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 
-public class UserDatabaseCommunication extends DatabaseCommunication{
+public class UserDatabaseCommunication extends DatabaseCommunication {
 
     public UserDatabaseCommunication(String dbUsername, String dbPassword) throws SQLException {
         super(dbUsername, dbPassword);
@@ -200,5 +200,42 @@ public class UserDatabaseCommunication extends DatabaseCommunication{
           userList.add(userToAddToList);
         }
         return userList;
+      }
+
+      // Inserts into takeCareOf table to link a patient and caretaker together
+      public int linkPatientAndCaretaker(String patientEmail, String caretakerEmail) throws SQLException {
+        // check if both patient and careTaker actually exist in database
+        // also, if one of them is not the correct type, then we return -1
+        ResultSet patientResult = findUser(patientEmail);
+        if (!patientResult.next()) {
+          return -1;
+        }
+        ResultSet caretakerResult = findUser(caretakerEmail);
+        if (!caretakerResult.next()) {
+            return -1;
+        }
+        if (!patientResult.getString(4).equals("Patient") || !caretakerResult.getString(4).equals("Caretaker"))
+          return -1;
+
+        String query = String.format("INSERT INTO takeCareOf " + 
+            "VALUES ('%s', '%s')", patientEmail, caretakerEmail
+          );
+        
+        statement.executeUpdate(query);
+        System.out.print("Added " + patientEmail + " to takeCareOf table database");
+        return 1;
+      }
+
+      // gets list of linked patients
+      public String[] getLinkedPatientList(String caretakerEmail) {
+       String query = String.format("SELECT * FROM Users " +
+        "WHERE email in (SELECT patientEmail FROM takeCareOf where caretakerEmail = '%s');"
+        );
+        return null;
+      }
+
+      public String[] getLinkedCaretakerList(String patientEmail) {
+
+        return null;
       }
 }
