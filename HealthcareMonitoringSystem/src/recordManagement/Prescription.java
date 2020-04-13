@@ -7,7 +7,7 @@ public class Prescription extends Record {
     private double reading = -1;
 
     public Prescription(String name, Date dateToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
-        super(name, datesToTake, patientEmail, createdByPatientObject, frequency, ID);
+        super(name, dateToTake, patientEmail, createdByPatientObject, frequency, ID);
     }
 
     @Override
