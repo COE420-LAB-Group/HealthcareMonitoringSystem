@@ -96,7 +96,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     }
 
     // deletes record with that patient email and name
-    public int deleteRecord(String patientEmail, String recordName) throws SQLException, UserNotFoundException {
+    public int deleteRecord(int id) throws SQLException, UserNotFoundException {
       ResultSet result = findRecord(patientEmail, recordName);
       // if Record was found, delete it, else return -1 because record was not found
       if (result.next()) {

@@ -39,22 +39,17 @@ public class Doctor extends User {
                 db.modifyRecord(currentRecord.getPatientEmail(), currentRecord.getName(), newRecord.getPatientEmail(), newRecord.getName(), newRecord.getFrequency(), newRecordType);
             RecordListChanged = true;
         }
-        catch (InputErrorException | UserNotFoundException exception) {
+        catch (InputErrorException exception) {
             System.out.println(exception.getMessage());
         }
             return 0;
     }
 
     public int deleteRecord(Record record) throws SQLException {
-        try {
-            db.deleteRecord(record.getPatientEmail(),record.getName());
-            RecordListChanged = true;
-            return 1;
-        }
-        catch (UserNotFoundException exception) {
-            System.out.println(exception.getMessage());
-            return -1;
-        }
+        db.deleteRecord(record.getPatientEmail(),record.getName());
+        RecordListChanged = true;
+        return 1;
+
     }
 
     
