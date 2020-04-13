@@ -42,7 +42,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication{
       }
   
       // checks if the input provided is valid and can be inserted into database
-      public String checkIfInputIsValid(String name, String email, String password, String contact, String userType, String emergencyContact)
+      public boolean checkIfInputIsValid(String name, String email, String password, String contact, String userType, String emergencyContact)
           throws InputErrorException {
         
         char[] chars = name.toCharArray();
@@ -78,7 +78,6 @@ public class UserDatabaseCommunication extends DatabaseCommunication{
                   digits++;
             }
         }
-  
         if(specials == 0 || digits == 0 || password.length() < 5)
           throw new InputErrorException( "Password must have atleast 1 number, 1 special character and must be longer than 5 characters");
   
@@ -96,7 +95,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication{
         if (!userType.equals("Admin") && !userType.equals("Caretaker") && !userType.equals("Patient") && !userType.equals("Doctor")) {
           throw new InputErrorException("Incorrect user type");
         }
-        return "Valid info";
+        return true;
       }
   
       // finds user in database and returs the resultset, result.next() will be false if the user was not found

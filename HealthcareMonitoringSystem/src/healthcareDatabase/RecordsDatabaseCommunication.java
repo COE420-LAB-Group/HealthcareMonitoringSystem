@@ -24,7 +24,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
         }
         return recordList;
       }
-      public String checkIfInputIsValid(String patientEmail, String doctorEmail, String frequency, String recordType, String recordName)
+      public boolean checkIfInputIsValid(String patientEmail, String doctorEmail, String frequency, String recordType, String recordName)
       throws InputErrorException {
         if(patientEmail.length() == 0 || doctorEmail.length() == 0 || frequency.length() == 0 || recordType.length() == 0 || recordName.length() == 0)
           throw new InputErrorException( "One of the inputs was empty. Please fill all inputs.");
@@ -48,7 +48,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
                   throw new InputErrorException( "Found invalid character " + "'" + c +"' Try again with no special characters or numbers");
               }
               }
-        return "Valid record input ";
+        return true;
       }
       public ResultSet findRecord(String patientEmail, String recordName) throws SQLException {
         String findDuplicatesQuery = String.format(
