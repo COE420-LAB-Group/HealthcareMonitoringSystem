@@ -7,7 +7,7 @@ import java.text.*;
 public abstract class Record {
     protected String name;
     protected Calendar calendar = Calendar.getInstance();
-    protected ArrayList<Date> datesToTake;
+    protected Date datesToTake;
     protected String patientEmail;
     protected boolean createdByPatientObject;
     protected int frequency;
@@ -49,11 +49,11 @@ public abstract class Record {
         this.calendar = calendar;
     }
 
-    public ArrayList<Date> getDatesToTake() {
+    public Date getDatesToTake() {
         return this.datesToTake;
     }
 
-    public void setDatesToTake(ArrayList<Date> datesToTake) {
+    public void setDatesToTake(Date datesToTake) {
         this.datesToTake = datesToTake;
     }
 
@@ -89,13 +89,13 @@ public abstract class Record {
         return result;
     }
 
-    public Record(String name, ArrayList<Date> datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
+    public Record(String name, Date datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
         this.name = name;
         this.patientEmail = patientEmail;
         this.createdByPatientObject = true;
         this.frequency = frequency;
         this.ID = ID;
-        datesToTake = new ArrayList<Date>();
+        this.datesToTake = datesToTake;
     }
 
     public boolean compareDate(Date d){

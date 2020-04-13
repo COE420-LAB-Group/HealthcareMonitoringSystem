@@ -6,7 +6,7 @@ import java.util.Date;
 public class Prescription extends Record {
     private double reading = -1;
 
-    public Prescription(String name, ArrayList<Date> datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
+    public Prescription(String name, Date dateToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
         super(name, datesToTake, patientEmail, createdByPatientObject, frequency, ID);
     }
 

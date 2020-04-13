@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.time.*;
 public class Vital extends Record {
-    public Vital(String name, ArrayList<Date> datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
+    public Vital(String name, Date datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
         super(name, datesToTake, patientEmail, createdByPatientObject, frequency, ID);
     }
 

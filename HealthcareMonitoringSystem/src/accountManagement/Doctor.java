@@ -37,7 +37,7 @@ public class Doctor extends User {
     public void getRecordsList() throws SQLException {
         ArrayList<String[]> recordArray = db.getRecordList();
         Record record = null;
-        ArrayList<Date> datesarray;
+    
         // if the user list has not been changed since the last time the function is called, return
         if (!recordListChanged)
             return;
@@ -45,12 +45,10 @@ public class Doctor extends User {
             String recordType = recordArray.get(i)[6]; // double-check this
 
             if (recordType.equals("Prescription")) {
-                datesarray.add(StringToDate( recordArray.get(i)[1]));
-                record = new Prescription(recordArray.get(i)[0], datesarray, recordArray.get(i)[2],Boolean.parseBoolean( recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
+                record = new Prescription(recordArray.get(i)[0], StringToDate( recordArray.get(i)[1]), recordArray.get(i)[2],Boolean.parseBoolean( recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
             }
             else if (recordType.equals("Vital")) {
-                datesarray.add(StringToDate( recordArray.get(i)[1]));
-                record = new Vital(recordArray.get(i)[0], datesarray, recordArray.get(i)[2],Boolean.parseBoolean( recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
+                record = new Vital(recordArray.get(i)[0], StringToDate( recordArray.get(i)[1]), recordArray.get(i)[2],Boolean.parseBoolean( recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
             else {
                 System.out.println("Not a valid user type!");
             }
