@@ -124,7 +124,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
         patientEmail, recordName, frequency, recordType, currentID
         );
         statement.executeUpdate(query);
-        System.out.println("Modified record with id " + id + " from database");
+        System.out.println("Modified record with id " + currentID + " from database");
         return 1;
       }
       else {
