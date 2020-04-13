@@ -10,7 +10,59 @@ public abstract class Record {
     protected ArrayList<Date> datesToTake;
     protected String patientEmail;
     protected boolean createdByPatientObject;
+    protected String frequency;
+
+
+    public String getFrequency() {
+        return this.frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
+
     Date current = new Date();
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Calendar getCalendar() {
+        return this.calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
+    public ArrayList<Date> getDatesToTake() {
+        return this.datesToTake;
+    }
+
+    public void setDatesToTake(ArrayList<Date> datesToTake) {
+        this.datesToTake = datesToTake;
+    }
+
+    public String getPatientEmail() {
+        return this.patientEmail;
+    }
+
+    public void setPatientEmail(String patientEmail) {
+        this.patientEmail = patientEmail;
+    }
+
+    public boolean isCreatedByPatientObject() {
+        return this.createdByPatientObject;
+    }
+
+    public void setCreatedByPatientObject(boolean createdByPatientObject) {
+        this.createdByPatientObject = createdByPatientObject;
+    }
+
 
     public Date StringToDate(String s){
 
@@ -27,9 +79,12 @@ public abstract class Record {
         return result;
     }
 
-    public Record(String name, String patientEmail) {
+    public Record(String name, ArrayList<Date> datesToTake, String patientEmail, boolean createdByPatientObject, String frequency, String recordType) {
         this.name = name;
         this.patientEmail = patientEmail;
+        this.createdByPatientObject = true;
+        this.frequency = frequency;
+        this.recordType = recordType;
         datesToTake = new ArrayList<Date>();
     }
 
