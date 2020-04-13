@@ -227,15 +227,40 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
       }
 
       // gets list of linked patients
-      public String[] getLinkedPatientList(String caretakerEmail) {
-       String query = String.format("SELECT * FROM Users " +
-        "WHERE email in (SELECT patientEmail FROM takeCareOf where caretakerEmail = '%s');"
+      public ArrayList<String[]> getLinkedPatientList(String caretakerEmail) throws SQLException {
+        ArrayList<String[]> userList = new ArrayList<String[]>();
+        String query = String.format("SELECT * FROM Users " +
+        "WHERE email in (SELECT patientEmail FROM takeCareOf where caretakerEmail = '%s');", caretakerEmail
         );
-        return null;
+        ResultSet result = statement.executeQuery(query); 
+        
+        while(result.next()) {
+          String[] tempUser = {
+            result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getString(6)
+          };
+
+          userList.add(tempUser);
+        }
+
+        return userList;
       }
 
-      public String[] getLinkedCaretakerList(String patientEmail) {
+      // get list of linked caretakers
+      public ArrayList<String[]> getLinkedCaretakerList(String patientEmail) throws SQLException {
+        ArrayList<String[]> userList = new ArrayList<String[]>();
+        String query = String.format("SELECT * FROM Users " +
+        "WHERE email in (SELECT caretakerEmail FROM takeCareOf where patientEmail = '%s');", patientEmail
+        );
+        ResultSet result = statement.executeQuery(query); 
+        
+        while(result.next()) {
+          String[] tempUser = {
+            result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5)
+          };
 
-        return null;
+          userList.add(tempUser);
+        }
+
+        return userList;
       }
 }
