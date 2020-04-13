@@ -42,14 +42,13 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     }
 
     // checks if input for record is valid
-    public boolean checkIfInputIsValid(String patientEmail, String doctorEmail, String frequency, String recordType, String recordName)
+    public boolean checkIfInputIsValid(String patientEmail, String frequency, String recordType, String recordName)
     throws InputErrorException {
-      if(patientEmail.length() == 0 || doctorEmail.length() == 0 || frequency.length() == 0 || recordType.length() == 0 || recordName.length() == 0)
+      if(patientEmail.length() == 0 || frequency.length() == 0 || recordType.length() == 0 || recordName.length() == 0)
         throw new InputErrorException( "One of the inputs was empty. Please fill all inputs.");
       if (!patientEmail.contains(".") || !patientEmail.contains("@"))
         throw new InputErrorException("Please enter an appropriate patient email");
-      if (!doctorEmail.contains(".") || !doctorEmail.contains("@"))
-        throw new InputErrorException("Please enter an appropriate doctor email");
+
       char[] chars = frequency.toCharArray();
       for (char c : chars) {
         if(!Character.isDigit(c)) {
@@ -75,9 +74,9 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
       return result;
     }
 
-    public int addRecord(String patientEmail, String doctorEmail, String recordName, String frequency, String recordType)
+    public int addRecord(String patientEmail, String recordName, String frequency, String recordType)
           throws SQLException {
-        // checkIfRecordIsValid(patientEmail, doctorEmail, recordName, frequency, recordType);
+        // checkIfRecordIsValid(patientEmail, recordName, frequency, recordType);
         ResultSet result = findRecord(patientEmail, recordName); // check if record already exists
 
         // if the record  already exists, do not add user
@@ -88,7 +87,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
 
         String query = String.format("INSERT INTO Records " + 
             "VALUES ('%s', '%s','%s', '%s', '%s')",
-            patientEmail, doctorEmail, recordName, frequency, frequency
+            patientEmail, recordName, frequency, frequency
           );
         statement.executeUpdate(query);
         System.out.print("Added record " + recordName + " to database");
@@ -111,15 +110,15 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
       }
     }
 
-    public int modifyRecord(String currentPatientEmail, String currentRecordName, String patientEmail, String doctorEmail, String recordName, String frequency, String recordType)
+    public int modifyRecord(String currentPatientEmail, String currentRecordName, String patientEmail, String recordName, String frequency, String recordType)
         throws SQLException {
-      // checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
+      // checkIfInputIsValid(name, email, password, contact, userType, emergencyContact)
       ResultSet result = findRecord(currentPatientEmail, currentRecordName); // check if user already exists
 
       if (result.next()) {
         String query = String.format("UPDATE Users" + 
-        " SET patientEmail = '%s', doctorEmail = '%s', recordName = '%s', frequency = '%s', recordType = '%s' WHERE (email = '%s' AND recordName = '%s')",
-        patientEmail, doctorEmail, recordName, frequency, recordType, currentPatientEmail
+        " SET patientEmail = '%s', recordName = '%s', frequency = '%s', recordType = '%s' WHERE (email = '%s' AND recordName = '%s')",
+        patientEmail, recordName, frequency, recordType, currentPatientEmail
         );
         statement.executeUpdate(query);
         System.out.println("Modified user with email " + currentPatientEmail + " from database");
