@@ -42,19 +42,13 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     }
 
     // checks if input for record is valid
-    public boolean checkIfInputIsValid(String patientEmail, String frequency, String recordType, String recordName)
+    public boolean checkIfInputIsValid(String patientEmail, int frequency, String recordType, String recordName)
     throws InputErrorException {
-      if(patientEmail.length() == 0 || frequency.length() == 0 || recordType.length() == 0 || recordName.length() == 0)
+      if(patientEmail.length() == 0 || recordType.length() == 0 || recordName.length() == 0)
         throw new InputErrorException( "One of the inputs was empty. Please fill all inputs.");
       if (!patientEmail.contains(".") || !patientEmail.contains("@"))
         throw new InputErrorException("Please enter an appropriate patient email");
 
-      char[] chars = frequency.toCharArray();
-      for (char c : chars) {
-        if(!Character.isDigit(c)) {
-          throw new InputErrorException("Frequency information must only contain numbers"); 
-        }
-        }
         if (!recordType.equals("Vital") && !recordType.equals("Prescription")) {
           throw new InputErrorException("Incorrect record type");
         }
@@ -66,19 +60,27 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
           }
       return true;
     }
-    public ResultSet findRecord(String patientEmail, String recordName) throws SQLException {
+
+    public ResultSet findRecord(int id) throws SQLException {
       String findDuplicatesQuery = String.format(
-        "SELECT * FROM Records WHERE (email = '%s' AND recordName = '%s' AND ROWNUM <= 1)", patientEmail, recordName
+        "SELECT * FROM Records WHERE (recordID = %i AND ROWNUM <= 1)", id
         );
       ResultSet result = statement.executeQuery(findDuplicatesQuery);
       return result;
     }
 
+    public ResultSet findRecordWithEmail(String patientEmail, String recordName) throws SQLException {
+      String findDuplicatesQuery = String.format(
+        "SELECT * FROM Records WHERE (recordID = '%s' AND recordName = '%s' AND ROWNUM <= 1)", patientEmail, recordName
+        );
+      ResultSet result = statement.executeQuery(findDuplicatesQuery);
+      return result;
+    }
 
-    public int addRecord(String patientEmail, String recordName, String frequency, String recordType)
+    public int addRecord(String patientEmail, String recordName, int frequency, String recordType)
           throws SQLException {
       // checkIfRecordIsValid(patientEmail, recordName, frequency, recordType);
-      ResultSet result = findRecord(patientEmail, recordName); // check if record already exists
+      ResultSet result = findRecordWithEmail(patientEmail, recordName); // check if record already exists
 
       // if the record  already exists, do not add user
       if (result.next()) {
@@ -87,8 +89,8 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
       }
 
       String query = String.format("INSERT INTO Records " + 
-          "VALUES ('%s', '%s','%s', '%s', '%s')",
-          patientEmail, recordName, frequency, frequency
+          "VALUES (seq_recordid.nextval, '%s','%s', %i, '%s')",
+          patientEmail, recordName, frequency, recordType
         );
       statement.executeUpdate(query);
       System.out.print("Added record " + recordName + " to database");
@@ -97,12 +99,12 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
 
     // deletes record with that patient email and name
     public int deleteRecord(int id) throws SQLException, UserNotFoundException {
-      ResultSet result = findRecord(patientEmail, recordName);
+      ResultSet result = findRecord(id);
       // if Record was found, delete it, else return -1 because record was not found
       if (result.next()) {
-        String query = String.format("DELETE FROM Users WHERE email = '%s'", patientEmail);
+        String query = String.format("DELETE FROM Users WHERE recordid = %i", id);
         statement.executeUpdate(query);
-        System.out.println("Removed record with patient email " + patientEmail + " from database");
+        System.out.println("Removed record with record id " + id + " from database");
         return 1;
         // need to remove user from other tables (if they are in other tables)
       }
@@ -111,18 +113,18 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
       }
     }
 
-    public int modifyRecord(String currentPatientEmail, String currentRecordName, String patientEmail, String recordName, String frequency, String recordType)
+    public int modifyRecord(int currentID, String currentRecordName, String patientEmail, String recordName, int frequency, String recordType)
         throws SQLException {
       // checkIfInputIsValid(name, email, password, contact, userType, emergencyContact)
-      ResultSet result = findRecord(currentPatientEmail, currentRecordName); // check if user already exists
+      ResultSet result = findRecord(currentID); // check if user already exists
 
       if (result.next()) {
         String query = String.format("UPDATE Users" + 
-        " SET patientEmail = '%s', recordName = '%s', frequency = '%s', recordType = '%s' WHERE (email = '%s' AND recordName = '%s')",
-        patientEmail, recordName, frequency, recordType, currentPatientEmail
+        " SET patientEmail = '%s', recordName = '%s', frequency = '%s', recordType = '%s' WHERE (recordID = %i)",
+        patientEmail, recordName, frequency, recordType, currentID
         );
         statement.executeUpdate(query);
-        System.out.println("Modified user with email " + currentPatientEmail + " from database");
+        System.out.println("Modified record with id " + id + " from database");
         return 1;
       }
       else {
