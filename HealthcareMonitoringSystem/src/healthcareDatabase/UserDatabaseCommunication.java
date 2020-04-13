@@ -229,7 +229,8 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
       // gets list of linked patients
       public ArrayList<String[]> getLinkedPatientList(String caretakerEmail) throws SQLException {
         ArrayList<String[]> userList = new ArrayList<String[]>();
-        String query = String.format("SELECT * FROM Users " +
+        String query = String.format(
+        "SELECT users.*, patientinfo.emergencycontact FROM users FULL OUTER JOIN patientinfo ON users.email = patientinfo.patientemail " +
         "WHERE email in (SELECT patientEmail FROM takeCareOf where caretakerEmail = '%s');", caretakerEmail
         );
         ResultSet result = statement.executeQuery(query); 
@@ -241,7 +242,6 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
 
           userList.add(tempUser);
         }
-
         return userList;
       }
 
@@ -260,7 +260,6 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
 
           userList.add(tempUser);
         }
-
         return userList;
       }
 }

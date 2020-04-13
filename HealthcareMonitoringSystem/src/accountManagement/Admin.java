@@ -45,8 +45,8 @@ public class Admin extends User {
             }
 
             userList.add(user);
-            userListChanged = false;
         }
+        userListChanged = false;
     }
     public int addUser(User user) throws SQLException {
         String userType = user.getClass().getSimpleName();

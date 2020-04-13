@@ -74,25 +74,26 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
       return result;
     }
 
+
     public int addRecord(String patientEmail, String recordName, String frequency, String recordType)
           throws SQLException {
-        // checkIfRecordIsValid(patientEmail, recordName, frequency, recordType);
-        ResultSet result = findRecord(patientEmail, recordName); // check if record already exists
+      // checkIfRecordIsValid(patientEmail, recordName, frequency, recordType);
+      ResultSet result = findRecord(patientEmail, recordName); // check if record already exists
 
-        // if the record  already exists, do not add user
-        if (result.next()) {
-          System.out.println("Record is already in database!");
-          return -1;
-        }
-
-        String query = String.format("INSERT INTO Records " + 
-            "VALUES ('%s', '%s','%s', '%s', '%s')",
-            patientEmail, recordName, frequency, frequency
-          );
-        statement.executeUpdate(query);
-        System.out.print("Added record " + recordName + " to database");
-        return 1;
+      // if the record  already exists, do not add user
+      if (result.next()) {
+        System.out.println("Record is already in database!");
+        return -1;
       }
+
+      String query = String.format("INSERT INTO Records " + 
+          "VALUES ('%s', '%s','%s', '%s', '%s')",
+          patientEmail, recordName, frequency, frequency
+        );
+      statement.executeUpdate(query);
+      System.out.print("Added record " + recordName + " to database");
+      return 1;
+    }
 
     // deletes record with that patient email and name
     public int deleteRecord(String patientEmail, String recordName) throws SQLException, UserNotFoundException {
