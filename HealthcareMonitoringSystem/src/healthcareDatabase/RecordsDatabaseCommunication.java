@@ -127,10 +127,10 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     
     String dateString = dateToString(dateToTake);
     if (result.next()) {
-      String query = String.format("UPDATE Users "
+      String query = String.format("UPDATE records "
           + "SET patientEmail = '%s', recordName = '%s', frequency = %d, recordType = '%s', "
           + "dateToTake = TO_DATE('%s', 'dd/mm/yyyy HH24:mi:ss') WHERE (recordID = %d)",
-          patientEmail, recordName, frequency, recordType, currentID, dateString);
+          patientEmail, recordName, frequency, recordType, dateString, currentID );
       statement.executeUpdate(query);
       System.out.println("Modified record with id " + currentID + " from database");
       return 1;
@@ -158,13 +158,11 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     return strDate;
   }
 
-  public static void main(String args[]) throws SQLException {
+  public static void main(String args[]) throws SQLException, UserNotFoundException, InputErrorException {
     RecordsDatabaseCommunication db = new RecordsDatabaseCommunication("admin", "coe420project");
     Date date = db.stringToDate("12/07/2020 12:21:25");
-    try {
-      db.addRecord("test9@gmail.com", "Blood surgar", 1, "Vital", date);
-    } catch (InputErrorException e) {
-      e.printStackTrace();
-    }
+    
+    db.deleteRecord(8);
+
   }
 }
