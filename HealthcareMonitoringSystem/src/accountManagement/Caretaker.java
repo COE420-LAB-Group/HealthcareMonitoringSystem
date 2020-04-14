@@ -3,7 +3,6 @@ package accountManagement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import healthcareDatabase.DatabaseCommunication;
 import healthcareDatabase.UserDatabaseCommunication;
 
 public class Caretaker extends User {
@@ -16,9 +15,13 @@ public class Caretaker extends User {
         super(name, email, password, contact);
         patients = new ArrayList<Patient>();
         hasPermission = false;
-        db = new UserDatabaseCommunication("admin", "coe420project");
         patientListChanged = true;
     }
+
+    public void initializeDatabaseConnection() throws SQLException {
+		db = new UserDatabaseCommunication("admin", "coe420project");
+	}
+
     public void getLinkedPatientList() throws SQLException {
         ArrayList<String[]> patientArray = db.getLinkedPatientList(this.email);
         Patient user = null;

@@ -231,7 +231,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         ArrayList<String[]> userList = new ArrayList<String[]>();
         String query = String.format(
         "SELECT users.*, patientinfo.emergencycontact FROM users FULL OUTER JOIN patientinfo ON users.email = patientinfo.patientemail " +
-        "WHERE email in (SELECT patientEmail FROM takeCareOf where caretakerEmail = '%s');", caretakerEmail
+        "WHERE email in (SELECT patientEmail FROM takeCareOf where caretakerEmail = '%s')", caretakerEmail
         );
         ResultSet result = statement.executeQuery(query); 
         
@@ -250,7 +250,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
       public ArrayList<String[]> getLinkedCaretakerList(String patientEmail) throws SQLException {
         ArrayList<String[]> userList = new ArrayList<String[]>();
         String query = String.format("SELECT * FROM Users " +
-        "WHERE email in (SELECT caretakerEmail FROM takeCareOf where patientEmail = '%s');", patientEmail
+        "WHERE email in (SELECT caretakerEmail FROM takeCareOf where patientEmail = '%s')", patientEmail
         );
         ResultSet result = statement.executeQuery(query); 
         

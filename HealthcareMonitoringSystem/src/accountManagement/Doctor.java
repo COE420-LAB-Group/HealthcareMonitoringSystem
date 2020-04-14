@@ -15,7 +15,7 @@ import recordManagement.*;
 public class Doctor extends User {
     private ArrayList<Record> records;
     private RecordsDatabaseCommunication db;
-    private boolean recordListChanged = false;
+    private boolean recordListChanged = true;
     
     public Doctor(String name, String email, String password, String contact) {
         super(name, email, password, contact);
@@ -34,29 +34,16 @@ public class Doctor extends User {
         }
         return result;
     }
-    public void getRecordsList() throws SQLException {
-        ArrayList<String[]> recordArray = db.getRecordList();
-        Record record = null;
-    
-        // if the user list has not been changed since the last time the function is called, return
-        if (!recordListChanged)
-            return;
-        for (int i = 0; i < recordArray.size(); i++) {
-            String recordType = recordArray.get(i)[6]; // double-check this
 
-            if (recordType.equals("Prescription")) {
-                record = new Prescription(recordArray.get(i)[0], StringToDate(recordArray.get(i)[1]), recordArray.get(i)[2],Boolean.parseBoolean(recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
-            }
-            else if (recordType.equals("Vital")) {
-                record = new Vital(recordArray.get(i)[0], StringToDate(recordArray.get(i)[1]), recordArray.get(i)[2],Boolean.parseBoolean(recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
-            }
-            else {
-                System.out.println("Not a valid user type!");
-            }
-            records.add(record);
-        }
+
+    public void getRecordsList() throws SQLException {
+        if (recordListChanged)
+            records = db.getRecordList();
+        // if the record list has not been changed since the last time the function is called, do not read again
         recordListChanged = false;
     }
+
+    
     public int addRecord(Record record) throws SQLException {
         String RecordType = record.getClass().getSimpleName();
 

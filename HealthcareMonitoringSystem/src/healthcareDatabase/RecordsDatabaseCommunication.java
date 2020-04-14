@@ -8,39 +8,58 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 
+import recordManagement.Prescription;
+import recordManagement.Record;
+import recordManagement.Vital;
+
 public class RecordsDatabaseCommunication extends DatabaseCommunication {
+  private Record record;
   public RecordsDatabaseCommunication(String dbUsername, String dbPassword) throws SQLException {
     super(dbUsername, dbPassword);
   }
 
-  public ArrayList<String[]> getPatientRecordList(String patientEmail) throws SQLException {
-    ArrayList<String[]> recordList = new ArrayList<String[]>();
+  public ArrayList<Record> getPatientRecordList(String patientEmail) throws SQLException {
+    ArrayList<Record> recordList = new ArrayList<Record>();
     String query = String.format(
-        "SELECT Records.*, vitalReading.reading FROM Records FULL OUTER JOIN vitalReading ON Records.RecordID = vitalReading.RecordID "
-            + "(patientEmail = '%s')",
+        "SELECT Records.*, vitalReading.reading FROM Records FULL OUTER JOIN vitalReading ON Records.RecordID = vitalReading.VitalID "
+        + "WHERE (patientEmail = '%s')",
         patientEmail);
     ResultSet result = statement.executeQuery(query);
 
+    // read all values in row into a string array (the integers are turned into a string, which is really stupid because we turn them back to ints in upper layer)
     while (result.next()) {
-      String[] tempRecord = { result.getString(1), result.getString(2), result.getString(3), result.getString(4),
-          result.getString(5) };
+      String recordType = result.getString(4);
+      Record tempRecord;
+      if (recordType.equals("Prescription")) 
+        tempRecord = new Prescription(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1));
+      else {
+        tempRecord = new Vital(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1), result.getDouble(7));
+      }
+
       recordList.add(tempRecord);
     }
-
     return recordList;
   }
 
   // gets all records from Records table
-  public ArrayList<String[]> getRecordList() throws SQLException {
-    ArrayList<String[]> recordList = new ArrayList<String[]>();
-    String query = String.format("SELECT * FROM Records");
+  public ArrayList<Record> getRecordList() throws SQLException {
+    ArrayList<Record> recordList = new ArrayList<Record>();
+    String query = "SELECT Records.*, vitalReading.reading FROM Records FULL OUTER JOIN vitalReading ON Records.RecordID = vitalReading.VitalID";
     ResultSet result = statement.executeQuery(query);
 
+    // read all values in row into a string array (the integers are turned into a string, which is really stupid because we turn them back to ints in upper layer)
     while (result.next()) {
-      String[] tempRecord = { result.getString(1), result.getString(2), result.getString(3), result.getString(4),
-          result.getString(5) };
+      String recordType = result.getString(4);
+      Record tempRecord;
+      if (recordType.equals("Prescription")) 
+        tempRecord = new Prescription(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1));
+      else {
+        tempRecord = new Vital(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1), result.getDouble(7));
+      }
+
       recordList.add(tempRecord);
     }
+
     return recordList;
   }
 
@@ -154,13 +173,5 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     String strDate = dateFormat.format(date);
     return strDate;
-  }
-
-  public static void main(String args[]) throws SQLException, UserNotFoundException, InputErrorException {
-    RecordsDatabaseCommunication db = new RecordsDatabaseCommunication("admin", "coe420project");
-    Date date = db.stringToDate("12/07/2020 12:21:25");
-    
-    db.deleteRecord(8);
-
   }
 }

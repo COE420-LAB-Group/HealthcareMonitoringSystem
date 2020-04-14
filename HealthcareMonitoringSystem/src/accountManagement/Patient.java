@@ -3,6 +3,7 @@ package accountManagement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import healthcareDatabase.RecordsDatabaseCommunication;
 import healthcareDatabase.UserDatabaseCommunication;
 import recordManagement.*;
 
@@ -10,20 +11,29 @@ public class Patient extends User {
 	private ArrayList<Record> records;
 	private String emergencyContact;
 	private ArrayList<Caretaker> caretakers;
-	private UserDatabaseCommunication db;
-	private boolean CaretakerListChanged;
+	private RecordsDatabaseCommunication dbRecords;
+	private UserDatabaseCommunication dbUsers;
+	private boolean CaretakerListChanged, recordsListRead;
 
 	public Patient(String name, String email, String password, String contact, String emergencyContact)
 			throws SQLException {
 		super(name, email, password, contact);
 		this.emergencyContact = emergencyContact;
-		records = new ArrayList<Record>();
+		CaretakerListChanged = true;
+		recordsListRead = true;
 		caretakers = new ArrayList<Caretaker>();
-		db = new UserDatabaseCommunication("admin", "coe420project");
-        CaretakerListChanged = true;
-    }
-    public void getLinkedPatientList() throws SQLException {
-        ArrayList<String[]> CaretakerArray = db.getLinkedCaretakerList(this.email);
+	}
+	
+	// this function must be called to connect user to database and to read records list and caretakers list
+	public void initializeDatabaseConnection() throws SQLException {
+		this.dbRecords = new RecordsDatabaseCommunication("admin", "coe420project");
+		this.dbUsers = new UserDatabaseCommunication("admin", "coe420project");
+		getLinkedCaretakerList(); // puts caretakers from database into the caretakers ArrayList
+		this.records = dbRecords.getPatientRecordList(this.email);
+	}
+
+    public void getLinkedCaretakerList() throws SQLException {
+        ArrayList<String[]> CaretakerArray = dbUsers.getLinkedCaretakerList(this.email);
         Caretaker user = null;
         // if the user list has not been changed since the last time the function is called, return
         if (!CaretakerListChanged)
@@ -34,11 +44,21 @@ public class Patient extends User {
 
         }
             CaretakerListChanged = false;
-        }
-	public String getEmergencyContact() {
-		return emergencyContact;
+		}
+
+	public ArrayList<Record> getRecords() throws SQLException {
+		if (recordsListRead) {
+			this.records = dbRecords.getPatientRecordList(this.email);
+			recordsListRead = false;
+		}
+		return this.records;
 	}
-	public void setEmergencyContact(String emergencyContact) {
-		this.emergencyContact = emergencyContact;
+
+	public ArrayList<Caretaker> getCaretakers() {
+		return this.caretakers;
+	}
+
+	public String getEmergencyContact() {
+		return this.emergencyContact;
 	}
 }
