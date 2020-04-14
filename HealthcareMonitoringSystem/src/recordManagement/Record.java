@@ -27,10 +27,6 @@ public abstract class Record {
         this.ID = ID;
     }
 
-    
-
-    Date current = new Date();
-
     public String getName() {
         return this.name;
     }
@@ -73,7 +69,6 @@ public abstract class Record {
 
 
     public Date StringToDate(String s){
-
         Date result = null;
         try{
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -94,13 +89,6 @@ public abstract class Record {
         this.frequency = frequency;
         this.ID = ID;
         this.dateToTake = dateToTake;
-    }
-
-    public boolean compareDate(Date d){
-        System.out.println(current.toLocaleString());
-        if (current.compareTo(d) == 0)
-            return true;
-        return false;
     }
     
     //returns 1 if notifcation succesfully sent, -1 if failed
