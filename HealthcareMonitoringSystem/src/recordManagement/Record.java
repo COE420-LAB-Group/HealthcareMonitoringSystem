@@ -90,20 +90,11 @@ public abstract class Record {
         this.ID = ID;
         this.dateToTake = dateToTake;
     }
-    
+
     //returns 1 if notifcation succesfully sent, -1 if failed
     protected abstract int sendNotification(); 
     //sets the name of the Record
     void setName() {
         
     }
-    // public static void main(String [] args){
-    //    Prescription x = new Prescription ("n ", "n@n.n");
-    //    while(true){
-    //    Date d = x.StringToDate("2020-04-11 21:09:00");
-    //           if(x.compareDate(d))
-    //           System.out.println("Please take the medicine now");
-        
-    //    }
-       
-    }
+}
