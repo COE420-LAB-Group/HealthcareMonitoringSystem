@@ -8,17 +8,16 @@ import recordManagement.*;
 public class Driver {
     public static void main(String[] args) throws SQLException, UserNotFoundException {
         Account acc = new Account();
-        User user = acc.validateUser("test8@gmail.com", "12345_");
+        User user = acc.validateUser("test@gmail.com", "1234");
 
-        ((Patient) user).initializeDatabaseConnection();
-        ((Patient) user).getCaretakers();
-        ArrayList<Caretaker> userList = ((Patient) user).getCaretakers();
-        ArrayList<Record> recordList = ((Patient) user).getRecords();
+        ((Doctor) user).loadRecordsList();
+        // ArrayList<Patient> userList = ((Caretaker) user).getPatients();
+        ArrayList<Record> recordList = ((Doctor) user).getRecords();
 
-        for (int i = 0; i < userList.size(); i++) {
-            User u = userList.get(i);
-            System.out.println(u.getEmail());
-        }
+        // for (int i = 0; i < userList.size(); i++) {
+        //     User u = userList.get(i);
+        //     System.out.println(u.getEmail());
+        // }
         for (int i = 0; i < recordList.size(); i++) {
             Record r = recordList.get(i);
             System.out.println(r.getID());

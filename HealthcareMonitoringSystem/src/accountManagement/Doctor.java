@@ -1,25 +1,24 @@
 package accountManagement;
 
-import recordManagement.*;
-
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import recordManagement.*;
 import healthcareDatabase.InputErrorException;
 import healthcareDatabase.RecordsDatabaseCommunication;
 import healthcareDatabase.UserNotFoundException;
-import recordManagement.*;
 public class Doctor extends User {
     private ArrayList<Record> records;
     private RecordsDatabaseCommunication db;
     private boolean recordListChanged = true;
     
-    public Doctor(String name, String email, String password, String contact) {
+    public Doctor(String name, String email, String password, String contact) throws SQLException {
         super(name, email, password, contact);
         records = new ArrayList<Record>();
+        db = new RecordsDatabaseCommunication("admin", "coe420project");
     }
     public Date StringToDate(String s){
         Date result = null;
@@ -28,15 +27,17 @@ public class Doctor extends User {
             result  = dateFormat.parse(s);
         }
     
-        catch(ParseException e){
+        catch(ParseException e) {
             e.printStackTrace();
-    
         }
         return result;
     }
 
+    public ArrayList<Record> getRecords() {
+        return this.records;
+    }
 
-    public void getRecordsList() throws SQLException {
+    public void loadRecordsList() throws SQLException {
         if (recordListChanged)
             records = db.getRecordList();
         // if the record list has not been changed since the last time the function is called, do not read again

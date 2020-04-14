@@ -13,7 +13,6 @@ import recordManagement.Record;
 import recordManagement.Vital;
 
 public class RecordsDatabaseCommunication extends DatabaseCommunication {
-  private Record record;
   public RecordsDatabaseCommunication(String dbUsername, String dbPassword) throws SQLException {
     super(dbUsername, dbPassword);
   }

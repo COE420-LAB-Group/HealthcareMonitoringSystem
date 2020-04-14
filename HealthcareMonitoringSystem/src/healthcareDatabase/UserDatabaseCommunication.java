@@ -235,7 +235,6 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         );
         ResultSet result = statement.executeQuery(query); 
         
-        System.out.println("Now looping in getLinkedPatientList");
         while(result.next()) {
           String[] tempUser = {
             result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getString(6)

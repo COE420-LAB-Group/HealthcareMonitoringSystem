@@ -15,9 +15,13 @@ public class Admin extends User {
         db = new UserDatabaseCommunication("admin", "coe420project");
         userListChanged = true;
     }
+
+    public ArrayList<User> getUserList() {
+        return this.userList;
+    }
     
-    // gets list of all users from database
-    public void getUserList() throws SQLException {
+    // loads list of all users from database
+    public void loadUserList() throws SQLException {
         ArrayList<String[]> userArray = db.getUserList();
         User user = null;
         userList = new ArrayList<User>();

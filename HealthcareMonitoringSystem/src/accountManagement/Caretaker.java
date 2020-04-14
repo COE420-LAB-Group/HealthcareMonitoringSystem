@@ -18,6 +18,20 @@ public class Caretaker extends User {
         patientListChanged = true;
     }
 
+
+    public ArrayList<Patient> getPatients() {
+        return this.patients;
+    }
+
+    public boolean getHasPermission() {
+        return this.hasPermission;
+    }
+
+    public void getHasPermission(boolean hasPermission) {
+        this.hasPermission = hasPermission;
+    }
+
+
     public void initializeDatabaseConnection() throws SQLException {
 		db = new UserDatabaseCommunication("admin", "coe420project");
 	}
