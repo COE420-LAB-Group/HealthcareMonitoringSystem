@@ -83,7 +83,6 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
       throws SQLException, InputErrorException {
     checkIfInputIsValid(patientEmail, frequency, recordType, recordName); // WHY ARE THE VARIABLES FLIPPED AROUND :(
     ResultSet result = findRecordWithEmail(patientEmail, recordName); // check if record already exists
-
     // if the record already exists, do not add user
     if (result.next()) {
       System.out.println("Record is already in database!");
@@ -124,7 +123,6 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
       throws SQLException, InputErrorException {
     checkIfInputIsValid(patientEmail, frequency, recordType, recordName);
     ResultSet result = findRecord(currentID); // check if user already exists
-    
     String dateString = dateToString(dateToTake);
     if (result.next()) {
       String query = String.format("UPDATE records "

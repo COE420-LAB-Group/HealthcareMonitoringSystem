@@ -16,7 +16,7 @@ public class Doctor extends User {
     private ArrayList<Record> records;
     private RecordsDatabaseCommunication db;
     private boolean recordListChanged = false;
-
+    
     public Doctor(String name, String email, String password, String contact) {
         super(name, email, password, contact);
         records = new ArrayList<Record>();
@@ -45,10 +45,11 @@ public class Doctor extends User {
             String recordType = recordArray.get(i)[6]; // double-check this
 
             if (recordType.equals("Prescription")) {
-                record = new Prescription(recordArray.get(i)[0], StringToDate( recordArray.get(i)[1]), recordArray.get(i)[2],Boolean.parseBoolean( recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
+                record = new Prescription(recordArray.get(i)[0], StringToDate(recordArray.get(i)[1]), recordArray.get(i)[2],Boolean.parseBoolean(recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
             }
             else if (recordType.equals("Vital")) {
-                record = new Vital(recordArray.get(i)[0], StringToDate( recordArray.get(i)[1]), recordArray.get(i)[2],Boolean.parseBoolean( recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
+                record = new Vital(recordArray.get(i)[0], StringToDate(recordArray.get(i)[1]), recordArray.get(i)[2],Boolean.parseBoolean(recordArray.get(i)[3]), Integer.parseInt(recordArray.get(i)[4]),  Integer.parseInt(recordArray.get(i)[5]));
+            }
             else {
                 System.out.println("Not a valid user type!");
             }
@@ -61,7 +62,7 @@ public class Doctor extends User {
 
         // if Record is a patient, add an emergency contact as well
         try {
-            db.addRecord(record.getPatientEmail(), record.getName(), record.getFrequency(), RecordType);
+            db.addRecord(record.getPatientEmail(), record.getName(), record.getFrequency(), RecordType, record.getDateToTake());
             recordListChanged = true;
         } catch (InputErrorException exception) {
             System.out.println(exception.getMessage());
@@ -74,7 +75,7 @@ public class Doctor extends User {
         // if Record is a patient, modify emergency contact as well
         try {
 
-            db.modifyRecord(currentRecord.getID(), currentRecord.getName(), newRecord.getPatientEmail(), newRecord.getName(), newRecord.getFrequency(), newRecordType);
+            db.modifyRecord(currentRecord.getID(), currentRecord.getPatientEmail(), newRecord.getName(), newRecord.getFrequency(), newRecordType, newRecord.getDateToTake());
             recordListChanged = true;
         } catch (InputErrorException exception) {
             System.out.println(exception.getMessage());
