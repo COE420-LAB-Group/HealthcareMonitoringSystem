@@ -53,6 +53,15 @@ public class Patient extends User {
 		}
 		return this.records;
 	}
+	
+	public int insertReading(Record r, double reading) throws SQLException {
+		((Vital) r).setReading(reading);
+		return dbRecords.insertReading(r.getID(), reading);
+	}
+
+	public int insertReading(int id, double reading) throws SQLException {
+		return dbRecords.insertReading(id, reading);
+	}
 
 	public ArrayList<Caretaker> getCaretakers() {
 		return this.caretakers;

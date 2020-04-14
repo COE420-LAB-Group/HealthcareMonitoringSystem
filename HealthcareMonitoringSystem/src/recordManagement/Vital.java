@@ -1,13 +1,20 @@
 package recordManagement;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.time.*;
 public class Vital extends Record {
-    double readings;
-    public Vital(String name, Date datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID, double readings) {
+    double reading;
+    
+    public Vital(String name, Date datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID, double reading) {
         super(name, datesToTake, patientEmail, createdByPatientObject, frequency, ID);
-        this.readings = readings;
+        this.reading = reading;
+    }
+
+    public double getReading() {
+        return reading;
+    }
+
+    public void setReading(double reading) {
+        this.reading = reading;
     }
 
     @Override
