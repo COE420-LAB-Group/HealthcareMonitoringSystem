@@ -8,7 +8,10 @@ import recordManagement.*;
 public class Driver {
     public static void main(String[] args) throws SQLException, UserNotFoundException {
         Account acc = new Account();
-        User user = acc.validateUser("test8@gmail.com", "12345_");
+        User patient = acc.validateUser("test8@gmail.com", "12345_");
+        User caretaker = acc.validateUser("test5@gmail.com", "1234");
+        User doctor = acc.validateUser("test@gmail.com", "1234");
+        User admin = acc.validateUser("test3@gmail.com", "1234");
 
         ((Patient) user).initializeDatabaseConnection();
         // ArrayList<Patient> userList = ((Caretaker) user).getPatients();

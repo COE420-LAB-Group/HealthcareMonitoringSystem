@@ -15,20 +15,16 @@ public class Admin extends User {
         db = new UserDatabaseCommunication("admin", "coe420project");
         userListChanged = true;
     }
-
-    public ArrayList<User> getUserList() {
-        return this.userList;
-    }
     
     // loads list of all users from database
-    public void loadUserList() throws SQLException {
+    public ArrayList<User> getUserList() throws SQLException {
         ArrayList<String[]> userArray = db.getUserList();
         User user = null;
         userList = new ArrayList<User>();
 
         // if the user list has not been changed since the last time the function is called, return
         if (!userListChanged)
-            return;
+            return this.userList;
         for (int i = 0; i < userArray.size(); i++) {
             String userType = userArray.get(i)[4];
 
@@ -51,7 +47,10 @@ public class Admin extends User {
             userList.add(user);
         }
         userListChanged = false;
+        return this.userList;
     }
+
+
     public int addUser(User user) throws SQLException {
         String userType = user.getClass().getSimpleName();
 
@@ -73,6 +72,7 @@ public class Admin extends User {
         return 0;
     }
 
+    
     public int modifyUser(User currentUser, User newUser) throws SQLException {
         String newUserType = newUser.getClass().getSimpleName();
         // if user is a patient, modify emergency contact as well

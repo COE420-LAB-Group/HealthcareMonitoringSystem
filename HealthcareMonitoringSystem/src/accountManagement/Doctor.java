@@ -15,10 +15,9 @@ public class Doctor extends User {
     private RecordsDatabaseCommunication db;
     private boolean recordListChanged = true;
     
-    public Doctor(String name, String email, String password, String contact) throws SQLException {
+    public Doctor(String name, String email, String password, String contact) {
         super(name, email, password, contact);
         records = new ArrayList<Record>();
-        db = new RecordsDatabaseCommunication("admin", "coe420project");
     }
     public Date StringToDate(String s){
         Date result = null;
@@ -33,17 +32,17 @@ public class Doctor extends User {
         return result;
     }
 
-    public ArrayList<Record> getRecords() {
-        return this.records;
+    public void initializeDatabaseConnection() throws SQLException {
+        this.db = new RecordsDatabaseCommunication("admin", "coe420project");
     }
 
-    public void loadRecordsList() throws SQLException {
+    public ArrayList<Record> getRecords() throws SQLException {
         if (recordListChanged)
             records = db.getRecordList();
-        // if the record list has not been changed since the last time the function is called, do not read again
+            // if the record list has not been changed since the last time the function is called, do not read again
         recordListChanged = false;
+        return this.records;
     }
-
     
     public int addRecord(Record record) throws SQLException {
         String RecordType = record.getClass().getSimpleName();
