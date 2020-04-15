@@ -57,12 +57,12 @@ public class Doctor extends User {
         return 0;
     }
 
-    public int modifyRecord(Record currentRecord, Record newRecord) throws SQLException {
+    public int modifyRecord(Record newRecord) throws SQLException {
         String newRecordType = newRecord.getClass().getSimpleName();
         // if Record is a patient, modify emergency contact as well
         try {
-
-            db.modifyRecord(currentRecord.getID(), currentRecord.getPatientEmail(), newRecord.getName(), newRecord.getFrequency(), newRecordType, newRecord.getDateToTake());
+            // new record's id is passed because the ID of a modified record does not change
+            db.modifyRecord(newRecord.getID(), newRecord.getPatientEmail(), newRecord.getName(), newRecord.getFrequency(), newRecordType, newRecord.getDateToTake());
             recordListChanged = true;
         } catch (InputErrorException exception) {
             System.out.println(exception.getMessage());

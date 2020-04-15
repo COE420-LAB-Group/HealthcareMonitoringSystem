@@ -151,7 +151,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
   }
 
   // this function can be used by the patient for both inserting and for modifying a vital
-  public int insertReading(int id, double reading) throws SQLException {
+  public int insertReading(int id, String patientEmail, double reading) throws SQLException {
     if (reading <= 0) {
       System.out.println("Reading <= 0 not possible");
       return -1;
@@ -159,7 +159,8 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     // check if the record actually exists
     ResultSet result = findRecord(id);
     if (result.next()) {
-      if (!result.getString(5).equals("Vital")) // check if the record is not a vital, return -1 if it is not
+      // check if the record is not a vital, return -1 if it is not, and emails match
+      if (!result.getString(5).equals("Vital") || !result.getString(2).equals(patientEmail))
         return -1; 
       String query = String.format("UPDATE VitalReading " +
       "SET reading = %f WHERE (vitalID = %d)", reading, id

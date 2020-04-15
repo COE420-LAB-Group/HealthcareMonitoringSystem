@@ -13,22 +13,36 @@ public class Driver {
         User doctor = acc.validateUser("test@gmail.com", "1234");
         User admin = acc.validateUser("test3@gmail.com", "1234");
 
-        ((Patient) user).initializeDatabaseConnection();
-        // ArrayList<Patient> userList = ((Caretaker) user).getPatients();
-        ArrayList<Record> recordList = ((Patient) user).getRecords();
+        ((Patient) patient).initializeDatabaseConnection();
+        ((Caretaker) caretaker).initializeDatabaseConnection();
+        ((Doctor) doctor).initializeDatabaseConnection();
 
-        // for (int i = 0; i < userList.size(); i++) {
-        //     User u = userList.get(i);
-        //     System.out.println(u.getEmail());
-        // }
-        for (int i = 0; i < recordList.size(); i++) {
-            Record r = recordList.get(i);
-            System.out.println(r.getID());
+        ArrayList<Patient> caretakerPatientList = ((Caretaker) caretaker).getPatients(); // gets all patients linked to patient
+        ArrayList<Caretaker> patientCaretakerList = ((Patient) patient).getCaretakers(); // gets all caretakers linked to patient
+        ArrayList<Record> patientRecordList = ((Patient) patient).getRecords(); // gets all records of the patient
+        ArrayList<Record> allRecordList = ((Doctor) doctor).getRecords(); // gets all records in the database
+
+        for (int i = 0; i < patientRecordList.size(); i++) {
+            Record r = patientRecordList.get(i);
+            System.out.println(r.getPatientEmail() + "\t" + r.getName() + "\t");
         }
-
-        ((Patient) user).insertReading(recordList.get(0), 60.2);
+        System.out.println();
+        for (int i = 0; i < allRecordList.size(); i++) {
+            Record r = patientRecordList.get(i);
+            System.out.println(r.getPatientEmail() + "\t" + r.getName());
+        }
+        System.out.println();
+        for (int i = 0; i < caretakerPatientList.size(); i++) {
+            User u = caretakerPatientList.get(i);
+            System.out.println(u.getName() + "\t" + u.getEmail() + "\t" + u.getClass().getSimpleName());
+        }
+        System.out.println();
+        for (int i = 0; i < patientCaretakerList.size(); i++) {
+            User u = patientCaretakerList.get(i);
+            System.out.println(u.getName() + "\t" + u.getEmail() + "\t" + u.getClass().getSimpleName());
+        }
+        ((Patient) patient).insertReading(patientRecordList.get(0), 60.2); // inserts a reading for a vital
         // ((Admin) user).addUser(new Patient("Saif AlNajjar", "test6@gmail.com", "12345_", "0521112224", "0501234567"));
-
         // ((Admin) user).getUserList();
         // userList = ((Admin) user).userList;
 
