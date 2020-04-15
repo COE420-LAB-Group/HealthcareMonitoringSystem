@@ -11,6 +11,24 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         super(dbUsername, dbPassword);
     }
 
+    public String[] createUserStringArray(ResultSet result) throws SQLException {
+      String[] userStringArray;
+      if (result.getString(5).equals("Patient")) { // if user type is patient
+        String[] temp = {
+          result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getString(6)
+        };
+        userStringArray = temp;
+      }
+      else {
+        String[] temp = {
+          result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5)
+        };
+        userStringArray = temp;
+      }
+
+      return userStringArray;
+    }
+
     public String[] validateUser(String email, String password) throws SQLException, UserNotFoundException {
         String query = String.format(
           "SELECT users.*, patientinfo.emergencycontact FROM users FULL OUTER JOIN patientinfo ON users.email = patientinfo.patientemail " + 
@@ -20,24 +38,11 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         String[] userInfo = {};
         
         // if user is found, return array with info for that user, else, return an empty array
-        if (result.next()) {
-          if (result.getString(5).equals("Patient")) { // if user type is patient
-            String[] temp = {
-              result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getString(6)
-            };
-            userInfo = temp;
-          } 
-          else {
-            String[] temp = {
-              result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5)
-            };
-            userInfo = temp;
-          }
-        }
-  
-        else {
+        if (result.next()) 
+            userInfo = createUserStringArray(result);
+        else
           throw new UserNotFoundException("User was not found in database.");
-        }
+          
         return userInfo;
       }
   
@@ -181,24 +186,9 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         String query = "SELECT users.*, patientinfo.emergencycontact FROM users FULL OUTER JOIN patientinfo ON users.email = patientinfo.patientemail";
         ResultSet result = statement.executeQuery(query);
   
-        while(result.next()) {
-          String[] userToAddToList;
-  
-          if (result.getString(5).equals("Patient")) { // if user type is patient get emergency contact
-            String[] tempUser = {
-              result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getString(6)
-            };
-            userToAddToList = tempUser;
-          }
-          else {
-            String[] tempUser = {
-              result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5)
-            };
-            userToAddToList = tempUser;
-          }
-  
-          userList.add(userToAddToList);
-        }
+        while(result.next()) 
+          userList.add(createUserStringArray(result)); // creates user string from query result and adds it to list of users
+        
         return userList;
       }
 
@@ -235,13 +225,9 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         );
         ResultSet result = statement.executeQuery(query); 
         
-        while(result.next()) {
-          String[] tempUser = {
-            result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5), result.getString(6)
-          };
-
-          userList.add(tempUser);
-        }
+        while(result.next())
+          userList.add(createUserStringArray(result));
+      
         return userList;
       }
 
@@ -253,13 +239,9 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         );
         ResultSet result = statement.executeQuery(query); 
         
-        while(result.next()) {
-          String[] tempUser = {
-            result.getString(1), result.getString(2), result.getString(3), result.getString(4), result.getString(5)
-          };
-          // random comment
-          userList.add(tempUser);
-        }
+        while(result.next()) 
+          userList.add(createUserStringArray(result));
+        
         return userList;
       }
 }

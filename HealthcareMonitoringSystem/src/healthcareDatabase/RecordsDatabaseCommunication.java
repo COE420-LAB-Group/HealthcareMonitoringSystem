@@ -17,6 +17,17 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     super(dbUsername, dbPassword);
   }
 
+  public Record createRecord(ResultSet result) throws SQLException {
+    String recordType = result.getString(4);
+    Record tempRecord;
+    if (recordType.equals("Prescription")) 
+      tempRecord = new Prescription(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1));
+    else {
+      tempRecord = new Vital(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1), result.getDouble(7));
+    }
+    return tempRecord;
+  }
+  
   public ArrayList<Record> getPatientRecordList(String patientEmail) throws SQLException {
     ArrayList<Record> recordList = new ArrayList<Record>();
     String query = String.format(
@@ -26,17 +37,9 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     ResultSet result = statement.executeQuery(query);
 
     // read all values in row into a string array (the integers are turned into a string, which is really stupid because we turn them back to ints in upper layer)
-    while (result.next()) {
-      String recordType = result.getString(4);
-      Record tempRecord;
-      if (recordType.equals("Prescription")) 
-        tempRecord = new Prescription(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1));
-      else {
-        tempRecord = new Vital(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1), result.getDouble(7));
-      }
-
-      recordList.add(tempRecord);
-    }
+    while (result.next()) 
+      recordList.add(createRecord(result));
+    
     return recordList;
   }
 
@@ -48,15 +51,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
 
     // read all values in row into a string array (the integers are turned into a string, which is really stupid because we turn them back to ints in upper layer)
     while (result.next()) {
-      String recordType = result.getString(4);
-      Record tempRecord;
-      if (recordType.equals("Prescription")) 
-        tempRecord = new Prescription(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1));
-      else {
-        tempRecord = new Vital(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1), result.getDouble(7));
-      }
-
-      recordList.add(tempRecord);
+      recordList.add(createRecord(result));
     }
 
     return recordList;
