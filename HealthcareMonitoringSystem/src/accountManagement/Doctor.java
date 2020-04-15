@@ -50,6 +50,7 @@ public class Doctor extends User {
         // if Record is a patient, add an emergency contact as well
         try {
             db.addRecord(record.getPatientEmail(), record.getName(), record.getFrequency(), RecordType, record.getDateToTake());
+            record.setID(db.getRecordID(record.getPatientEmail(), record.getName()));
             recordListChanged = true;
         } catch (InputErrorException exception) {
             System.out.println(exception.getMessage());

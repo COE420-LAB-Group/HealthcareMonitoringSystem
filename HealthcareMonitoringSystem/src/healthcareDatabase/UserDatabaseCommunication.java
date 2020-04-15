@@ -204,8 +204,8 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         if (!caretakerResult.next()) {
             return -1;
         }
-        if (!patientResult.getString(4).equals("Patient") || !caretakerResult.getString(4).equals("Caretaker"))
-          return -1;
+        // if (!patientResult.getString(4).equals("Patient") || !caretakerResult.getString(4).equals("Caretaker"))
+        //   return -1;
 
         String query = String.format("INSERT INTO takeCareOf " + 
             "VALUES ('%s', '%s')", patientEmail, caretakerEmail

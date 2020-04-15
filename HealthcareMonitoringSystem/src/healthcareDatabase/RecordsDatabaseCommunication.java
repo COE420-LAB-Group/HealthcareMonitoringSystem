@@ -42,6 +42,14 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     
     return recordList;
   }
+  
+  public int getRecordID(String patientEmail, String recordName) throws SQLException {
+    ResultSet result = findRecordWithEmail(patientEmail, recordName);
+    if (result.next())
+      return result.getInt(1); // returns the record's ID
+    else
+      return -1;
+    }
 
   // gets all records from Records table
   public ArrayList<Record> getRecordList() throws SQLException {
@@ -122,7 +130,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     ResultSet result = findRecord(id);
     // if Record was found, delete it, else return -1 because record was not found
     if (result.next()) {
-      String query = String.format("DELETE FROM Users WHERE recordid = %d", id);
+      String query = String.format("DELETE FROM Records WHERE recordid = %d", id);
       statement.executeUpdate(query);
       System.out.println("Removed record with record id " + id + " from database");
       return 1;

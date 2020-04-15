@@ -104,8 +104,8 @@ public class Admin extends User {
         }
     }
 
-    public int linkUsers(User user1, User user2)  {
-        return 0;
+    public void linkUsers(User patient, User caretaker) throws SQLException {
+        db.linkPatientAndCaretaker(patient.getEmail(), caretaker.getEmail()); 
     }
 
 }

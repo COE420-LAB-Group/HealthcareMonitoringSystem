@@ -18,11 +18,6 @@ public class Caretaker extends User {
         patientListChanged = true;
     }
 
-
-    public ArrayList<Patient> getPatients() {
-        return this.patients;
-    }
-
     public boolean getHasPermission() {
         return this.hasPermission;
     }
@@ -36,18 +31,19 @@ public class Caretaker extends User {
 		db = new UserDatabaseCommunication("admin", "coe420project");
 	}
 
-    public void getLinkedPatientList() throws SQLException {
+    public ArrayList<Patient> getLinkedPatientList() throws SQLException {
         ArrayList<String[]> patientArray = db.getLinkedPatientList(this.email);
         Patient user = null;
         // if the user list has not been changed since the last time the function is called, return
         if (!patientListChanged)
-            return;
+            return this.patients;
         for (int i = 0; i < patientArray.size(); i++) {
             user = new Patient(patientArray.get(i)[0], patientArray.get(i)[1], patientArray.get(i)[2], patientArray.get(i)[3], patientArray.get(i)[5]);
             patients.add(user);
 
         }
             patientListChanged = false;
+        return this.patients;
         }
     
 	public boolean doesHavePermission() {

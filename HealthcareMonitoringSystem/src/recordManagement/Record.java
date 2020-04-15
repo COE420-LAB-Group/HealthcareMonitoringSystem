@@ -91,6 +91,15 @@ public abstract class Record {
         this.dateToTake = dateToTake;
     }
 
+    public Record(String name, Date dateToTake, String patientEmail, int frequency) {
+        this.name = name;
+        this.patientEmail = patientEmail;
+        this.createdByPatientObject = true;
+        this.frequency = frequency;
+        this.ID = -1;
+        this.dateToTake = dateToTake;
+    }
+
     //returns 1 if notifcation succesfully sent, -1 if failed
     protected abstract int sendNotification(); 
     //sets the name of the Record

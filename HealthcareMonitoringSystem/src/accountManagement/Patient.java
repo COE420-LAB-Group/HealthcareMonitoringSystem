@@ -32,18 +32,19 @@ public class Patient extends User {
 		this.records = dbRecords.getPatientRecordList(this.email);
 	}
 
-    public void getLinkedCaretakerList() throws SQLException {
+    public ArrayList<Caretaker> getLinkedCaretakerList() throws SQLException {
         ArrayList<String[]> CaretakerArray = dbUsers.getLinkedCaretakerList(this.email);
         Caretaker user = null;
         // if the user list has not been changed since the last time the function is called, return
         if (!CaretakerListChanged)
-            return;
+            return this.caretakers;
         for (int i = 0; i < CaretakerArray.size(); i++) {
             user = new Caretaker(CaretakerArray.get(i)[0], CaretakerArray.get(i)[1], CaretakerArray.get(i)[2], CaretakerArray.get(i)[3]);
             caretakers.add(user);
 
         }
-            CaretakerListChanged = false;
+			CaretakerListChanged = false;
+			return this.caretakers;
 		}
 
 	public ArrayList<Record> getRecords() throws SQLException {
@@ -56,11 +57,11 @@ public class Patient extends User {
 	
 	public int insertReading(Record r, double reading) throws SQLException {
 		((Vital) r).setReading(reading);
-		return dbRecords.insertReading(r.getID(), reading);
+		return dbRecords.insertReading(r.getID(), r.getPatientEmail(), reading);
 	}
 
-	public int insertReading(int id, double reading) throws SQLException {
-		return dbRecords.insertReading(id, reading);
+	public int insertReading(int id, String patientEmail, double reading) throws SQLException {
+		return dbRecords.insertReading(id, patientEmail, reading);
 	}
 
 	public ArrayList<Caretaker> getCaretakers() {
