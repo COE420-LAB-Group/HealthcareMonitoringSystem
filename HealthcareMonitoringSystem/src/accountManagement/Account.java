@@ -9,11 +9,11 @@ public class Account {
     private User user;
     private UserDatabaseCommunication db;
 
-    Account() throws SQLException {
+    public Account() throws SQLException {
         db = new UserDatabaseCommunication("admin", "coe420project");
     }
 
-    Account(User user) throws SQLException {
+    public Account(User user) throws SQLException {
         this.user = user;
         db = new UserDatabaseCommunication("admin", "coe420project");
     }
