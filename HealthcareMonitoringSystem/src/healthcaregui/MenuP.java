@@ -1,5 +1,7 @@
 package healthcaregui;
 
+import accountManagement.Patient;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,11 +13,15 @@ package healthcaregui;
  * @author dubs2
  */
 public class MenuP extends javax.swing.JFrame {
-
     /**
      * Creates new form MenuP
      */
     public MenuP() {
+        initComponents();
+    }
+    
+    public MenuP(Patient patient) {
+        this.patient = patient;
         initComponents();
     }
 
@@ -185,5 +191,7 @@ public class MenuP extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem5;
+    private Patient patient;
+
     // End of variables declaration//GEN-END:variables
 }

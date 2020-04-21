@@ -1,5 +1,7 @@
 package healthcaregui;
 
+import accountManagement.Admin;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,10 +17,13 @@ public class MenuA extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
+    public MenuA(Admin admin) {
+        this.admin = admin;
+        initComponents();
+    }
     public MenuA() {
         initComponents();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,12 +152,12 @@ public class MenuA extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        (new AddNewUser()).setVisible(true);
+        (new AddNewUser(admin)).setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        (new UpdateDeleteUser()).setVisible(true);
+        (new UpdateDeleteUser(admin)).setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -212,5 +217,6 @@ public class MenuA extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu menuUser2;
+    private Admin admin;
     // End of variables declaration//GEN-END:variables
 }

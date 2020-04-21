@@ -1,5 +1,7 @@
 package healthcaregui;
 
+import accountManagement.Caretaker;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +18,10 @@ public class MenuC extends javax.swing.JFrame {
      * Creates new form MenuC
      */
     public MenuC() {
+        initComponents();
+    }
+    public MenuC(Caretaker caretaker) {
+        this.caretaker = caretaker;
         initComponents();
     }
 
@@ -225,5 +231,6 @@ public class MenuC extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno1;
+    private Caretaker caretaker;
     // End of variables declaration//GEN-END:variables
 }

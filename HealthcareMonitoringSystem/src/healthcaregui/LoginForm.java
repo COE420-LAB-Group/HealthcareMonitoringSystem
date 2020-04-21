@@ -2,8 +2,7 @@ package healthcaregui;
 
 import java.sql.SQLException;
 
-import accountManagement.Account;
-import accountManagement.User;
+import accountManagement.*;
 import healthcareDatabase.UserNotFoundException;
 
 /*
@@ -89,7 +88,6 @@ public class LoginForm extends javax.swing.JFrame {
                 } catch (SQLException | UserNotFoundException e) {
                     System.out.println("User not found!");
                     passwordMessage.setText("Incorrect Email/password combination");
-                    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 }
             }
         });
@@ -122,7 +120,7 @@ public class LoginForm extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                        layout.createSequentialGroup().addGap(61, 61, 61)
+                        layout.createSequentialGroup().addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel1).addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -184,16 +182,16 @@ public class LoginForm extends javax.swing.JFrame {
         String userType = user.getClass().getSimpleName();
 
         if (userType.equals("Admin")) {
-            new MenuA().setVisible(true);
+            new MenuA((Admin) user).setVisible(true);
         }
         else if (userType.equals("Doctor")) {
-            new MenuD().setVisible(true);
+            new MenuD((Doctor) user).setVisible(true);
         }
         else if (userType.equals("Patient")) {
-            new MenuP().setVisible(true);
+            new MenuP((Patient) user).setVisible(true);
         }
         else if (userType.equals("Caretaker")) {
-            new MenuC().setVisible(true);
+            new MenuC((Caretaker) user).setVisible(true);
         }
         else {
             System.out.println("Not a valid user type!");

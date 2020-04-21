@@ -1,5 +1,15 @@
 package healthcaregui;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import accountManagement.Admin;
+import accountManagement.Caretaker;
+import accountManagement.Doctor;
+import accountManagement.Patient;
+import accountManagement.User;
+import healthcareDatabase.InputErrorException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,6 +29,16 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
         initComponents();
     }
 
+    public UpdateDeleteUser(Admin admin) {
+        this.admin = admin;
+        try {
+            userList = admin.getUserList();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,32 +50,40 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtEmpno = new javax.swing.JTextField();
+        txtEmpno = new javax.swing.JTextField(userList.get(index).getName());
         lblEmpnoError = new javax.swing.JLabel();
-        txtEmpno2 = new javax.swing.JTextField();
+        txtEmpno2 = new javax.swing.JTextField(userList.get(index).getEmail());
         jLabel4 = new javax.swing.JLabel();
         lblEmpnoError2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtEmpno3 = new javax.swing.JTextField();
+        txtEmpno3 = new javax.swing.JTextField(userList.get(index).getContact());
         lblEmpnoError3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtEmpno4 = new javax.swing.JTextField();
+        String userType = userList.get(index).getClass().getSimpleName(); // gets the type of user
+        String emergencyContact = "";
+        if (userType.equals("Patient"))
+            emergencyContact = ((Patient) userList.get(index)).getEmergencyContact(); // Gets the patient's emergency contact
+        txtEmpno4 = new javax.swing.JTextField(emergencyContact);
         lblEmpnoError4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtEmpno5 = new javax.swing.JTextField();
+        txtEmpno5 = new javax.swing.JPasswordField(userList.get(index).getPassword());
         lblEmpnoError5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtEmpno6 = new javax.swing.JTextField();
+        txtEmpno6 = new javax.swing.JPasswordField();
         lblEmpnoError6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtEmpno7 = new javax.swing.JTextField();
+        txtEmpno7 = new javax.swing.JPasswordField();
         lblEmpnoError7 = new javax.swing.JLabel();
+        userAddingErrorLabel = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        cmbMgr = new javax.swing.JComboBox<>();
-        btnUpdate = new javax.swing.JButton();
-        btnUpdate1 = new javax.swing.JButton();
-        btnUpdate2 = new javax.swing.JButton();
-        btnUpdate3 = new javax.swing.JButton();
+        String[] userTypes = { "Admin", "Caretaker", "Patient", "Doctor" };
+        userTypeSelect = new javax.swing.JComboBox<>(userTypes);
+        updateButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        nextButton = new javax.swing.JButton();
+        prevButton = new javax.swing.JButton();
+        
+        index = 0;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,7 +97,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
 
         lblEmpnoError.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblEmpnoError.setForeground(new java.awt.Color(255, 0, 0));
-        lblEmpnoError.setText("error label");
+        lblEmpnoError.setText("");
 
         txtEmpno2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
@@ -78,16 +106,12 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
 
         lblEmpnoError2.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblEmpnoError2.setForeground(new java.awt.Color(255, 0, 0));
-        lblEmpnoError2.setText("error label");
+        lblEmpnoError2.setText("");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Contact:");
 
         txtEmpno3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        lblEmpnoError3.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        lblEmpnoError3.setForeground(new java.awt.Color(255, 0, 0));
-        lblEmpnoError3.setText("error label");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Emergency Contact:");
@@ -99,10 +123,6 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
             }
         });
 
-        lblEmpnoError4.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
-        lblEmpnoError4.setForeground(new java.awt.Color(255, 0, 0));
-        lblEmpnoError4.setText("error label");
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Old Password:");
 
@@ -113,9 +133,9 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
             }
         });
 
-        lblEmpnoError5.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        lblEmpnoError5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblEmpnoError5.setForeground(new java.awt.Color(255, 0, 0));
-        lblEmpnoError5.setText("error label");
+        lblEmpnoError5.setText("");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel8.setText("New Password:");
@@ -129,7 +149,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
 
         lblEmpnoError6.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblEmpnoError6.setForeground(new java.awt.Color(255, 0, 0));
-        lblEmpnoError6.setText("error label");
+        lblEmpnoError6.setText("");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("Confirm Password:");
@@ -143,47 +163,61 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
 
         lblEmpnoError7.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         lblEmpnoError7.setForeground(new java.awt.Color(255, 0, 0));
-        lblEmpnoError7.setText("error label");
+        lblEmpnoError7.setText("");
+
+        userAddingErrorLabel.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
+        userAddingErrorLabel.setText("");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel10.setText("User Type:");
 
-        cmbMgr.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cmbMgr.addActionListener(new java.awt.event.ActionListener() {
+        userTypeSelect.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        userTypeSelect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbMgrActionPerformed(evt);
+                userTypeSelectActionPerformed(evt);
             }
         });
 
-        btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        updateButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                try {
+                    updateButtonActionPerformed(evt);
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         });
 
-        btnUpdate1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate1.setText("Delete");
-        btnUpdate1.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate1ActionPerformed(evt);
+                try {
+                    deleteButtonActionPerformed(evt);
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         });
 
-        btnUpdate2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate2.setText(">>");
-        btnUpdate2.addActionListener(new java.awt.event.ActionListener() {
+        nextButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        nextButton.setText(">>");
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate2ActionPerformed(evt);
+                nextButtonActionPerformed(evt);
             }
         });
 
-        btnUpdate3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate3.setText("<<");
-        btnUpdate3.addActionListener(new java.awt.event.ActionListener() {
+        prevButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        prevButton.setText("<<");
+        prevButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate3ActionPerformed(evt);
+                prevButtonActionPerformed(evt);
             }
         });
 
@@ -214,7 +248,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
                                 .addGap(131, 131, 131)
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbMgr, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(userTypeSelect, javax.swing.GroupLayout.DEFAULT_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -234,6 +268,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
                                             .addComponent(jLabel5))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(userAddingErrorLabel)
                                     .addComponent(txtEmpno4, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtEmpno6, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtEmpno7, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,13 +286,13 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(194, 194, 194)
-                                .addComponent(btnUpdate3)
+                                .addComponent(prevButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUpdate)
+                                .addComponent(updateButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUpdate1)
+                                .addComponent(deleteButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnUpdate2)))
+                                .addComponent(nextButton)))
                         .addGap(0, 0, 0)))
                 .addContainerGap())
         );
@@ -304,13 +339,16 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(cmbMgr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(userTypeSelect, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnUpdate1)
-                    .addComponent(btnUpdate2)
-                    .addComponent(btnUpdate3))
+                    .addComponent(userAddingErrorLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateButton)
+                    .addComponent(deleteButton)
+                    .addComponent(nextButton)
+                    .addComponent(prevButton))
                 .addGap(30, 30, 30))
         );
 
@@ -333,79 +371,105 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno7ActionPerformed
 
-    private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMgrActionPerformed
+    private void userTypeSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeSelectActionPerformed
         // TODO add your handling code here:
-        String items[] = {"Vitals", "Medications"};
-        for(int i = 0; i < items.length; ++i)
-            cmbMgr.addItem(items[i]);
-    }//GEN-LAST:event_cmbMgrActionPerformed
+    }//GEN-LAST:event_userTypeSelectActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_updateButtonActionPerformed
+        String name = txtEmpno.getText();
+        String email = txtEmpno2.getText();
+        String contact = txtEmpno3.getText();
+        String emergencyContact = txtEmpno4.getText();
+        String newPassword = new String(txtEmpno6.getPassword());
+        String confirmPassword = new String(txtEmpno7.getPassword());
+        String userType = (String) userTypeSelect.getSelectedItem();
+
+        // display error label that passwords do not match, and exit the event function
+        if (!newPassword.equals(confirmPassword)) {
+            userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
+            userAddingErrorLabel.setText("The new passwords do not match!");
+            return;
+        }
+
+        User user = null;
+        if (userType.equals("Admin")) {
+            user = new Admin(name, email, newPassword, contact);
+        }
+        else if (userType.equals("Doctor")) {
+            user = new Doctor(name, email, newPassword, contact);
+        }
+        else if (userType.equals("Patient")) {
+            user = new Patient(name, email, newPassword, contact, emergencyContact);
+        }
+        else if (userType.equals("Caretaker")) {
+            user = new Caretaker(name, email, newPassword, contact);
+        }
+        else {
+            System.out.println("Not a valid user type!");
+        }
+
+        try {
+            int success = admin.modifyUser(userList.get(index), user);
+            if (success == 1){
+                userAddingErrorLabel.setForeground(new java.awt.Color(0, 0, 255));
+                userAddingErrorLabel.setText("Account modified successfully!");
+            }
+            else {
+                userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
+                userAddingErrorLabel.setText("This user was not found!");
+            }
+        }
+        catch (InputErrorException ex) {
+            userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
+            userAddingErrorLabel.setText(ex.getMessage());
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_deleteButtonActionPerformed
+        int success = admin.deleteUser(userList.get(index));
+        if (success == 1) {
+            userAddingErrorLabel.setForeground(new java.awt.Color(0, 0, 255));
+            userAddingErrorLabel.setText("Account deleted successfully!");
+        }
+        else {
+            userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
+            userAddingErrorLabel.setText("This user was not found!");
+        }
         // TODO add your handling code here:
 
-//        try {
-//            // make the result set scrolable forward/backward updatable
-//            //            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-//
-//            if (isValidData()) {
-//                String prepSQL = "UPDATE emp SET ename = " +
-//                "'" + txtEname.getText().trim().toUpperCase() +
-//                "', job = '" + txtJob.getText().trim().toUpperCase() +
-//                "', mgr = " + cmbMgr.getSelectedItem() +
-//                ", hiredate = '" + ftxtHiredate.getText() +
-//                "', sal = " + txtSalary.getText().trim() +
-//                ", comm = " + txtComm.getText().trim() +
-//                ", deptno = " + cmbDeptno.getSelectedItem() +
-//                " WHERE empno = " + txtEmpno.getText().trim();
-//                //                prepStatement = con.prepareStatement("UPDATE emp SET ename = ?, job = ?, mgr = ?, hiredate = ?, sal = ?, comm = ?, deptno = ? WHERE empno = ?");
-//                ////                prepStatement.setInt(1, Integer.parseInt(txtEmpno.getText()));
-//                //                prepStatement.setString(1, txtEname.getText().toUpperCase());
-//                //                prepStatement.setString(2, txtJob.getText().toUpperCase());
-//                //                prepStatement.setInt(3, Integer.parseInt(cmbMgr.getSelectedItem().toString()));
-//                //                prepStatement.setString(4, ftxtHiredate.getText());
-//                //                prepStatement.setInt(5, Integer.parseInt(txtSalary.getText()));
-//                //                prepStatement.setInt(6, Integer.parseInt(txtComm.getText()));
-//                //                prepStatement.setInt(7, Integer.parseInt(cmbDeptno.getSelectedItem().toString()));
-//                //                prepStatement.setInt(8, Integer.parseInt(txtEmpno.getText().trim()));
-//                //                int result = prepStatement.executeUpdate();
-//                int result = dbCon.executePrepared(prepSQL);
-//                if (result > 0) {
-//
-//                    javax.swing.JLabel label = new javax.swing.JLabel("Employee No " + txtEmpno.getText() + " updated successfully.");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-//
-//                    getNewData();
-//
-//                } else {
-//                    // check validation errors
-//                }
-//                //                prepStatement.close();
-//            } else {
-//                javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
-//                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
-//
-//            }
-//
-//        } catch (SQLException e) {
-//
-//            JOptionPane.showMessageDialog(null, "Error updating employee." + e.getMessage());
-//
-//        }
-    }//GEN-LAST:event_btnUpdateActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdate1ActionPerformed
+    private void changeUserInformationInTextField() {
+        txtEmpno.setText(userList.get(index).getName());
+        txtEmpno2.setText(userList.get(index).getEmail());
+        txtEmpno3.setText(userList.get(index).getContact());
 
-    private void btnUpdate2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate2ActionPerformed
+        String emergencyContact = "";
+        String userType = userList.get(index).getClass().getSimpleName(); // gets the type of user
+        if (userType.equals("Patient"))
+            emergencyContact = ((Patient) userList.get(index)).getEmergencyContact(); // Gets the patient's emergency contact
+        txtEmpno4.setText(emergencyContact);
+        txtEmpno5.setText(userList.get(index).getPassword());
+    }
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdate2ActionPerformed
+        if (index >= userList.size() - 1)
+            index = 0; // Go back to the first user if the last user is reached
+        else
+            index++;
 
-    private void btnUpdate3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdate3ActionPerformed
+        changeUserInformationInTextField();
+        
+    }//GEN-LAST:event_nextButtonActionPerformed
+
+    private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
+        if (index <= 0)
+            index = userList.size() - 1; // Go back to the last user if the first user is reached
+        else
+            index--;
+
+        changeUserInformationInTextField();
+    }//GEN-LAST:event_prevButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -443,11 +507,11 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton btnUpdate1;
-    private javax.swing.JButton btnUpdate2;
-    private javax.swing.JButton btnUpdate3;
-    private javax.swing.JComboBox<String> cmbMgr;
+    private javax.swing.JButton updateButton;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton nextButton;
+    private javax.swing.JButton prevButton;
+    private javax.swing.JComboBox<String> userTypeSelect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -464,12 +528,16 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
     private javax.swing.JLabel lblEmpnoError5;
     private javax.swing.JLabel lblEmpnoError6;
     private javax.swing.JLabel lblEmpnoError7;
+    private javax.swing.JLabel userAddingErrorLabel;
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno2;
     private javax.swing.JTextField txtEmpno3;
     private javax.swing.JTextField txtEmpno4;
-    private javax.swing.JTextField txtEmpno5;
-    private javax.swing.JTextField txtEmpno6;
-    private javax.swing.JTextField txtEmpno7;
+    private javax.swing.JPasswordField txtEmpno5;
+    private javax.swing.JPasswordField txtEmpno6;
+    private javax.swing.JPasswordField txtEmpno7;
+    private Admin admin;
+    private ArrayList<User> userList;
+    private int index;
     // End of variables declaration//GEN-END:variables
 }

@@ -51,57 +51,45 @@ public class Admin extends User {
     }
 
 
-    public int addUser(User user) throws SQLException {
+    public int addUser(User user) throws SQLException, InputErrorException {
         String userType = user.getClass().getSimpleName();
 
         // if user is a patient, add an emergency contact as well
-        try {
-            if (userType.equals("Patient")) {
-                String emergencyContact = ((Patient) user).getEmergencyContact();
-                db.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getContact(), userType, emergencyContact);
-            }
-            else {
-                db.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getContact(), userType, "");
-            }
+        int checkIfInDatabase;
+        if (userType.equals("Patient")) {
+            String emergencyContact = ((Patient) user).getEmergencyContact();
+            checkIfInDatabase = db.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getContact(), userType, emergencyContact);
+        }
+        else {
+            checkIfInDatabase = db.addUser(user.getName(), user.getEmail(), user.getPassword(), user.getContact(), userType, "");
+        }
 
-            userListChanged = true;
-        }
-        catch (InputErrorException exception) {
-            System.out.println(exception.getMessage());
-        }
-        return 0;
+        userListChanged = true;
+        return checkIfInDatabase;
     }
 
     
-    public int modifyUser(User currentUser, User newUser) throws SQLException {
+    public int modifyUser(User currentUser, User newUser) throws SQLException, InputErrorException {
         String newUserType = newUser.getClass().getSimpleName();
         // if user is a patient, modify emergency contact as well
-        try {
-            if (newUserType.equals("Patient")) {
-                String emergencyContact = ((Patient) newUser).getEmergencyContact();
-                db.modifyUser(currentUser.getEmail(), newUser.getName(), newUser.getEmail(), newUser.getPassword(), newUser.getContact(), newUserType, emergencyContact);
-            }
-            else {
-                db.modifyUser(currentUser.getEmail(), newUser.getName(), newUser.getEmail(), newUser.getPassword(), newUser.getContact(), newUserType, "");
-            }
-            userListChanged = true;
+        int checkIfInDatabase;
+        if (newUserType.equals("Patient")) {
+            String emergencyContact = ((Patient) newUser).getEmergencyContact();
+            checkIfInDatabase = db.modifyUser(currentUser.getEmail(), newUser.getName(), newUser.getEmail(), newUser.getPassword(), newUser.getContact(), newUserType, emergencyContact);
         }
-        catch (InputErrorException | UserNotFoundException exception) {
-            System.out.println(exception.getMessage());
+        else {
+            checkIfInDatabase = db.modifyUser(currentUser.getEmail(), newUser.getName(), newUser.getEmail(), newUser.getPassword(), newUser.getContact(), newUserType, "");
         }
-            return 0;
+        userListChanged = true;
+        return checkIfInDatabase;
     }
 
     public int deleteUser(User user) throws SQLException {
-        try {
-            db.deleteUser(user.getEmail());
+        int checkIfInDatabase =  db.deleteUser(user.getEmail());
+        if (checkIfInDatabase == 1)
             userListChanged = true;
-            return 1;
-        }
-        catch (UserNotFoundException exception) {
-            System.out.println(exception.getMessage());
-            return -1;
-        }
+        return checkIfInDatabase;
+
     }
 
     public void linkUsers(User patient, User caretaker) throws SQLException {

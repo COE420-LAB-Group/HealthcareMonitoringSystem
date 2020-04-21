@@ -140,7 +140,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
       }
   
       // deletes user with that email
-      public int deleteUser(String email) throws SQLException, UserNotFoundException {
+      public int deleteUser(String email) throws SQLException {
         ResultSet result = findUser(email);
         // if user was found, delete it, else return -1 because user was not found
         if (result.next()) {
@@ -150,13 +150,12 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
           return 1;
           // need to remove user from other tables (if they are in other tables)
         }
-        else {
-          throw new UserNotFoundException("User was not found in database");
-        }
+        
+        return -1;
       }
   
       public int modifyUser(String currentEmail, String name, String email, String password, String contact, String userType, String emergencyContact)
-          throws SQLException, UserNotFoundException, InputErrorException {
+          throws SQLException, InputErrorException {
         checkIfInputIsValid(name, email, password, contact, userType, emergencyContact);
         ResultSet result = findUser(currentEmail); // check if user already exists
   
@@ -173,10 +172,9 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
           }
           System.out.println("Modified user with email " + currentEmail + " from database");
           return 1;
-          // add implentation to remove user from other tables (if they are in other tables)
         }
         else {
-          throw new UserNotFoundException("User was not found in database");
+          return -1;
         }
       }
   
