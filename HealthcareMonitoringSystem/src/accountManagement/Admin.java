@@ -8,6 +8,8 @@ import healthcareDatabase.*;
 public class Admin extends User {
     UserDatabaseCommunication db;
     ArrayList<User> userList;
+    ArrayList<Patient> patientList;
+    ArrayList<Caretaker> caretakerList;
     boolean userListChanged;
 
     public Admin(String name, String email, String password, String contact) throws SQLException {
@@ -17,6 +19,14 @@ public class Admin extends User {
         userList = new ArrayList<User>();
     }
     
+    public ArrayList<Patient> getPatientList() {
+        return this.patientList;
+    }
+
+    public ArrayList<Caretaker> getCaretakerList() {
+        return this.caretakerList;
+    }
+
     // loads list of all users from database
     public ArrayList<User> getUserList() throws SQLException {
         ArrayList<String[]> userArray = db.getUserList();
@@ -25,6 +35,8 @@ public class Admin extends User {
         // if the user list has not been changed since the last time the function is called, return
         if (!userListChanged)
             return this.userList;
+
+        userList = new ArrayList<User>();
         for (int i = 0; i < userArray.size(); i++) {
             String userType = userArray.get(i)[4];
 
@@ -36,9 +48,11 @@ public class Admin extends User {
             }
             else if (userType.equals("Patient")) {
                 user = new Patient(userArray.get(i)[0], userArray.get(i)[1], userArray.get(i)[2], userArray.get(i)[3], userArray.get(i)[5]);
+                patientList.add((Patient) user);
             }
             else if (userType.equals("Caretaker")) {
                 user = new Caretaker(userArray.get(i)[0], userArray.get(i)[1], userArray.get(i)[2], userArray.get(i)[3]);
+                caretakerList.add((Caretaker) user);
             }
             else {
                 System.out.println("Not a valid user type!");

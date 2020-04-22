@@ -37,7 +37,8 @@ public class Patient extends User {
         Caretaker user = null;
         // if the user list has not been changed since the last time the function is called, return
         if (!CaretakerListChanged)
-            return this.caretakers;
+			return this.caretakers;
+		caretakers = new ArrayList<Caretaker>();
         for (int i = 0; i < CaretakerArray.size(); i++) {
             user = new Caretaker(CaretakerArray.get(i)[0], CaretakerArray.get(i)[1], CaretakerArray.get(i)[2], CaretakerArray.get(i)[3]);
             caretakers.add(user);

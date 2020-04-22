@@ -230,16 +230,28 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
       }
 
       // get list of linked caretakers
-      public ArrayList<String[]> getLinkedCaretakerList(String patientEmail) throws SQLException {
-        ArrayList<String[]> userList = new ArrayList<String[]>();
-        String query = String.format("SELECT * FROM Users " +
-        "WHERE email in (SELECT caretakerEmail FROM takeCareOf where patientEmail = '%s')", patientEmail
-        );
-        ResultSet result = statement.executeQuery(query); 
-        
-        while(result.next()) 
-          userList.add(createUserStringArray(result));
-        
-        return userList;
-      }
+        public ArrayList<String[]> getLinkedCaretakerList(String patientEmail) throws SQLException {
+          ArrayList<String[]> userList = new ArrayList<String[]>();
+          String query = String.format("SELECT * FROM Users " +
+          "WHERE email in (SELECT caretakerEmail FROM takeCareOf where patientEmail = '%s')", patientEmail
+          );
+          ResultSet result = statement.executeQuery(query); 
+          
+          while(result.next()) 
+            userList.add(createUserStringArray(result));
+          
+          return userList;
+        }
+
+        public ArrayList<String[]> getAllLinkedPateintsAndCaretakers() throws SQLException {
+          ArrayList<String[]> userList = new ArrayList<String[]>();
+          String query = String.format("SELECT * FROM takeCareOf");
+          
+          ResultSet result = statement.executeQuery(query); 
+          
+          while(result.next()) 
+            userList.add(createUserStringArray(result));
+          
+          return userList;
+        }
 }
