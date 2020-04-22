@@ -243,15 +243,16 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
           return userList;
         }
 
-        public ArrayList<String[]> getAllLinkedPateintsAndCaretakers() throws SQLException {
-          ArrayList<String[]> userList = new ArrayList<String[]>();
+        public ArrayList<String[]> getAllLinkedUsersEmail() throws SQLException {
+          ArrayList<String[]> linkedUsersList = new ArrayList<String[]>();
           String query = String.format("SELECT * FROM takeCareOf");
-          
           ResultSet result = statement.executeQuery(query); 
           
-          while(result.next()) 
-            userList.add(createUserStringArray(result));
-          
-          return userList;
-        }
+          // index 0 of String[] is patient email, index 1 is caretaker email 
+          while(result.next()) {
+            String[] temp = { result.getString(1), result.getString(2) };
+            linkedUsersList.add(temp);
+          }
+          return linkedUsersList;
+      }
 }

@@ -1,5 +1,10 @@
 package healthcaregui;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import accountManagement.Admin;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +21,12 @@ public class DeleteLink extends javax.swing.JFrame {
      * Creates new form DeleteLink
      */
     public DeleteLink() {
+        initComponents();
+    }
+
+    public DeleteLink(Admin admin) throws SQLException {
+        this.admin = admin;
+        linkedUsersEmailList = admin.getAllLinkedUsersEmail();
         initComponents();
     }
 
@@ -228,5 +239,7 @@ public class DeleteLink extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno1;
+    private Admin admin;
+    private ArrayList<String[]> linkedUsersEmailList;
     // End of variables declaration//GEN-END:variables
 }

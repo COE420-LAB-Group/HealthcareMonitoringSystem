@@ -10,19 +10,25 @@ public class Admin extends User {
     ArrayList<User> userList;
     ArrayList<Patient> patientList;
     ArrayList<Caretaker> caretakerList;
-    boolean userListChanged;
+    ArrayList<String[]> linkedUsersEmailList; // index 0 is patient email, index 1 is caretaker email
+    boolean userListChanged, linkedUsersListChanged;
 
     public Admin(String name, String email, String password, String contact) throws SQLException {
         super(name, email, password, contact);
         db = new UserDatabaseCommunication("admin", "coe420project");
         userListChanged = true;
+        linkedUsersListChanged = true;
         userList = new ArrayList<User>();
+        patientList = new ArrayList<Patient>();
+        caretakerList = new ArrayList<Caretaker>();
     }
     
+    // YOU MUST CALL GETUSERLIST FIRST TO BE ABLE TO GET THE PATIENT LIST
     public ArrayList<Patient> getPatientList() {
         return this.patientList;
     }
 
+    // YOU MUST CALL GETPATIENTLIST FIRST TO BE ABLE TO GET THE PATIENT LIST
     public ArrayList<Caretaker> getCaretakerList() {
         return this.caretakerList;
     }
@@ -37,6 +43,8 @@ public class Admin extends User {
             return this.userList;
 
         userList = new ArrayList<User>();
+        patientList = new ArrayList<Patient>();
+        caretakerList = new ArrayList<Caretaker>();
         for (int i = 0; i < userArray.size(); i++) {
             String userType = userArray.get(i)[4];
 
@@ -98,16 +106,23 @@ public class Admin extends User {
         return checkIfInDatabase;
     }
 
-    public int deleteUser(User user) throws SQLException {
-        int checkIfInDatabase =  db.deleteUser(user.getEmail());
+    public int deleteUser(String email) throws SQLException {
+        int checkIfInDatabase =  db.deleteUser(email);
         if (checkIfInDatabase == 1)
             userListChanged = true;
         return checkIfInDatabase;
-
     }
 
-    public void linkUsers(User patient, User caretaker) throws SQLException {
-        db.linkPatientAndCaretaker(patient.getEmail(), caretaker.getEmail()); 
+    public int linkUsers(String patientEmail, String caretakerEmail) throws SQLException {
+        int checkIfInDatabase = db.linkPatientAndCaretaker(patientEmail, caretakerEmail); 
+        if (checkIfInDatabase == 1)
+            linkedUsersListChanged = true;
+        return checkIfInDatabase;
     }
 
+    public ArrayList<String[]> getAllLinkedUsersEmail() throws SQLException {
+        if (linkedUsersListChanged)
+            this.linkedUsersEmailList = db.getAllLinkedUsersEmail();
+        return this.linkedUsersEmailList;
+    }
 }
