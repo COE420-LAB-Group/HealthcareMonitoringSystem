@@ -53,7 +53,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
         txtEmpno1 = new javax.swing.JTextField(caretakerList.get(0).getEmail());
         nextCaretakerButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        btnAddNewEmp = new javax.swing.JButton();
+        linkButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -88,11 +88,11 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Link Caretaker-Patient");
 
-        btnAddNewEmp.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnAddNewEmp.setText("Link");
-        btnAddNewEmp.addActionListener(new java.awt.event.ActionListener() {
+        linkButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        linkButton.setText("Link");
+        linkButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddNewEmpActionPerformed(evt);
+                admin.linkUsers(txtEmpno.getText(), txtEmpno1.getText());
             }
         });
 
@@ -123,9 +123,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
                     caretakerIndex--;
                 else
                     caretakerIndex = caretakerList.size()-1;
-                 txtEmpno1.setText(caretakerList.get(caretakerIndex).getEmail());   
-                
-
+                 txtEmpno1.setText(caretakerList.get(caretakerIndex).getEmail());  
             
         }
         });
@@ -175,7 +173,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
                         .addComponent(nextCaretakerButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(281, 281, 281)
-                        .addComponent(btnAddNewEmp)))
+                        .addComponent(linkButton)))
                 .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
@@ -200,7 +198,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
                         .addComponent(prevCaretakerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)))
                 .addGap(18, 18, 18)
-                .addComponent(btnAddNewEmp)
+                .addComponent(linkButton)
                 .addGap(30, 30, 30))
         );
 
@@ -215,7 +213,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno1ActionPerformed
 
-    private void btnAddNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewEmpActionPerformed
+    private void linkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linkButtonActionPerformed
         // TODO add your handling code here:
 
 //        try {
@@ -264,7 +262,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
 //        } catch (SQLException e) {
 //            JOptionPane.showMessageDialog(null, "Error adding new employee.");
 //        }
-    }//GEN-LAST:event_btnAddNewEmpActionPerformed
+    }//GEN-LAST:event_linkButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -302,7 +300,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddNewEmp;
+    private javax.swing.JButton linkButton;
     private javax.swing.JButton prevPatientButton;
     private javax.swing.JButton nextPatientButton;
     private javax.swing.JButton prevCaretakerButton;
