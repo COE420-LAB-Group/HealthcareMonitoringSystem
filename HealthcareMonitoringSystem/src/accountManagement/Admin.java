@@ -10,19 +10,23 @@ public class Admin extends User {
     ArrayList<User> userList;
     ArrayList<Patient> patientList;
     ArrayList<Caretaker> caretakerList;
-    boolean userListChanged;
+    ArrayList<String[]> linkedUsersEmailList; // index 0 is patient email, index 1 is caretaker email
+    boolean userListChanged, linkedUsersListChanged;
 
     public Admin(String name, String email, String password, String contact) throws SQLException {
         super(name, email, password, contact);
         db = new UserDatabaseCommunication("admin", "coe420project");
         userListChanged = true;
+        linkedUsersListChanged = true;
         userList = new ArrayList<User>();
     }
     
+    // YOU MUST CALL GETUSERLIST FIRST TO BE ABLE TO GET THE PATIENT LIST
     public ArrayList<Patient> getPatientList() {
         return this.patientList;
     }
 
+    // YOU MUST CALL GETPATIENTLIST FIRST TO BE ABLE TO GET THE PATIENT LIST
     public ArrayList<Caretaker> getCaretakerList() {
         return this.caretakerList;
     }
@@ -110,4 +114,9 @@ public class Admin extends User {
         db.linkPatientAndCaretaker(patient.getEmail(), caretaker.getEmail()); 
     }
 
+    public ArrayList<String[]> getAllLinkedUsersEmail() throws SQLException {
+        if (linkedUsersListChanged)
+            this.linkedUsersEmailList = db.getAllLinkedUsersEmail();
+        return this.linkedUsersEmailList;
+    }
 }

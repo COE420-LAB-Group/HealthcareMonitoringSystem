@@ -162,12 +162,12 @@ public class MenuA extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
-        (new LinkCaretakerPatient()).setVisible(true);
+        (new LinkCaretakerPatient(admin)).setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
-        (new DeleteLink()).setVisible(true);
+        (new DeleteLink(admin)).setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
