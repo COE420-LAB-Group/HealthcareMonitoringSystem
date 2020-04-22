@@ -19,6 +19,8 @@ public class Admin extends User {
         userListChanged = true;
         linkedUsersListChanged = true;
         userList = new ArrayList<User>();
+        patientList = new ArrayList<Patient>();
+        caretakerList = new ArrayList<Caretaker>();
     }
     
     // YOU MUST CALL GETUSERLIST FIRST TO BE ABLE TO GET THE PATIENT LIST
@@ -41,6 +43,8 @@ public class Admin extends User {
             return this.userList;
 
         userList = new ArrayList<User>();
+        patientList = new ArrayList<Patient>();
+        caretakerList = new ArrayList<Caretaker>();
         for (int i = 0; i < userArray.size(); i++) {
             String userType = userArray.get(i)[4];
 
@@ -102,16 +106,18 @@ public class Admin extends User {
         return checkIfInDatabase;
     }
 
-    public int deleteUser(User user) throws SQLException {
-        int checkIfInDatabase =  db.deleteUser(user.getEmail());
+    public int deleteUser(String email) throws SQLException {
+        int checkIfInDatabase =  db.deleteUser(email);
         if (checkIfInDatabase == 1)
             userListChanged = true;
         return checkIfInDatabase;
-
     }
 
-    public void linkUsers(User patient, User caretaker) throws SQLException {
-        db.linkPatientAndCaretaker(patient.getEmail(), caretaker.getEmail()); 
+    public int linkUsers(String patientEmail, String caretakerEmail) throws SQLException {
+        int checkIfInDatabase = db.linkPatientAndCaretaker(patientEmail, caretakerEmail); 
+        if (checkIfInDatabase == 1)
+            linkedUsersListChanged = true;
+        return checkIfInDatabase;
     }
 
     public ArrayList<String[]> getAllLinkedUsersEmail() throws SQLException {
