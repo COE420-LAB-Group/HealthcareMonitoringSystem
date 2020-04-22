@@ -1,5 +1,9 @@
 package healthcaregui;
 
+import accountManagement.*;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,7 +22,18 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
     public LinkCaretakerPatient() {
         initComponents();
     }
-
+    public LinkCaretakerPatient(Admin admin) {
+        this.admin = admin;
+        try {
+           admin.getUserList();
+           patientList = admin.getPatientList(); 
+           caretakerList = admin.getCaretakerList();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,15 +42,16 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        patientIndex = 0;
+        caretakerIndex = 0;
         jLabel2 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        txtEmpno = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        nextPatientButton = new javax.swing.JButton();
+        txtEmpno = new javax.swing.JTextField(patientList.get(0).getEmail());
+        prevPatientButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        txtEmpno1 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        prevCaretakerButton = new javax.swing.JButton();
+        txtEmpno1 = new javax.swing.JTextField(caretakerList.get(0).getEmail());
+        nextCaretakerButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnAddNewEmp = new javax.swing.JButton();
 
@@ -43,8 +59,8 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Patient Email:");
-
-        jButton4.setText("<<");
+        
+        nextPatientButton.setText("<<");
 
         txtEmpno.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtEmpno.addActionListener(new java.awt.event.ActionListener() {
@@ -53,12 +69,12 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText(">>");
+        prevPatientButton.setText(">>");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Caretaker Email:");
 
-        jButton5.setText("<<");
+        prevCaretakerButton.setText("<<");
 
         txtEmpno1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtEmpno1.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +83,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setText(">>");
+        nextCaretakerButton.setText(">>");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Link Caretaker-Patient");
@@ -80,6 +96,53 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
             }
         });
 
+        prevPatientButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(patientIndex != 0 )
+                    patientIndex--;
+                else
+                    patientIndex = patientList.size()-1;
+                 txtEmpno.setText(patientList.get(patientIndex).getEmail());   
+                
+
+            
+        }
+        });
+        nextPatientButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(patientIndex != (patientList.size()-1) )
+                    patientIndex++;
+                else
+                    patientIndex = 0;
+                 txtEmpno.setText(patientList.get(patientIndex).getEmail());   
+        }
+        });
+        prevCaretakerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(caretakerIndex != 0 )
+                    caretakerIndex--;
+                else
+                    caretakerIndex = caretakerList.size()-1;
+                 txtEmpno1.setText(caretakerList.get(caretakerIndex).getEmail());   
+                
+
+            
+        }
+        });
+        
+       nextCaretakerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(caretakerIndex != (caretakerList.size()-1)  )
+                    caretakerIndex++;
+                else
+                    caretakerIndex = 0;
+                 txtEmpno1.setText(caretakerList.get(caretakerIndex).getEmail());   
+                
+
+            
+        }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,11 +153,11 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(nextPatientButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(prevPatientButton)
                         .addGap(43, 43, 43))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -105,11 +168,11 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(prevCaretakerButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6))
+                        .addComponent(nextCaretakerButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(281, 281, 281)
                         .addComponent(btnAddNewEmp)))
@@ -124,17 +187,17 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(prevPatientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nextPatientButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nextCaretakerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(prevCaretakerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)))
                 .addGap(18, 18, 18)
                 .addComponent(btnAddNewEmp)
@@ -240,14 +303,21 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNewEmp;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton prevPatientButton;
+    private javax.swing.JButton nextPatientButton;
+    private javax.swing.JButton prevCaretakerButton;
+    private javax.swing.JButton nextCaretakerButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno1;
+    private Admin admin;
+    private ArrayList<User> userList;
+    private ArrayList<Patient> patientList;
+    private ArrayList<Caretaker> caretakerList;
+    private int index;
+    private int patientIndex;
+    private int caretakerIndex;
     // End of variables declaration//GEN-END:variables
 }
