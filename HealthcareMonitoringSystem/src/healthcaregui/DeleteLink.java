@@ -24,9 +24,14 @@ public class DeleteLink extends javax.swing.JFrame {
         initComponents();
     }
 
-    public DeleteLink(Admin admin) throws SQLException {
+    public DeleteLink(Admin admin) {
         this.admin = admin;
-        linkedUsersEmailList = admin.getAllLinkedUsersEmail();
+        try {
+            linkedUsersEmailList = admin.getAllLinkedUsersEmail();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         initComponents();
     }
 
@@ -38,15 +43,16 @@ public class DeleteLink extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        index = 0;
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtEmpno = new javax.swing.JTextField();
+        txtEmpno = new javax.swing.JTextField(linkedUsersEmailList.get(0)[0]);
         jLabel3 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        txtEmpno1 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        btnAddNewEmp = new javax.swing.JButton();
+        prevButton = new javax.swing.JButton();
+        txtEmpno1 = new javax.swing.JTextField(linkedUsersEmailList.get(0)[1]);
+        nextButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        errorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -66,7 +72,7 @@ public class DeleteLink extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Caretaker Email:");
 
-        jButton5.setText("<<");
+        prevButton.setText("<<");
 
         txtEmpno1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtEmpno1.addActionListener(new java.awt.event.ActionListener() {
@@ -75,13 +81,54 @@ public class DeleteLink extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setText(">>");
+        nextButton.setText(">>");
 
-        btnAddNewEmp.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnAddNewEmp.setText("Delete");
-        btnAddNewEmp.addActionListener(new java.awt.event.ActionListener() {
+        errorLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+        errorLabel.setText("");
+
+        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddNewEmpActionPerformed(evt);
+                String patientEmail = txtEmpno.getText();
+                String caretakerEmail = txtEmpno1.getText();
+                try {
+                    int success = admin.deleteLink(patientEmail, caretakerEmail);
+                    if (success == 1) {
+                        errorLabel.setForeground(new java.awt.Color(0, 0, 255));
+                        errorLabel.setText("Link deleted successfully");
+                    }
+                    else {
+                        errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+                        errorLabel.setText("Link does not exist!");
+                    }
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (index >= linkedUsersEmailList.size() - 1)
+                    index = 0;
+                else
+                    index++;
+
+                changeUserInformationInTextField();
+            }
+        });
+
+        prevButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (index <= 0)
+                    index = linkedUsersEmailList.size() - 1;
+                else
+                    index--;
+
+                changeUserInformationInTextField();
             }
         });
 
@@ -97,11 +144,11 @@ public class DeleteLink extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(prevButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnAddNewEmp)
+                                .addComponent(deleteButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
@@ -109,7 +156,8 @@ public class DeleteLink extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -126,15 +174,24 @@ public class DeleteLink extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnAddNewEmp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(prevButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void changeUserInformationInTextField() {
+        txtEmpno.setText(linkedUsersEmailList.get(index)[0]);
+        txtEmpno1.setText(linkedUsersEmailList.get(index)[1]);
+    }
 
     private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpnoActionPerformed
         // TODO add your handling code here:
@@ -143,57 +200,6 @@ public class DeleteLink extends javax.swing.JFrame {
     private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno1ActionPerformed
-
-    private void btnAddNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewEmpActionPerformed
-        // TODO add your handling code here:
-//
-//        try {
-//            /*
-//            * you need also to verify that the empno is unique and not duplicate
-//            *
-//            */
-//            if (isValidData() && !isDuplicate(Integer.parseInt(txtEmpno.getText().trim()))) {
-//                // if new employee details are valid, then add new employee to DB
-//
-//                String prepSQL = "INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES ("
-//                + txtEmpno.getText().trim() + ", "
-//                + "'" + txtEname.getText().toUpperCase() + "', "
-//                + "'" + txtJob.getText().toUpperCase() + "', "
-//                + cmbMgr.getSelectedItem().toString() + ", "
-//                + "'" + ftxtHiredate.getText().trim() + "',"
-//                + txtSalary.getText() + ","
-//                + txtComm.getText() + ","
-//                + cmbDeptno.getSelectedItem() + ")";
-//
-//                int result = dbCon.executePrepared(prepSQL);
-//                if (result > 0) {
-//
-//                    javax.swing.JLabel label = new javax.swing.JLabel("New employee added successfully.");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-//                    clearInputBoxes();
-//                } else {
-//
-//                }
-//
-//                rs.close();
-//            } else {
-//                if (!isDuplicate(Integer.parseInt(txtEmpno.getText().trim()))) {
-//                    javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
-//                } else {
-//                    javax.swing.JLabel label = new javax.swing.JLabel("Empno Already exists. Use a different employee number.");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.INFORMATION_MESSAGE);
-//                    // check validation errors
-//                }
-//
-//            }
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error adding new employee.");
-//        }
-    }//GEN-LAST:event_btnAddNewEmpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,15 +237,18 @@ public class DeleteLink extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddNewEmp;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton prevButton;
+    private javax.swing.JButton nextButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel errorLabel;
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno1;
+
     private Admin admin;
     private ArrayList<String[]> linkedUsersEmailList;
+    int index;
     // End of variables declaration//GEN-END:variables
 }

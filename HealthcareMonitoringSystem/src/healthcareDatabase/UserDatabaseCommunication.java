@@ -204,14 +204,33 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         }
         // if (!patientResult.getString(4).equals("Patient") || !caretakerResult.getString(4).equals("Caretaker"))
         //   return -1;
+        String findLinkQuery = String.format("SELECT * FROM takeCareOf " +
+        "WHERE patientEmail = '%s' AND caretakerEmail = '%s' AND ROWNUM <= 1", patientEmail, caretakerEmail
+        );
+        ResultSet result = statement.executeQuery(findLinkQuery);
+        if (result.next()) {
+          String query = String.format("INSERT INTO takeCareOf " + 
+              "VALUES ('%s', '%s')", patientEmail, caretakerEmail
+            );
+          
+          statement.executeUpdate(query);
+          System.out.print("Added " + patientEmail + " to takeCareOf table database");
+          return 1;
+        }
+        else 
+          return -1;
+      }
 
-        String query = String.format("INSERT INTO takeCareOf " + 
-            "VALUES ('%s', '%s')", patientEmail, caretakerEmail
-          );
-        
-        statement.executeUpdate(query);
-        System.out.print("Added " + patientEmail + " to takeCareOf table database");
-        return 1;
+      public int deleteLink(String patientEmail, String caretakerEmail) throws SQLException {
+        String query = String.format("DELETE FROM takeCareOf " + 
+        "WHERE patientEmail = '%s' AND caretakerEmail = '%s' AND ROWNUM <= 1", patientEmail, caretakerEmail
+        );
+
+        int count = statement.executeUpdate(query);
+        if (count > 0)
+          return 1;
+        else
+          return -1;
       }
 
       // gets list of linked patients

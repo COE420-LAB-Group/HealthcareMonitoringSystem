@@ -106,6 +106,13 @@ public class Admin extends User {
         return checkIfInDatabase;
     }
 
+    public int deleteUser(User user) throws SQLException {
+        int checkIfInDatabase =  db.deleteUser(user.getEmail());
+        if (checkIfInDatabase == 1)
+            userListChanged = true;
+        return checkIfInDatabase;
+    }
+
     public int deleteUser(String email) throws SQLException {
         int checkIfInDatabase =  db.deleteUser(email);
         if (checkIfInDatabase == 1)
@@ -113,6 +120,7 @@ public class Admin extends User {
         return checkIfInDatabase;
     }
 
+    // links a caretaker and patient
     public int linkUsers(String patientEmail, String caretakerEmail) throws SQLException {
         int checkIfInDatabase = db.linkPatientAndCaretaker(patientEmail, caretakerEmail); 
         if (checkIfInDatabase == 1)
@@ -120,6 +128,13 @@ public class Admin extends User {
         return checkIfInDatabase;
     }
 
+    public int deleteLink(String patientEmail, String caretakerEmail) throws SQLException {
+        int checkIfInDatabase = db.deleteLink(patientEmail, caretakerEmail);
+        if (checkIfInDatabase == 1)
+            linkedUsersListChanged = false;
+        return checkIfInDatabase;
+    }
+    // gets all users who are linked (index 0 is patient email, index 1 is caretaker email)
     public ArrayList<String[]> getAllLinkedUsersEmail() throws SQLException {
         if (linkedUsersListChanged)
             this.linkedUsersEmailList = db.getAllLinkedUsersEmail();
