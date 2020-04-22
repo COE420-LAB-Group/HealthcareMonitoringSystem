@@ -14,13 +14,13 @@ public class Admin extends User {
         super(name, email, password, contact);
         db = new UserDatabaseCommunication("admin", "coe420project");
         userListChanged = true;
+        userList = new ArrayList<User>();
     }
     
     // loads list of all users from database
     public ArrayList<User> getUserList() throws SQLException {
         ArrayList<String[]> userArray = db.getUserList();
         User user = null;
-        userList = new ArrayList<User>();
 
         // if the user list has not been changed since the last time the function is called, return
         if (!userListChanged)

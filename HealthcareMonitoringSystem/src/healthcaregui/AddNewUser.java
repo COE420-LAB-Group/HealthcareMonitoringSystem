@@ -151,7 +151,7 @@ public class AddNewUser extends javax.swing.JFrame {
         lblEmpnoError6.setForeground(new java.awt.Color(255, 0, 0));
         lblEmpnoError6.setText("");
 
-        userAddingErrorLabel.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        userAddingErrorLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
         userAddingErrorLabel.setText("");
 
@@ -253,53 +253,6 @@ public class AddNewUser extends javax.swing.JFrame {
     private void btnAddNewEmpActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_btnAddNewEmpActionPerformed
         // TODO add your handling code here:
 
-//        try {
-//            /*
-//            * you need also to verify that the empno is unique and not duplicate
-//            *
-//            */
-//            if (isValidData() && !isDuplicate(Integer.parseInt(txtEmpno.getText().trim()))) {
-//                // if new employee details are valid, then add new employee to DB
-//
-//                String prepSQL = "INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES ("
-//                + txtEmpno.getText().trim() + ", "
-//                + "'" + txtEname.getText().toUpperCase() + "', "
-//                + "'" + txtJob.getText().toUpperCase() + "', "
-//                + userTypeSelect.getSelectedItem().toString() + ", "
-//                + "'" + ftxtHiredate.getText().trim() + "',"
-//                + txtSalary.getText() + ","
-//                + txtComm.getText() + ","
-//                + cmbDeptno.getSelectedItem() + ")";
-//
-//                int result = dbCon.executePrepared(prepSQL);
-//                if (result > 0) {
-//
-//                    javax.swing.JLabel label = new javax.swing.JLabel("New employee added successfully.");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-//                    clearInputBoxes();
-//                } else {
-//
-//                }
-//
-//                rs.close();
-//            } else {
-//                if (!isDuplicate(Integer.parseInt(txtEmpno.getText().trim()))) {
-//                    javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
-//                } else {
-//                    javax.swing.JLabel label = new javax.swing.JLabel("Empno Already exists. Use a different employee number.");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.INFORMATION_MESSAGE);
-//                    // check validation errors
-//                }
-//
-//            }
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error adding new employee.");
-//        }
-
         String name = txtEmpno.getText();
         String email = txtEmpno2.getText();
         String contact = txtEmpno3.getText();
@@ -334,7 +287,7 @@ public class AddNewUser extends javax.swing.JFrame {
         try {
             int success = admin.addUser(user);
             if (success == 1){
-                userAddingErrorLabel.setForeground(new java.awt.Color(0, 255, 0));
+                userAddingErrorLabel.setForeground(new java.awt.Color(0, 0, 255));
                 userAddingErrorLabel.setText("Account created successfully!");
             }
             else {

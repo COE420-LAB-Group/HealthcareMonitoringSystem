@@ -389,6 +389,12 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
             userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
             userAddingErrorLabel.setText("The new passwords do not match!");
             return;
+        }  
+
+        System.out.println(newPassword);
+        if (newPassword.equals("")){
+            newPassword = userList.get(index).getPassword();
+            System.out.println(newPassword);
         }
 
         User user = null;
@@ -450,6 +456,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
             emergencyContact = ((Patient) userList.get(index)).getEmergencyContact(); // Gets the patient's emergency contact
         txtEmpno4.setText(emergencyContact);
         txtEmpno5.setText(userList.get(index).getPassword());
+        userTypeSelect.setSelectedItem(userList.get(index).getClass().getSimpleName());
     }
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         // TODO add your handling code here:
