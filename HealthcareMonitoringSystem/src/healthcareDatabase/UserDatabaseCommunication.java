@@ -56,7 +56,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         for (char c : chars) {
           if(!Character.isLetter(c) && c != ' ' && c != '-') {
               
-              throw new InputErrorException( "Found invalid character " + "'" + c +"' Try again with no special characters or numbers");
+              throw new InputErrorException( "Found invalid character, try again with no special characters or numbers");
           }
           }
         if( userType.equals("Patient") )
@@ -208,7 +208,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         "WHERE patientEmail = '%s' AND caretakerEmail = '%s' AND ROWNUM <= 1", patientEmail, caretakerEmail
         );
         ResultSet result = statement.executeQuery(findLinkQuery);
-        if (result.next()) {
+        if (!result.next()) {
           String query = String.format("INSERT INTO takeCareOf " + 
               "VALUES ('%s', '%s')", patientEmail, caretakerEmail
             );
