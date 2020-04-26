@@ -14,4 +14,9 @@ public abstract class DatabaseCommunication {
       con = DriverManager.getConnection(url, dbUsername, dbPassword);
       statement = con.createStatement();
     }
+
+    public void closeDatabaseConnection() throws SQLException {
+      statement.close();
+      con.close();
+    }
 }

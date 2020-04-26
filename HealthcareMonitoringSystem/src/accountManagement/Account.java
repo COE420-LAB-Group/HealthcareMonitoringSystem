@@ -52,7 +52,7 @@ public class Account {
         else {
             System.out.println("Not a valid user type!");
         }
+        db.closeDatabaseConnection();
         return user;
-        
     }
 }
