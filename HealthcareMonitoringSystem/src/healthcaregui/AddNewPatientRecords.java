@@ -374,12 +374,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_btnAddNewEmpActionPerformed
 
-    private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMgrActionPerformed
-        // TODO add your handling code here:
-        String items[] = {"Patient", "Doctor", "Caretaker"};
-        for(int i = 0; i < items.length; ++i)
-            cmbMgr.addItem(items[i]);
-    }//GEN-LAST:event_cmbMgrActionPerformed
 
     /**
      * @param args the command line arguments
