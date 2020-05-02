@@ -336,7 +336,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAddNewEmpActionPerformed
 
-
     /**
      * @param args the command line arguments
      */
