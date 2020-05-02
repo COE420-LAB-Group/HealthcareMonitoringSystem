@@ -114,11 +114,9 @@ public class InsertVitalReadings extends javax.swing.JFrame {
                         .addGap(79, 79, 79))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(194, 194, 194)
-                                .addComponent(jButtonLeft)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonRight)))
+                            .addComponent(jButtonLeft)
+                            .addComponent(jButton1)
+                            .addComponent(jButtonRight)))
                         .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
@@ -139,9 +137,10 @@ public class InsertVitalReadings extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtEmpno2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButtonLeft)
-                .addComponent(jButton1)
-                .addComponent(jButtonRight)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonLeft)
+                    .addComponent(jButton1)
+                    .addComponent(jButtonRight))
                 .addGap(30, 30, 30))
         );
 
