@@ -139,11 +139,12 @@ public class MenuP extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        (new InsertVitalReadings()).setVisible(true);
+        (new InsertVitalReadings(patient)).setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
+        (new ViewPatientRecords(patient)).setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
