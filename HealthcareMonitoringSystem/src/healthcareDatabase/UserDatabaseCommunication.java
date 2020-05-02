@@ -56,7 +56,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         for (char c : chars) {
           if(!Character.isLetter(c) && c != ' ' && c != '-') {
               
-              throw new InputErrorException( "Found invalid character " + "'" + c +"' Try again with no special characters or numbers");
+              throw new InputErrorException( "Found invalid character, try again with no special characters or numbers");
           }
           }
         if( userType.equals("Patient") )
