@@ -1,5 +1,13 @@
 package healthcaregui;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import accountManagement.Admin;
+import accountManagement.Doctor;
+import accountManagement.Patient;
+import accountManagement.User;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,13 +20,26 @@ package healthcaregui;
  */
 public class AddNewPatientRecords extends javax.swing.JFrame {
 
+    private Doctor doctor;
+    int patientindex;
+    private ArrayList<Patient> patientList;
+
     /**
      * Creates new form AddNewVitals
      */
     public AddNewPatientRecords() {
         initComponents();
     }
-
+    public AddNewPatientRecords(Doctor doctor) {
+        this.doctor= doctor;
+        try {
+           patientList = doctor.getPatientList(); 
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,7 +48,8 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+        patientindex = 0;
+    
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -98,11 +120,11 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             }
         });
 
-        txtEmpno1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtEmpno1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmpno1ActionPerformed(evt);
-            }
+             txtEmpno1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+       }
         });
 
         txtEmpno2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -129,7 +151,27 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         jButton3.setText(">>");
 
         jButton4.setText("<<");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(patientindex != 0 )
+                    patientindex--;
+                else
+                    patientindex = patientList.size()-1;
+                 txtEmpno.setText(patientList.get(patientindex).getEmail());   
+                
 
+            
+        }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if(patientindex != (patientList.size()-1) )
+                    patientindex++;
+                else
+                    patientindex = 0;
+                 txtEmpno.setText(patientList.get(patientindex).getEmail());   
+        }
+        });
         btnAddNewEmp.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnAddNewEmp.setText("Add");
         btnAddNewEmp.addActionListener(new java.awt.event.ActionListener() {

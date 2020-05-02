@@ -101,6 +101,7 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
             }
         });
 
+        
         prevPatientButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 if(patientIndex != 0 )
