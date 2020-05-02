@@ -4,7 +4,7 @@ import java.util.Date;
 public class Vital extends Record {
     double reading;
     
-    public Vital(String name, Date startDateTime, String patientEmail, String daysRepeating, boolean createdByPatientObject, int TID, int intervals, int ID) {
+    public Vital(String name, Date startDateTime, String patientEmail, String daysRepeating, boolean createdByPatientObject, int TID, int intervals, int ID, double reading) {
         super(name, startDateTime, patientEmail, daysRepeating, createdByPatientObject, TID, intervals, ID);
         this.reading = reading;
     }

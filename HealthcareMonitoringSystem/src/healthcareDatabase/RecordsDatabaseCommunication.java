@@ -21,9 +21,9 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     String recordType = result.getString(4);
     Record tempRecord;
     if (recordType.equals("Prescription")) 
-      tempRecord = new Prescription(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1));
+      tempRecord = new Prescription(result.getString(3), result.getDate(5), result.getString(2), result.getString(8), true, result.getInt(6), result.getInt(7), result.getInt(1));
     else {
-      tempRecord = new Vital(result.getString(3), result.getDate(6), result.getString(2), true, result.getInt(4), result.getInt(1), result.getDouble(7));
+      tempRecord = new Vital(result.getString(3), result.getDate(5), result.getString(2), result.getString(8), true, result.getInt(6), result.getInt(7), result.getInt(1), result.getDouble(9));
     }
     return tempRecord;
   }
