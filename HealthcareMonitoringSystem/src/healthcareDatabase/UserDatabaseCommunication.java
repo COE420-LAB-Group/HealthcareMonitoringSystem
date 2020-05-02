@@ -208,7 +208,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         "WHERE patientEmail = '%s' AND caretakerEmail = '%s' AND ROWNUM <= 1", patientEmail, caretakerEmail
         );
         ResultSet result = statement.executeQuery(findLinkQuery);
-        if (result.next()) {
+        if (!result.next()) {
           String query = String.format("INSERT INTO takeCareOf " + 
               "VALUES ('%s', '%s')", patientEmail, caretakerEmail
             );
@@ -275,3 +275,4 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         return linkedUsersList;
     }
 }
+

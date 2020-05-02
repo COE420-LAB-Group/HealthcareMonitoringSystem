@@ -432,7 +432,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_deleteButtonActionPerformed
-        int success = admin.deleteUser(userList.get(index));
+        int success = admin.deleteUser(txtEmpno2.getText());
         if (success == 1) {
             userAddingErrorLabel.setForeground(new java.awt.Color(0, 0, 255));
             userAddingErrorLabel.setText("Account deleted successfully!");
