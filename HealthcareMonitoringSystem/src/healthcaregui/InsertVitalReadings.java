@@ -34,6 +34,8 @@ public class InsertVitalReadings extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtEmpno2 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButtonLeft = new javax.swing.JButton("<<");
+        jButtonRight = new javax.swing.JButton(">>");
         jLabel5 = new javax.swing.JLabel();
         txtEmpno3 = new javax.swing.JTextField();
 
@@ -69,6 +71,10 @@ public class InsertVitalReadings extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
+        jButtonLeft.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jButtonLeft.setText("<<");
+        jButtonRight.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jButtonRight.setText(">>");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Vital Date/Time:");
@@ -107,8 +113,13 @@ public class InsertVitalReadings extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addGap(79, 79, 79))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(196, 196, 196))))
+                        .addGap(194, 194, 194)
+                                .addComponent(jButtonLeft)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonRight)))
+                        .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +139,9 @@ public class InsertVitalReadings extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtEmpno2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonLeft)
+                .addComponent(jButton1)
+                .addComponent(jButtonRight)
                 .addGap(30, 30, 30))
         );
 
@@ -188,6 +201,8 @@ public class InsertVitalReadings extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonLeft;
+    private javax.swing.JButton jButtonRight;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

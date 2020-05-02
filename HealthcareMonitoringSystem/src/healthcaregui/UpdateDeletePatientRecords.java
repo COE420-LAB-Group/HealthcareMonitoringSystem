@@ -1,5 +1,7 @@
 package healthcaregui;
 
+import accountManagement.Doctor;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -18,7 +20,10 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
     public UpdateDeletePatientRecords() {
         initComponents();
     }
-
+    public UpdateDeletePatientRecords(Doctor doctor) {
+        this.doctor = doctor;
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -427,5 +432,6 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmpno2;
     private javax.swing.JTextField txtEmpno3;
     private javax.swing.JTextField txtEmpno4;
+    private Doctor doctor;
     // End of variables declaration//GEN-END:variables
 }

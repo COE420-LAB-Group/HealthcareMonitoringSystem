@@ -137,7 +137,7 @@ public class MenuD extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        (new UpdateDeletePatientRecords()).setVisible(true);
+        (new UpdateDeletePatientRecords(doctor)).setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -147,7 +147,7 @@ public class MenuD extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
-        (new ViewPatientRecords()).setVisible(true);
+        (new ViewPatientRecords(doctor)).setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
