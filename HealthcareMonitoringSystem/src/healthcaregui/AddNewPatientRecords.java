@@ -72,9 +72,9 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btnAddNewEmp = new javax.swing.JButton();
-        cmbMgr = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-
+        String[] RecordTypes = { "Prescription", "Vital" };
+        cmbMgr = new javax.swing.JComboBox<>(RecordTypes);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
 
@@ -184,6 +184,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         cmbMgr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbMgrActionPerformed(evt);
+
             }
         });
 
