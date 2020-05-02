@@ -50,11 +50,11 @@ public class Doctor extends User {
     }
     
     public int addRecord(Record record) throws SQLException {
-        String RecordType = record.getClass().getSimpleName();
+        String recordType = record.getClass().getSimpleName();
 
         // if Record is a patient, add an emergency contact as well
         try {
-            db.addRecord(record.getPatientEmail(), record.getName(), record.getFrequency(), RecordType, record.getDateToTake());
+            db.addRecord(record.getPatientEmail(), record.getName(), record.getTID(), recordType, record.getIntervals(), record.getStartDateTime(), record.getDaysRepeating());
             record.setID(db.getRecordID(record.getPatientEmail(), record.getName()));
             recordListChanged = true;
         } catch (InputErrorException exception) {
@@ -68,7 +68,7 @@ public class Doctor extends User {
         // if Record is a patient, modify emergency contact as well
         try {
             // new record's id is passed because the ID of a modified record does not change
-            db.modifyRecord(newRecord.getID(), newRecord.getPatientEmail(), newRecord.getName(), newRecord.getFrequency(), newRecordType, newRecord.getDateToTake());
+            db.modifyRecord(newRecord.getID(), newRecord.getPatientEmail(), newRecord.getName(), newRecord.getTID(), newRecordType, newRecord.getIntervals(), newRecord.getStartDateTime(), newRecord.getDaysRepeating());
             recordListChanged = true;
         } catch (InputErrorException exception) {
             System.out.println(exception.getMessage());
@@ -96,7 +96,7 @@ public class Doctor extends User {
             patient = new Patient(patientArray.get(i)[0], patientArray.get(i)[1], patientArray.get(i)[2], patientArray.get(i)[3], patientArray.get(i)[5]);
             patientList.add(patient);
         }
-        
+
         patientListChanged = false;
         return this.patientList;
     }

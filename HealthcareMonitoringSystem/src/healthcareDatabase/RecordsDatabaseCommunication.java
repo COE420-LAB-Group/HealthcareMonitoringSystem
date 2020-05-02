@@ -100,19 +100,19 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     return result;
   }
 
-  public int addRecord(String patientEmail, String recordName, int frequency, String recordType, Date dateToTake)
+  public int addRecord(String patientEmail, String recordName, int TID, String recordType, int intervals, Date startDateTime, String daysRepeating)
       throws SQLException, InputErrorException {
-    checkIfInputIsValid(patientEmail, frequency, recordType, recordName); // WHY ARE THE VARIABLES FLIPPED AROUND :(
+    checkIfInputIsValid(patientEmail, TID, recordType, recordName); // WHY ARE THE VARIABLES FLIPPED AROUND :(
     ResultSet result = findRecordWithEmail(patientEmail, recordName); // check if record already exists
     // if the record already exists, do not add user
     if (result.next()) {
       System.out.println("Record is already in database!");
       return -1;
     }
-    String dateString = dateToString(dateToTake);
-    String query = String.format("INSERT INTO Records " + "VALUES (seq_recordid.nextval, '%s','%s', %d, '%s', "
-    + "TO_DATE('%s', 'dd/mm/yyyy HH24:mi:ss'))",
-        patientEmail, recordName, frequency, recordType, dateString);
+    String dateString = dateToString(startDateTime);
+    String query = String.format("INSERT INTO Records " + "VALUES (seq_recordid.nextval, '%s','%s','%s', "
+    + "TO_DATE('%s', 'dd/mm/yyyy HH24:mi:ss'), %d, %d,'%s')",
+        patientEmail, recordName, recordType, dateString, TID, intervals, daysRepeating);
     statement.executeUpdate(query);
 
     // add to vitalReading table if the type is a vital
@@ -140,16 +140,16 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     }
   }
 
-  public int modifyRecord(int currentID, String patientEmail, String recordName, int frequency, String recordType, Date dateToTake)
+  public int modifyRecord(int currentID, String patientEmail, String recordName, int TID, String recordType, int intervals, Date startDateTime, String daysRepeating)
       throws SQLException, InputErrorException {
-    checkIfInputIsValid(patientEmail, frequency, recordType, recordName);
+    checkIfInputIsValid(patientEmail, TID, recordType, recordName);
     ResultSet result = findRecord(currentID); // check if user already exists
-    String dateString = dateToString(dateToTake);
+    String dateString = dateToString(startDateTime);
     if (result.next()) {
       String query = String.format("UPDATE records "
-          + "SET patientEmail = '%s', recordName = '%s', frequency = %d, recordType = '%s', "
-          + "dateToTake = TO_DATE('%s', 'dd/mm/yyyy HH24:mi:ss') WHERE (recordID = %d)",
-          patientEmail, recordName, frequency, recordType, dateString, currentID );
+          + "SET patientEmail = '%s', recordName = '%s', TID = %d, recordType = '%s', Intervals= %d, "
+          + "startDateTime = TO_DATE('%s', 'dd/mm/yyyy HH24:mi:ss'), repeatEvery = '%s' WHERE (recordID = %d)",
+          patientEmail, recordName, TID, recordType, intervals, dateString, currentID, daysRepeating, currentID);
       statement.executeUpdate(query);
       System.out.println("Modified record with id " + currentID + " from database");
       return 1;
