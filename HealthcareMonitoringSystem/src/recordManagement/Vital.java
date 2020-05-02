@@ -4,15 +4,15 @@ import java.util.Date;
 public class Vital extends Record {
     double reading;
     
-    public Vital(String name, Date datesToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID, double reading) {
-        super(name, datesToTake, patientEmail, createdByPatientObject, frequency, ID);
+    public Vital(String name, Date startDateTime, String patientEmail, String daysRepeating, boolean createdByPatientObject, int TID, int intervals, int ID) {
+        super(name, startDateTime, patientEmail, daysRepeating, createdByPatientObject, TID, intervals, ID);
         this.reading = reading;
     }
 
-    public Vital(String name, Date dateToTake, String patientEmail, int frequency) {
-        super(name, dateToTake, patientEmail, frequency);
-        this.reading = -1;
-    }
+    // public Vital(String name, Date dateToTake, String patientEmail, int frequency) {
+    //     super(name, dateToTake, patientEmail, frequency);
+    //     this.reading = -1;
+    // }
 
     public double getReading() {
         return reading;

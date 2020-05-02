@@ -274,5 +274,18 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
         }
         return linkedUsersList;
     }
+
+    public ArrayList<String[]> getPatientList() throws SQLException {
+      ArrayList <String[]> userList = new ArrayList<String[]>();
+      String query = "SELECT users.*, patientinfo.emergencycontact FROM users " +
+                  "FULL OUTER JOIN patientinfo ON users.email = patientinfo.patientemail" + 
+                  "WHERE userType = 'Patient'";
+      ResultSet result = statement.executeQuery(query);
+
+      while(result.next()) 
+        userList.add(createUserStringArray(result)); // creates user string from query result and adds it to list of users
+      
+      return userList;
+    }
 }
 

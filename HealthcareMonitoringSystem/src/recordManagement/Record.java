@@ -1,22 +1,75 @@
 package recordManagement;
 import java.util.Date;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import java.util.Calendar;
 import java.text.*;
-public abstract class Record {
+public abstract class Record implements Runnable {
     protected String name;
     protected Calendar calendar = Calendar.getInstance();
-    protected Date dateToTake;
+    protected Date startDateTime;
     protected String patientEmail;
+    protected String daysRepeating;
     protected boolean createdByPatientObject;
-    protected int frequency;
+    protected int TID, intervals;
     protected int ID;
 
-    public int getFrequency() {
-        return this.frequency;
+    public void run() {
+        while(true) {
+            boolean checkIfDatePassed = checkDate();
+            if (checkIfDatePassed) {
+                // notify user
+                JPanel panel = new JPanel();
+                JOptionPane.showMessageDialog(panel, "take medication");
+                // Date newDateTime = getNextDate();
+               // startDateTime = newDateTime;
+            }
+        }
+
     }
 
-    public void setFrequency(int frequency) {
-        this.frequency = frequency;
+    // public Date getNextDate() {
+    //     for (int i = 0; i < daysRepeating.length(); i++) {
+    //     }
+    // }
+
+    public Date getStartDateTime() {
+        return this.startDateTime;
+    }
+
+    public void setStartDateTime(Date startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+
+    public String getDaysRepeating() {
+        return this.daysRepeating;
+    }
+
+    public void setDaysRepeating(String daysRepeating) {
+        this.daysRepeating = daysRepeating;
+    }
+
+    public boolean getCreatedByPatientObject() {
+        return this.createdByPatientObject;
+    }
+
+
+    public int getTID() {
+        return this.TID;
+    }
+
+    public void setTID(int TID) {
+        this.TID = TID;
+    }
+
+    public int getIntervals() {
+        return this.intervals;
+    }
+
+    public void setIntervals(int intervals) {
+        this.intervals = intervals;
     }
 
     public int getID() {
@@ -43,13 +96,19 @@ public abstract class Record {
         this.calendar = calendar;
     }
 
-    public Date getDateToTake() {
-        return this.dateToTake;
+    public boolean checkDate() {
+        Date currentDateTime = calendar.getTime();
+        if (currentDateTime.before(startDateTime))
+            return true;
+        return false;
     }
+    // public Date getDateToTake() {
+    //     return this.dateToTake;
+    // }
 
-    public void setDateToTake(Date dateToTake) {
-        this.dateToTake = dateToTake;
-    }
+    // public void setDateToTake(Date dateToTake) {
+    //     this.dateToTake = dateToTake;
+    // }
 
     public String getPatientEmail() {
         return this.patientEmail;
@@ -82,23 +141,25 @@ public abstract class Record {
         return result;
     }
 
-    public Record(String name, Date dateToTake, String patientEmail, boolean createdByPatientObject, int frequency, int ID) {
+    public Record(String name, Date startDateTime, String patientEmail, String daysRepeating, boolean createdByPatientObject, int TID, int intervals, int ID) {
         this.name = name;
+        this.startDateTime = startDateTime;
         this.patientEmail = patientEmail;
-        this.createdByPatientObject = true;
-        this.frequency = frequency;
+        this.daysRepeating = daysRepeating;
+        this.createdByPatientObject = createdByPatientObject;
+        this.TID = TID;
+        this.intervals = intervals;
         this.ID = ID;
-        this.dateToTake = dateToTake;
     }
 
-    public Record(String name, Date dateToTake, String patientEmail, int frequency) {
-        this.name = name;
-        this.patientEmail = patientEmail;
-        this.createdByPatientObject = true;
-        this.frequency = frequency;
-        this.ID = -1;
-        this.dateToTake = dateToTake;
-    }
+    // public Record(String name, Date dateToTake, String patientEmail, int frequency) {
+    //     this.name = name;
+    //     this.patientEmail = patientEmail;
+    //     this.createdByPatientObject = true;
+    //     this.frequency = frequency;
+    //     this.ID = -1;
+    //     this.dateToTake = dateToTake;
+    // }
 
     //returns 1 if notifcation succesfully sent, -1 if failed
     protected abstract int sendNotification(); 

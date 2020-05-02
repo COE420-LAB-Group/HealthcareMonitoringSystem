@@ -9,15 +9,20 @@ import java.util.Date;
 import recordManagement.*;
 import healthcareDatabase.InputErrorException;
 import healthcareDatabase.RecordsDatabaseCommunication;
+import healthcareDatabase.UserDatabaseCommunication;
 import healthcareDatabase.UserNotFoundException;
 public class Doctor extends User {
     private ArrayList<Record> records;
     private RecordsDatabaseCommunication db;
+    private UserDatabaseCommunication userDb;
     private boolean recordListChanged = true;
-    
+    private boolean patientListChanged = true;
+    private ArrayList<Patient> patientList;
+
     public Doctor(String name, String email, String password, String contact) {
         super(name, email, password, contact);
         records = new ArrayList<Record>();
+        patientList = new ArrayList<Patient>();
     }
     public Date StringToDate(String s){
         Date result = null;
@@ -78,5 +83,22 @@ public class Doctor extends User {
 
     }
 
+    public ArrayList<Patient> getPatientList() throws SQLException {
+        ArrayList<String[]> patientArray = userDb.getPatientList();
+        Patient patient = null;
+
+        // if the user list has not been changed since the last time the function is called, return
+        if (!patientListChanged)
+            return this.patientList;
+
+        patientList = new ArrayList<Patient>();
+        for (int i = 0; i < patientArray.size(); i++) {
+            patient = new Patient(patientArray.get(i)[0], patientArray.get(i)[1], patientArray.get(i)[2], patientArray.get(i)[3], patientArray.get(i)[5]);
+            patientList.add(patient);
+        }
+        
+        patientListChanged = false;
+        return this.patientList;
+    }
     
 }
