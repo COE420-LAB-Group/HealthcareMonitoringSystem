@@ -86,7 +86,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         txtEmpno4 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        btnAddNewEmp = new javax.swing.JButton();
+        addRecordButton = new javax.swing.JButton();
         cmbMgr = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
 
@@ -178,11 +178,11 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             }
         });
 
-        btnAddNewEmp.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnAddNewEmp.setText("Add");
-        btnAddNewEmp.addActionListener(new java.awt.event.ActionListener() {
+        addRecordButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        addRecordButton.setText("Add");
+        addRecordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddNewEmpActionPerformed(evt);
+                addRecordButtonActionPerformed(evt);
             }
         });
 
@@ -244,7 +244,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
                             .addComponent(cmbMgr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(320, 320, 320)
-                        .addComponent(btnAddNewEmp)))
+                        .addComponent(addRecordButton)))
                 .addGap(76, 76, 76))
         );
         layout.setVerticalGroup(
@@ -298,7 +298,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton7)
                 .addGap(18, 18, 18)
-                .addComponent(btnAddNewEmp)
+                .addComponent(addRecordButton)
                 .addGap(30, 30, 30))
         );
 
@@ -325,35 +325,34 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno4ActionPerformed
 
-    private void btnAddNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewEmpActionPerformed
-        /*String daysrepeat = "";
-        if (cmbMgr.getSelectedItem().equals("Vital"))
-        {
-            if (jRadioButton1.isSelected())
-                daysrepeat += 'U';
-            if (jRadioButton2.isSelected())
-                daysrepeat += 'M';
-            if (jRadioButton3.isSelected())
-                daysrepeat += 'T';
-            if (jRadioButton4.isSelected())
-                daysrepeat += 'W';
-            if (jRadioButton5.isSelected())
-                daysrepeat += 'R';
-            if (jRadioButton6.isSelected())
-                daysrepeat += 'F';
-            if (jRadioButton7.isSelected())
-                daysrepeat += 'S';
-            Date date = null;
-            try {
-                date = new SimpleDateFormat("dd/mm/yyyy").parse(txtEmpno3.getText());
-            } catch (ParseException ex) {
-                Logger.getLogger(AddNewPatientRecords.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            newrecord = new Vital(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Integer.parseInt(txtEmpno4.getText()) - 1, 0, 0);
-        }*/
+    private void addRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRecordButtonActionPerformed
+        String daysrepeat = "";
+    
+        if (jRadioButton1.isSelected())
+            daysrepeat += 'U';
+        if (jRadioButton2.isSelected())
+            daysrepeat += 'M';
+        if (jRadioButton3.isSelected())
+            daysrepeat += 'T';
+        if (jRadioButton4.isSelected())
+            daysrepeat += 'W';
+        if (jRadioButton5.isSelected())
+            daysrepeat += 'R';
+        if (jRadioButton6.isSelected())
+            daysrepeat += 'F';
+        if (jRadioButton7.isSelected())
+            daysrepeat += 'S';
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("dd/mm/yyyy HH24:mi:ss").parse(txtEmpno3.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(AddNewPatientRecords.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        newrecord = new Vital(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Integer.parseInt(txtEmpno4.getText()) - 1, 0, 0);
+    
 
 
-    }//GEN-LAST:event_btnAddNewEmpActionPerformed
+    }//GEN-LAST:event_addRecordButtonActionPerformed
     
     private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {
         
@@ -414,7 +413,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddNewEmp;
+    private javax.swing.JButton addRecordButton;
     private javax.swing.JComboBox<String> cmbMgr;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
