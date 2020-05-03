@@ -1,6 +1,18 @@
 package healthcaregui;
 
 import accountManagement.Doctor;
+import accountManagement.Patient;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import recordManagement.Prescription;
+import recordManagement.Record;
+import recordManagement.Vital;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,6 +27,9 @@ import accountManagement.Doctor;
 public class UpdateDeletePatientRecords extends javax.swing.JFrame {
 
     private Doctor doctor;
+    int recordIndex;
+    private ArrayList<Record> recordList;
+    private Record newrecord;
 
     /**
      * Creates new form UpdateDeletePatientRecords
@@ -24,13 +39,22 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
     }
     public UpdateDeletePatientRecords(Doctor doctor) {
         this.doctor = doctor;
+        try {
+            doctor.initializeDatabaseConnection();
+            recordList = doctor.getRecords();
+            recordIndex = 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         initComponents();
-        String items[] = {"Vitals", "Medications"};
+        String items[] = {"Vital", "Prescription"};
         for(int i = 0; i < items.length; ++i)
             cmbMgr.addItem(items[i]);
-        String times[] = {"30 minutes", "1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours"};
+        String times[] = {"1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours"};
         for(int i = 0; i < times.length; ++i)
             cmbMgr1.addItem(times[i]);
+        
+        changeValuesInGUI(0);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,10 +85,10 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
         jRadioButton5 = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
         jRadioButton7 = new javax.swing.JRadioButton();
-        btnUpdate3 = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
-        btnUpdate1 = new javax.swing.JButton();
-        btnUpdate2 = new javax.swing.JButton();
+        prevButton = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        nextButton = new javax.swing.JButton();
         cmbMgr1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -142,35 +166,35 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
 
         jRadioButton7.setText("Saturday");
 
-        btnUpdate3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate3.setText("<<");
-        btnUpdate3.addActionListener(new java.awt.event.ActionListener() {
+        prevButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        prevButton.setText("<<");
+        prevButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate3ActionPerformed(evt);
+                prevButtonActionPerformed(evt);
             }
         });
 
-        btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        updateButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                updateButtonActionPerformed(evt);
             }
         });
 
-        btnUpdate1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate1.setText("Delete");
-        btnUpdate1.addActionListener(new java.awt.event.ActionListener() {
+        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate1ActionPerformed(evt);
+                deleteButtonActionPerformed(evt);
             }
         });
 
-        btnUpdate2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        btnUpdate2.setText(">>");
-        btnUpdate2.addActionListener(new java.awt.event.ActionListener() {
+        nextButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        nextButton.setText(">>");
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdate2ActionPerformed(evt);
+                nextButtonActionPerformed(evt);
             }
         });
 
@@ -224,13 +248,13 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
                             .addComponent(jRadioButton7)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(163, 163, 163)
-                        .addComponent(btnUpdate3)
+                        .addComponent(prevButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdate)
+                        .addComponent(updateButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdate1)
+                        .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUpdate2))
+                        .addComponent(nextButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addComponent(jLabel1)))
@@ -284,10 +308,10 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
                         .addComponent(jRadioButton7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnUpdate)
-                    .addComponent(btnUpdate1)
-                    .addComponent(btnUpdate2)
-                    .addComponent(btnUpdate3))
+                    .addComponent(updateButton)
+                    .addComponent(deleteButton)
+                    .addComponent(nextButton)
+                    .addComponent(prevButton))
                 .addGap(55, 55, 55))
         );
 
@@ -314,22 +338,107 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno3ActionPerformed
 
-    private void btnUpdate3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate3ActionPerformed
+    private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdate3ActionPerformed
+        if(recordIndex != 0 )
+            recordIndex--;
+        else
+            recordIndex = recordList.size()-1;
+        changeValuesInGUI(recordIndex);
+    }//GEN-LAST:event_prevButtonActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdateActionPerformed
+        /*String daysrepeat = "";
+        String recordType = (String) cmbMgr.getSelectedItem();
+        if (jRadioButton1.isSelected())
+            daysrepeat += 'U';
+        if (jRadioButton2.isSelected())
+            daysrepeat += 'M';
+        if (jRadioButton3.isSelected())
+            daysrepeat += 'T';
+        if (jRadioButton4.isSelected())
+            daysrepeat += 'W';
+        if (jRadioButton5.isSelected())
+            daysrepeat += 'R';
+        if (jRadioButton6.isSelected())
+            daysrepeat += 'F';
+        if (jRadioButton7.isSelected())
+            daysrepeat += 'S';
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(txtEmpno3.getText());
+        } catch (ParseException ex) {
+            Logger.getLogger(AddNewPatientRecords.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+        
+        if (recordType.equals("Vital"))
+            newrecord = new Vital(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Character.getNumericValue(((String) cmbMgr1.getSelectedItem()).charAt(0)), 0, 0);
+        else
+            newrecord = new Prescription(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Character.getNumericValue(((String) cmbMgr1.getSelectedItem()).charAt(0)), 0);
+        
+        try {
+            doctor.addRecord(newrecord);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }*/
+    }//GEN-LAST:event_updateButtonActionPerformed
 
-    private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdate1ActionPerformed
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
-    private void btnUpdate2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate2ActionPerformed
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdate2ActionPerformed
-
+        if(recordIndex != (recordList.size()-1))
+            recordIndex++;
+        else
+            recordIndex = 0;
+        changeValuesInGUI(recordIndex);
+    }//GEN-LAST:event_nextButtonActionPerformed
+    
+    private void changeValuesInGUI(int index)
+    {
+        txtEmpno.setText(recordList.get(index).getPatientEmail());
+        txtEmpno1.setText(recordList.get(index).getName());
+        txtEmpno2.setText(Integer.toString(recordList.get(index).getTID()));
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        txtEmpno3.setText(dateFormat.format(recordList.get(index).getStartDateTime()));
+        cmbMgr.setSelectedItem(recordList.get(index).getClass().getSimpleName());
+        int intervals = recordList.get(index).getIntervals();
+        if (intervals == 1)
+            cmbMgr1.setSelectedItem(Integer.toString(intervals) + " hour");
+        else
+            cmbMgr1.setSelectedItem(Integer.toString(intervals) + " hours");
+        String days = recordList.get(index).getDaysRepeating();
+        jRadioButton1.setSelected(false);
+        jRadioButton2.setSelected(false);
+        jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(false);
+        jRadioButton5.setSelected(false);
+        jRadioButton6.setSelected(false);
+        jRadioButton7.setSelected(false);
+        for(int i = 0; i < days.length(); ++i)
+        {
+            if(days.charAt(i) == 'U')
+                jRadioButton1.setSelected(true); 
+            if(days.charAt(i) == 'M')
+                jRadioButton2.setSelected(true);
+            if(days.charAt(i) == 'T')
+                jRadioButton3.setSelected(true);
+            if(days.charAt(i) == 'W')
+                jRadioButton4.setSelected(true);
+            if(days.charAt(i) == 'R')
+                jRadioButton5.setSelected(true);
+            if(days.charAt(i) == 'F')
+                jRadioButton6.setSelected(true);
+            if(days.charAt(i) == 'S')
+                jRadioButton7.setSelected(true);
+        }
+    }
+    
+    
     private void cmbMgr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMgr1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbMgr1ActionPerformed
@@ -370,12 +479,9 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnUpdate;
-    private javax.swing.JButton btnUpdate1;
-    private javax.swing.JButton btnUpdate2;
-    private javax.swing.JButton btnUpdate3;
     private javax.swing.JComboBox<String> cmbMgr;
     private javax.swing.JComboBox<String> cmbMgr1;
+    private javax.swing.JButton deleteButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -391,9 +497,12 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JRadioButton jRadioButton7;
+    private javax.swing.JButton nextButton;
+    private javax.swing.JButton prevButton;
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno1;
     private javax.swing.JTextField txtEmpno2;
     private javax.swing.JTextField txtEmpno3;
+    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }
