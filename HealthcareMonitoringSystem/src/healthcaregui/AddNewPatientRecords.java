@@ -54,10 +54,10 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         }
         initComponents();
         txtEmpno.setText(patientList.get(0).getEmail());
-        String items[] = {"Vitals", "Prescription"};
+        String items[] = {"Vital", "Prescription"};
         for(int i = 0; i < items.length; ++i)
             cmbMgr.addItem(items[i]);
-        String times[] = {"30 minutes", "1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours"};
+        String times[] = {"1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours"};
         for(int i = 0; i < times.length; ++i)
             cmbMgr1.addItem(times[i]);
         //loadFields();
@@ -352,7 +352,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(txtEmpno3.getText());
         } catch (ParseException ex) {
             Logger.getLogger(AddNewPatientRecords.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }   
         
         if (recordType.equals("Vital"))
             newrecord = new Vital(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Character.getNumericValue(((String) cmbMgr1.getSelectedItem()).charAt(0)), 0, 0);

@@ -52,7 +52,7 @@ public class Doctor extends User {
     
     public int addRecord(Record record) throws SQLException {
         String recordType = record.getClass().getSimpleName();
-
+        System.out.println(recordType);
         // if Record is a patient, add an emergency contact as well
         try {
             db.addRecord(record.getPatientEmail(), record.getName(), record.getTID(), recordType, record.getIntervals(), record.getStartDateTime(), record.getDaysRepeating());

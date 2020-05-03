@@ -105,6 +105,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     checkIfInputIsValid(patientEmail, TID, recordType, recordName); // WHY ARE THE VARIABLES FLIPPED AROUND :(
     ResultSet result = findRecordWithEmail(patientEmail, recordName); // check if record already exists
     // if the record already exists, do not add user
+    System.out.println(recordType);
     if (result.next()) {
       System.out.println("Record is already in database!");
       return -1;
@@ -118,6 +119,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     // add to vitalReading table if the type is a vital
     if (recordType.equals("Vital")) {
       query = "INSERT INTO vitalReading VALUES (seq_recordid.currval, -1)";
+      System.out.print("Added record " + recordName + " to database vitalreading");
       statement.executeUpdate(query);
     }
 
@@ -125,7 +127,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     return 1;
   }
 
-  // deletes record with that patient email and name
+  // deletes record with that id
   public int deleteRecord(int id) throws SQLException, UserNotFoundException {
     ResultSet result = findRecord(id);
     // if Record was found, delete it, else return -1 because record was not found
