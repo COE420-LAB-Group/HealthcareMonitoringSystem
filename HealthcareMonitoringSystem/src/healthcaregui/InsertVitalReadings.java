@@ -189,10 +189,16 @@ public class InsertVitalReadings extends javax.swing.JFrame {
                 recordIndex = recordList.size()-1;
              txtEmpno1.setText(recordList.get(recordIndex).getName());
              
-             txtEmpno2.setText(dateToString(recordList.get(recordIndex).getStartDateTime()));
+             txtEmpno3.setText(dateToString(recordList.get(recordIndex).getStartDateTime()));
     }
     private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        if(recordIndex != (recordList.size()-1))
+        recordIndex++;
+    else
+        recordIndex = 0;
+     txtEmpno1.setText(recordList.get(recordIndex).getName());
+     
+     txtEmpno3.setText(dateToString(recordList.get(recordIndex).getStartDateTime()));
     }
 
     public String dateToString(Date date) {
