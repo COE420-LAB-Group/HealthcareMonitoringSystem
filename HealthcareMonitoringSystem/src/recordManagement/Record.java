@@ -142,6 +142,7 @@ public abstract class Record implements Runnable {
     }
 
     public Record(String name, Date startDateTime, String patientEmail, String daysRepeating, boolean createdByPatientObject, int TID, int intervals, int ID) {
+        System.out.println(ID);
         this.name = name;
         this.startDateTime = startDateTime;
         this.patientEmail = patientEmail;

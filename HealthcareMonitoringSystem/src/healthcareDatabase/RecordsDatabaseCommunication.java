@@ -20,8 +20,9 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
   public Record createRecord(ResultSet result) throws SQLException {
     String recordType = result.getString(4);
     Record tempRecord;
-    if (recordType.equals("Prescription")) 
+    if (recordType.equals("Prescription")) {
       tempRecord = new Prescription(result.getString(3), result.getDate(5), result.getString(2), result.getString(8), true, result.getInt(6), result.getInt(7), result.getInt(1));
+    }
     else {
       tempRecord = new Vital(result.getString(3), result.getDate(5), result.getString(2), result.getString(8), true, result.getInt(6), result.getInt(7), result.getInt(1), result.getDouble(9));
     }
@@ -151,7 +152,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
       String query = String.format("UPDATE records "
           + "SET patientEmail = '%s', recordName = '%s', TID = %d, recordType = '%s', Intervals= %d, "
           + "startDateTime = TO_DATE('%s', 'dd/mm/yyyy HH24:mi:ss'), repeatEvery = '%s' WHERE (recordID = %d)",
-          patientEmail, recordName, TID, recordType, intervals, dateString, currentID, daysRepeating, currentID);
+          patientEmail, recordName, TID, recordType, intervals, dateString, daysRepeating, currentID);
       statement.executeUpdate(query);
       System.out.println("Modified record with id " + currentID + " from database");
       return 1;

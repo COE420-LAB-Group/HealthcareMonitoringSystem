@@ -69,6 +69,7 @@ public class Doctor extends User {
         // if Record is a patient, modify emergency contact as well
         try {
             // new record's id is passed because the ID of a modified record does not change
+            System.out.println(newRecord.getID());
             db.modifyRecord(newRecord.getID(), newRecord.getPatientEmail(), newRecord.getName(), newRecord.getTID(), newRecordType, newRecord.getIntervals(), newRecord.getStartDateTime(), newRecord.getDaysRepeating());
             recordListChanged = true;
         } catch (InputErrorException exception) {
