@@ -47,6 +47,7 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() throws SQLException {
         recordIndex = 0;
+        patient.initializeDatabaseConnection();
         recordList = patient.getRecords();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
