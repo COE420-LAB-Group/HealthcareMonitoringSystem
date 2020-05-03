@@ -90,7 +90,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         txtEmpno = new javax.swing.JTextField();
         txtEmpno1 = new javax.swing.JTextField();
         txtEmpno2 = new javax.swing.JTextField();
-        txtEmpno3 = new javax.swing.JTextField();
+        txtEmpno3 = new javax.swing.JTextField("dd/MM/yyyy HH:mm:ss");
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         addRecordButton = new javax.swing.JButton();
@@ -352,7 +352,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(txtEmpno3.getText());
         } catch (ParseException ex) {
             Logger.getLogger(AddNewPatientRecords.class.getName()).log(Level.SEVERE, null, ex);
-        }   
+        }
         
         if (recordType.equals("Vital"))
             newrecord = new Vital(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Character.getNumericValue(((String) cmbMgr1.getSelectedItem()).charAt(0)), 0, 0);

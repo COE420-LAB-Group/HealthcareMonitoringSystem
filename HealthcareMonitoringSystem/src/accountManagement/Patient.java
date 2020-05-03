@@ -32,6 +32,11 @@ public class Patient extends User {
 		this.records = dbRecords.getPatientRecordList(this.email);
 	}
 
+	public void closeDatabaseConnection() throws SQLException {
+		dbRecords.closeDatabaseConnection();
+		dbUsers.closeDatabaseConnection();
+	}
+
     public ArrayList<Caretaker> getLinkedCaretakerList() throws SQLException {
         ArrayList<String[]> CaretakerArray = dbUsers.getLinkedCaretakerList(this.email);
         Caretaker user = null;
@@ -42,7 +47,6 @@ public class Patient extends User {
         for (int i = 0; i < CaretakerArray.size(); i++) {
             user = new Caretaker(CaretakerArray.get(i)[0], CaretakerArray.get(i)[1], CaretakerArray.get(i)[2], CaretakerArray.get(i)[3]);
             caretakers.add(user);
-
         }
 			CaretakerListChanged = false;
 			return this.caretakers;
