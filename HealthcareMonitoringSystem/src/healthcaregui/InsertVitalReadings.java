@@ -21,6 +21,9 @@ import recordManagement.Record;
  */
 public class InsertVitalReadings extends javax.swing.JFrame {
 
+    private int recordIndex;
+    private ArrayList<Record> recordList;
+
     /**
      * Creates new form InsertVitalReadings
      * 
@@ -31,9 +34,13 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     }
 
     public InsertVitalReadings(Patient patient) throws SQLException {
-        this.patient = patient;
+        patient.initializeDatabaseConnection();
+        recordList = patient.getRecords();
+        recordIndex = 0;
         System.out.println(patient.getName());
         initComponents();
+        txtEmpno1.setText(recordList.get(0).getName());
+        txtEmpno3.setText(dateToString(recordList.get(0).getStartDateTime()));
     }
 
     /**
@@ -45,21 +52,19 @@ public class InsertVitalReadings extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
-    private void initComponents() throws SQLException {
-        recordIndex = 0;
-        patient.initializeDatabaseConnection();
-        recordList = patient.getRecords();
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtEmpno1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtEmpno2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButtonLeft = new javax.swing.JButton("<<");
-        jButtonRight = new javax.swing.JButton(">>");
+        insertButton = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtEmpno3 = new javax.swing.JTextField();
+        prevButton = new javax.swing.JButton();
+        nextButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -86,17 +91,13 @@ public class InsertVitalReadings extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jButton1.setText("Insert Readings");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        insertButton.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        insertButton.setText("Insert Readings");
+        insertButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                insertButtonActionPerformed(evt);
             }
         });
-        jButtonLeft.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jButtonLeft.setText("<<");
-        jButtonRight.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jButtonRight.setText(">>");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Vital Date/Time:");
@@ -107,64 +108,104 @@ public class InsertVitalReadings extends javax.swing.JFrame {
                 txtEmpno3ActionPerformed(evt);
             }
         });
-        jButtonLeft.addActionListener(new java.awt.event.ActionListener() {
+
+        prevButton.setText("<<");
+        prevButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLeftActionPerformed(evt);
+                prevButtonActionPerformed(evt);
             }
         });
-        jButtonRight.addActionListener(new java.awt.event.ActionListener() {
+
+        nextButton.setText(">>");
+        nextButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRightActionPerformed(evt);
+                nextButtonActionPerformed(evt);
             }
         });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup().addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup().addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, 316,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup().addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtEmpno2, javax.swing.GroupLayout.PREFERRED_SIZE, 316,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup().addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtEmpno3, javax.swing.GroupLayout.PREFERRED_SIZE, 316,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(50, 50, 50))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                        layout.createSequentialGroup().addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                layout.createSequentialGroup().addComponent(jLabel2).addGap(79, 79, 79))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                layout.createSequentialGroup().addGap(194, 194, 194)
-                                                        .addComponent(jButtonLeft).addComponent(jButton1)
-                                                        .addComponent(jButtonRight)))
-                                .addGap(0, 0, 0)));
-        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup().addGap(30, 30, 30).addComponent(jLabel2).addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3).addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5).addComponent(txtEmpno3, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4).addComponent(txtEmpno2, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButtonLeft).addComponent(jButton1).addComponent(jButtonRight))
-                        .addGap(30, 30, 30)));
+                        .addComponent(txtEmpno2, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtEmpno3, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(50, 50, 50))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(prevButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(insertButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nextButton)
+                        .addGap(138, 138, 138))))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtEmpno3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtEmpno2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(prevButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nextButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
+        // TODO add your handling code here:
+        if(recordIndex != 0 )
+            recordIndex--;
+        else
+            recordIndex = recordList.size()-1;
+        txtEmpno1.setText(recordList.get(recordIndex).getName());
+        txtEmpno3.setText(dateToString(recordList.get(recordIndex).getStartDateTime()));
+    }//GEN-LAST:event_prevButtonActionPerformed
+
+    private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
+        // TODO add your handling code here:
+        if(recordIndex != (recordList.size()-1))
+            recordIndex++;
+        else
+            recordIndex = 0;
+        txtEmpno1.setText(recordList.get(recordIndex).getName());
+        txtEmpno3.setText(dateToString(recordList.get(recordIndex).getStartDateTime()));
+    }//GEN-LAST:event_nextButtonActionPerformed
 
     private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpno1ActionPerformed
         // TODO add your handling code here:
@@ -178,28 +219,9 @@ public class InsertVitalReadings extends javax.swing.JFrame {
         // TODO add your handling code here:
     }// GEN-LAST:event_txtEmpno3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+    private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }// GEN-LAST:event_jButton1ActionPerformed
-    private void jButtonLeftActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-
-            if(recordIndex != 0 )
-                recordIndex--;
-            else
-                recordIndex = recordList.size()-1;
-             txtEmpno1.setText(recordList.get(recordIndex).getName());
-             
-             txtEmpno3.setText(dateToString(recordList.get(recordIndex).getStartDateTime()));
-    }
-    private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-        if(recordIndex != (recordList.size()-1))
-        recordIndex++;
-    else
-        recordIndex = 0;
-     txtEmpno1.setText(recordList.get(recordIndex).getName());
-     
-     txtEmpno3.setText(dateToString(recordList.get(recordIndex).getStartDateTime()));
-    }
 
     public String dateToString(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -254,16 +276,13 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private int recordIndex;
-    private Patient patient;
-    private ArrayList<Record> recordList;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonLeft;
-    private javax.swing.JButton jButtonRight;
+    private javax.swing.JButton insertButton;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton nextButton;
+    private javax.swing.JButton prevButton;
     private javax.swing.JTextField txtEmpno1;
     private javax.swing.JTextField txtEmpno2;
     private javax.swing.JTextField txtEmpno3;

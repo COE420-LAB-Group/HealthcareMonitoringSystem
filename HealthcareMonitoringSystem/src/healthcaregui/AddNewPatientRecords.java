@@ -8,6 +8,12 @@ import accountManagement.Admin;
 import accountManagement.Doctor;
 import accountManagement.Patient;
 import accountManagement.User;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import recordManagement.Record;
 import recordManagement.Vital;
 
@@ -24,7 +30,7 @@ import recordManagement.Vital;
 public class AddNewPatientRecords extends javax.swing.JFrame {
 
     private Doctor doctor;
-    int patientindex;
+    int patientIndex;
     private ArrayList<Patient> patientList;
     private Record newrecord;
     /**
@@ -39,12 +45,14 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         try {
             doctor.initializeDatabaseConnection();
             patientList = doctor.getPatientList();
+            patientIndex = 0;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         initComponents();
-        loadFields();
+        txtEmpno.setText(patientList.get(0).getEmail());
+        //loadFields();
     }
 
     /**
@@ -54,9 +62,8 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        patientindex = 0;
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -80,12 +87,12 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btnAddNewEmp = new javax.swing.JButton();
+        cmbMgr = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        String[] RecordTypes = { "Prescription", "Vital" };
-        cmbMgr = new javax.swing.JComboBox<>(RecordTypes);
-        
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Add New Patient Records");
@@ -120,7 +127,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         jRadioButton7.setText("Saturday");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel7.setText("Start Time:");
+        jLabel7.setText("Start Date Time:");
 
         txtEmpno.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtEmpno.addActionListener(new java.awt.event.ActionListener() {
@@ -129,10 +136,10 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             }
         });
 
-     txtEmpno1.addActionListener(new java.awt.event.ActionListener() {
+        txtEmpno1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtEmpno1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmpno1ActionPerformed(evt);
-                txtEmpno1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
             }
         });
 
@@ -149,7 +156,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
                 txtEmpno3ActionPerformed(evt);
             }
         });
-        txtEmpno3.setText("dd/mm/yyyy HH:mi:ss");
+
         txtEmpno4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtEmpno4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,26 +165,19 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         });
 
         jButton3.setText(">>");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         jButton4.setText("<<");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                if (patientindex != 0)
-                    patientindex--;
-                else
-                    patientindex = patientList.size() - 1;
-                txtEmpno.setText(patientList.get(patientindex).getEmail());
+                jButton4ActionPerformed(evt);
+            }
+        });
 
-            }
-        });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                if (patientindex != (patientList.size() - 1))
-                    patientindex++;
-                else
-                    patientindex = 0;
-                txtEmpno.setText(patientList.get(patientindex).getEmail());
-            }
-        });
         btnAddNewEmp.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnAddNewEmp.setText("Add");
         btnAddNewEmp.addActionListener(new java.awt.event.ActionListener() {
@@ -189,11 +189,8 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         cmbMgr.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cmbMgr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-            
-
+                cmbMgrActionPerformed(evt);
             }
-
-
         });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -212,16 +209,13 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(76, 76, 76)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel6))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel4)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel5)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
@@ -332,11 +326,56 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmpno4ActionPerformed
 
     private void btnAddNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewEmpActionPerformed
+        /*String daysrepeat = "";
         if (cmbMgr.getSelectedItem().equals("Vital"))
-        newrecord = new Vital(txtEmpno1.getText(), startDateTime, txtEmpno.getText(), daysRepeating, false, txtEmpno2.getText() , intervals, -1);
+        {
+            if (jRadioButton1.isSelected())
+                daysrepeat += 'U';
+            if (jRadioButton2.isSelected())
+                daysrepeat += 'M';
+            if (jRadioButton3.isSelected())
+                daysrepeat += 'T';
+            if (jRadioButton4.isSelected())
+                daysrepeat += 'W';
+            if (jRadioButton5.isSelected())
+                daysrepeat += 'R';
+            if (jRadioButton6.isSelected())
+                daysrepeat += 'F';
+            if (jRadioButton7.isSelected())
+                daysrepeat += 'S';
+            Date date = null;
+            try {
+                date = new SimpleDateFormat("dd/mm/yyyy").parse(txtEmpno3.getText());
+            } catch (ParseException ex) {
+                Logger.getLogger(AddNewPatientRecords.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            newrecord = new Vital(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Integer.parseInt(txtEmpno4.getText()) - 1, 0, 0);
+        }*/
 
 
     }//GEN-LAST:event_btnAddNewEmpActionPerformed
+    
+    private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {
+        
+    }
+    
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if(patientIndex != 0 )
+            patientIndex--;
+        else
+            patientIndex = patientList.size()-1;
+        txtEmpno.setText(patientList.get(patientIndex).getName());
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        if(patientIndex != (patientList.size()-1))
+            patientIndex++;
+        else
+            patientIndex = 0;
+        txtEmpno.setText(patientList.get(patientIndex).getName());
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -401,8 +440,8 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmpno4;
     // End of variables declaration//GEN-END:variables
 
-    private void loadFields() {
+    /*private void loadFields() {
         Doctor doc = new Doctor();
         
-    }
+    }*/
 }

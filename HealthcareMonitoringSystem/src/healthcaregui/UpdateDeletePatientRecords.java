@@ -23,6 +23,9 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
     public UpdateDeletePatientRecords(Doctor doctor) {
         this.doctor = doctor;
         initComponents();
+        String items[] = {"Vitals", "Medications"};
+        for(int i = 0; i < items.length; ++i)
+            cmbMgr.addItem(items[i]);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -287,9 +290,6 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
 
     private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMgrActionPerformed
         // TODO add your handling code here:
-        String items[] = {"Vitals", "Medications"};
-        for(int i = 0; i < items.length; ++i)
-            cmbMgr.addItem(items[i]);
     }//GEN-LAST:event_cmbMgrActionPerformed
 
     private void txtEmpno2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno2ActionPerformed
@@ -310,57 +310,6 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-
-//        try {
-//            // make the result set scrolable forward/backward updatable
-//            //            statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-//
-//            if (isValidData()) {
-//                String prepSQL = "UPDATE emp SET ename = " +
-//                "'" + txtEname.getText().trim().toUpperCase() +
-//                "', job = '" + txtJob.getText().trim().toUpperCase() +
-//                "', mgr = " + cmbMgr.getSelectedItem() +
-//                ", hiredate = '" + ftxtHiredate.getText() +
-//                "', sal = " + txtSalary.getText().trim() +
-//                ", comm = " + txtComm.getText().trim() +
-//                ", deptno = " + cmbDeptno.getSelectedItem() +
-//                " WHERE empno = " + txtEmpno.getText().trim();
-//                //                prepStatement = con.prepareStatement("UPDATE emp SET ename = ?, job = ?, mgr = ?, hiredate = ?, sal = ?, comm = ?, deptno = ? WHERE empno = ?");
-//                ////                prepStatement.setInt(1, Integer.parseInt(txtEmpno.getText()));
-//                //                prepStatement.setString(1, txtEname.getText().toUpperCase());
-//                //                prepStatement.setString(2, txtJob.getText().toUpperCase());
-//                //                prepStatement.setInt(3, Integer.parseInt(cmbMgr.getSelectedItem().toString()));
-//                //                prepStatement.setString(4, ftxtHiredate.getText());
-//                //                prepStatement.setInt(5, Integer.parseInt(txtSalary.getText()));
-//                //                prepStatement.setInt(6, Integer.parseInt(txtComm.getText()));
-//                //                prepStatement.setInt(7, Integer.parseInt(cmbDeptno.getSelectedItem().toString()));
-//                //                prepStatement.setInt(8, Integer.parseInt(txtEmpno.getText().trim()));
-//                //                int result = prepStatement.executeUpdate();
-//                int result = dbCon.executePrepared(prepSQL);
-//                if (result > 0) {
-//
-//                    javax.swing.JLabel label = new javax.swing.JLabel("Employee No " + txtEmpno.getText() + " updated successfully.");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-//
-//                    getNewData();
-//
-//                } else {
-//                    // check validation errors
-//                }
-//                //                prepStatement.close();
-//            } else {
-//                javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
-//                label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
-//
-//            }
-//
-//        } catch (SQLException e) {
-//
-//            JOptionPane.showMessageDialog(null, "Error updating employee." + e.getMessage());
-//
-//        }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnUpdate1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdate1ActionPerformed

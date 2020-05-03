@@ -1,6 +1,9 @@
 package healthcaregui;
 
 import accountManagement.Doctor;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -146,8 +149,12 @@ public class MenuD extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-        (new ViewPatientRecords(doctor)).setVisible(true);
+        try {
+            // TODO add your handling code here:
+            (new ViewPatientRecords(doctor)).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
