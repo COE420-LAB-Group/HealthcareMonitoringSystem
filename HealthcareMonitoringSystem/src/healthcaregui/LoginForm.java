@@ -44,7 +44,7 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
 
         jToggleButton1.setText("jToggleButton1");
@@ -215,7 +215,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
