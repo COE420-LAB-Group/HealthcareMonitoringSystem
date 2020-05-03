@@ -18,6 +18,10 @@ import accountManagement.Patient;
  */
 public class MenuC extends javax.swing.JFrame {
 
+    private Caretaker caretaker;
+    private ArrayList<Patient> linkedPatientList;
+    private int index = 0;
+
     /**
      * Creates new form MenuC
      */
@@ -25,10 +29,18 @@ public class MenuC extends javax.swing.JFrame {
         initComponents();
     }
 
-    public MenuC(Caretaker caretaker) {
+    public MenuC(Caretaker caretaker) throws SQLException {
         this.caretaker = caretaker;
+        caretaker.initializeDatabaseConnection();
+        linkedPatientList = caretaker.getLinkedPatientList();
+        if(linkedPatientList.isEmpty())
+        {
+            new MenuC().setVisible(true);
+            this.dispose();
+        }
         System.out.println(caretaker.getName());
         initComponents();
+        changeRecordInformationInTextField();
     }
 
     /**
@@ -38,29 +50,24 @@ public class MenuC extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
         txtEmpno = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtEmpno1 = new javax.swing.JTextField();
-        jButtonPrev = new javax.swing.JButton();
-        patientRecordButton = new javax.swing.JButton();
-        jButtonNext = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        try {
-            caretaker.initializeDatabaseConnection();
-            linkedPatientList = caretaker.getLinkedPatientList();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Patient Name:");
@@ -82,36 +89,25 @@ public class MenuC extends javax.swing.JFrame {
             }
         });
 
-        
-        jButtonPrev.setText("<<");
-        jButtonPrev.addActionListener(new java.awt.event.ActionListener() {
+        jButton4.setText("<<");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                if (index <= 0)
-                    index = linkedPatientList.size() - 1; // Go back to the last user if the first user is reached
-                else
-                    index--;
-
-                changeRecordInformationInTextField();
+                jButton4ActionPerformed(evt);
             }
         });
 
-        patientRecordButton.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        patientRecordButton.setText("Access Patient Records");
-        patientRecordButton.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jButton1.setText("Access Patient Records");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                patientRecordButtonActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        jButtonNext.setText(">>");
-        jButtonNext.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setText(">>");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                if (index >= linkedPatientList.size() - 1)
-                    index = 0; // Go back to the first user if the last user is reached
-                else
-                    index++;
-
-                changeRecordInformationInTextField();
+                jButton6ActionPerformed(evt);
             }
         });
 
@@ -157,11 +153,11 @@ public class MenuC extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(103, 103, 103)
-                        .addComponent(jButtonPrev)
+                        .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(patientRecordButton)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonNext))
+                        .addComponent(jButton6))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
@@ -185,9 +181,9 @@ public class MenuC extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(patientRecordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPrev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
 
@@ -223,7 +219,7 @@ public class MenuC extends javax.swing.JFrame {
         try {
             patient.initializeDatabaseConnection();
             patient.getRecords();
-           (new ViewRecords(patient)).setVisible(true);
+           (new ViewRecordsDoc(patient)).setVisible(true);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -231,6 +227,36 @@ public class MenuC extends javax.swing.JFrame {
         
     }//GEN-LAST:event_patientRecordButtonActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if(index != 0 )
+            index--;
+        else
+            index = linkedPatientList.size()-1;
+        changeRecordInformationInTextField();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        if(index != (linkedPatientList.size()-1))
+            index++;
+        else
+            index = 0;
+        changeRecordInformationInTextField();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        Patient patient = linkedPatientList.get(index);
+        try {
+            patient.initializeDatabaseConnection();
+            patient.getRecords();
+           (new ViewRecordsDoc(patient)).setVisible(true);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -267,9 +293,9 @@ public class MenuC extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton patientRecordButton;
-    private javax.swing.JButton jButtonPrev;
-    private javax.swing.JButton jButtonNext;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
@@ -279,8 +305,5 @@ public class MenuC extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno1;
-    private Caretaker caretaker;
-    private ArrayList<Patient> linkedPatientList;
-    private int index = 0;
     // End of variables declaration//GEN-END:variables
 }
