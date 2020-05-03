@@ -43,6 +43,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             e.printStackTrace();
         }
         initComponents();
+        loadFields();
     }
 
     /**
@@ -311,7 +312,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
 
     private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpnoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmpnoActionPerformed
+    }                                        
 
     private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno1ActionPerformed
         // TODO add your handling code here:
@@ -398,4 +399,9 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmpno3;
     private javax.swing.JTextField txtEmpno4;
     // End of variables declaration//GEN-END:variables
+
+    private void loadFields() {
+        Doctor doc = new Doctor();
+        
+    }
 }

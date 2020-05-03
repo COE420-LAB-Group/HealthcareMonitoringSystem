@@ -3,6 +3,8 @@ package healthcaregui;
 import java.sql.SQLException;
 
 import accountManagement.Patient;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -147,10 +149,15 @@ public class MenuP extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
         (new InsertVitalReadings()).setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }                                          
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            (new ViewRecords(patient)).setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuP.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
