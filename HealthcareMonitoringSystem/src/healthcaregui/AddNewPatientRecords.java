@@ -37,6 +37,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     public AddNewPatientRecords(Doctor doctor) {
         this.doctor = doctor;
         try {
+            doctor.initializeDatabaseConnection();
             patientList = doctor.getPatientList();
         } catch (SQLException e) {
             // TODO Auto-generated catch block

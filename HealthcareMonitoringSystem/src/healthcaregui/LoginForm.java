@@ -144,6 +144,7 @@ public class LoginForm extends javax.swing.JFrame {
             } else if (userType.equals("Doctor")) {
                 new MenuD((Doctor) user).setVisible(true);
             } else if (userType.equals("Patient")) {
+                System.out.println(user.getContact());
                 new MenuP((Patient) user).setVisible(true);
             } else if (userType.equals("Caretaker")) {
                 new MenuC((Caretaker) user).setVisible(true);

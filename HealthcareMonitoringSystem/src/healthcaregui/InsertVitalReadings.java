@@ -31,7 +31,8 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     }
 
     public InsertVitalReadings(Patient patient) throws SQLException {
-        patient = this.patient;
+        this.patient = patient;
+        System.out.println(patient.getName());
         initComponents();
     }
 
