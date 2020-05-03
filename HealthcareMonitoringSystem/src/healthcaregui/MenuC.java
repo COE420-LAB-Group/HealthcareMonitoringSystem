@@ -46,7 +46,7 @@ public class MenuC extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtEmpno1 = new javax.swing.JTextField();
         jButtonPrev = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        patientRecordButton = new javax.swing.JButton();
         jButtonNext = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -95,11 +95,11 @@ public class MenuC extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jButton1.setText("Access Patient Records");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        patientRecordButton.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        patientRecordButton.setText("Access Patient Records");
+        patientRecordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                patientRecordButtonActionPerformed(evt);
             }
         });
 
@@ -159,7 +159,7 @@ public class MenuC extends javax.swing.JFrame {
                         .addGap(103, 103, 103)
                         .addComponent(jButtonPrev)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(patientRecordButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonNext))
                     .addGroup(layout.createSequentialGroup()
@@ -185,7 +185,7 @@ public class MenuC extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(patientRecordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPrev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
@@ -218,9 +218,18 @@ public class MenuC extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void patientRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_patientRecordButtonActionPerformed
+        Patient patient = linkedPatientList.get(index);
+        try {
+            patient.initializeDatabaseConnection();
+            patient.getRecords();
+           (new ViewRecords(patient)).setVisible(true);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_patientRecordButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -258,7 +267,7 @@ public class MenuC extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton patientRecordButton;
     private javax.swing.JButton jButtonPrev;
     private javax.swing.JButton jButtonNext;
     private javax.swing.JLabel jLabel1;
