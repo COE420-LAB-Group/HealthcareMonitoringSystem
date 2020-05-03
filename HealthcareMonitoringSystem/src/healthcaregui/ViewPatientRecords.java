@@ -87,7 +87,7 @@ public class ViewPatientRecords extends javax.swing.JFrame {
                 try {
                     patient.initializeDatabaseConnection();
                     patient.getRecords();
-                    (new ViewRecords(patient)).setVisible(true);
+                    (new ViewRecordsDoc(patient)).setVisible(true);
                 } catch (SQLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
