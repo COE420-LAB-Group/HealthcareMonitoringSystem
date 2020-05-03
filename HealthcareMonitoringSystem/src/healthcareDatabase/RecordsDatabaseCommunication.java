@@ -170,7 +170,7 @@ public class RecordsDatabaseCommunication extends DatabaseCommunication {
     ResultSet result = findRecord(id);
     if (result.next()) {
       // check if the record is not a vital, return -1 if it is not, and emails match
-      if (!result.getString(5).equals("Vital") || !result.getString(2).equals(patientEmail))
+      if (!result.getString(4).equals("Vital") || !result.getString(2).equals(patientEmail))
         return -1; 
       String query = String.format("UPDATE VitalReading " +
       "SET reading = %f WHERE (vitalID = %d)", reading, id

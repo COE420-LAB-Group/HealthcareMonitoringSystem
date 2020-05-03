@@ -8,7 +8,7 @@ import java.util.Date;
 
 import accountManagement.Patient;
 import recordManagement.Record;
-
+import recordManagement.Vital;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,7 +23,7 @@ public class InsertVitalReadings extends javax.swing.JFrame {
 
     private int recordIndex;
     private ArrayList<Record> recordList;
-
+    private Patient patient;
     /**
      * Creates new form InsertVitalReadings
      * 
@@ -34,8 +34,16 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     }
 
     public InsertVitalReadings(Patient patient) throws SQLException {
+        this.patient = patient;
         patient.initializeDatabaseConnection();
-        recordList = patient.getRecords();
+        ArrayList<Record> tempRecordList = patient.getRecords();
+        recordList = new ArrayList<Record>();
+        for(int i = 0; i < tempRecordList.size(); i++) {
+            String recordType = tempRecordList.get(i).getClass().getSimpleName();
+            if (recordType.equals("Vital")) {
+                recordList.add(tempRecordList.get(i));
+            }
+        }
         recordIndex = 0;
         System.out.println(patient.getName());
         initComponents();
@@ -220,6 +228,20 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     }// GEN-LAST:event_txtEmpno3ActionPerformed
 
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+        Record record = recordList.get(recordIndex);
+        String recordType = record.getClass().getSimpleName();
+        double reading = Double.parseDouble(txtEmpno2.getText());
+        if (recordType.equals("Vital")) {
+            try {
+                System.out.println("Inserting " + reading);
+                System.out.println(patient.insertReading(record, reading));
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        else
+            System.out.println("Record type must be a vital to insert reading!");
         // TODO add your handling code here:
     }// GEN-LAST:event_jButton1ActionPerformed
 
