@@ -279,7 +279,7 @@ public class UserDatabaseCommunication extends DatabaseCommunication {
       ArrayList <String[]> userList = new ArrayList<String[]>();
       String query = "SELECT users.*, patientinfo.emergencycontact FROM users " +
                   "FULL OUTER JOIN patientinfo ON users.email = patientinfo.patientemail" + 
-                  "WHERE userType = 'Patient'";
+                  " WHERE userType = 'Patient'";
       ResultSet result = statement.executeQuery(query);
 
       while(result.next()) 

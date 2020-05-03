@@ -39,6 +39,7 @@ public class Doctor extends User {
 
     public void initializeDatabaseConnection() throws SQLException {
         this.db = new RecordsDatabaseCommunication("admin", "coe420project");
+        this.userDb = new UserDatabaseCommunication("admin", "coe420project");
     }
 
     public ArrayList<Record> getRecords() throws SQLException {

@@ -1,5 +1,6 @@
 package healthcaregui;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import accountManagement.Doctor;
@@ -23,8 +24,16 @@ public class ViewPatientRecords extends javax.swing.JFrame {
     public ViewPatientRecords() {
         initComponents();
     }
+
     public ViewPatientRecords(Doctor doctor) {
         this.doctor = doctor;
+        try {
+            this.doctor.initializeDatabaseConnection();
+            patientList = this.doctor.getPatientList();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         initComponents();
     }
 
@@ -38,13 +47,13 @@ public class ViewPatientRecords extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        txtEmpno = new javax.swing.JTextField();
+        txtEmpno = new javax.swing.JTextField(patientList.get(0).getName());
         jButtonPrev = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        patientRecordButton = new javax.swing.JButton();
         jButtonNext = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtEmpno1 = new javax.swing.JTextField();
+        txtEmpno1 = new javax.swing.JTextField(patientList.get(0).getEmail());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -61,17 +70,41 @@ public class ViewPatientRecords extends javax.swing.JFrame {
         jButtonPrev.setText("<<");
         jButtonPrev.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+                if (index <= 0)
+                    index = patientList.size() - 1; // Go back to the last user if the first user is reached
+                else
+                    index--;
+
+                changeRecordInformationInTextField();
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-        jButton1.setText("Access Patient Records");
+        patientRecordButton.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        patientRecordButton.setText("Access Patient Records");
+        patientRecordButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Patient patient = patientList.get(index);
+                try {
+                    patient.initializeDatabaseConnection();
+                    patient.getRecords();
+                    (new ViewRecords(patient)).setVisible(true);
+                } catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+                    }
+        });
 
         jButtonNext.setText(">>");
         jButtonNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+                if (index >= patientList.size() - 1)
+                    index = 0; // Go back to the first user if the last user is reached
+                else
+                    index++;
+
+                changeRecordInformationInTextField();
             }
         });
 
@@ -103,7 +136,7 @@ public class ViewPatientRecords extends javax.swing.JFrame {
                         .addGap(103, 103, 103)
                         .addComponent(jButtonPrev)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(patientRecordButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonNext))
                     .addGroup(layout.createSequentialGroup()
@@ -131,7 +164,7 @@ public class ViewPatientRecords extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(patientRecordButton, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonPrev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonNext, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
@@ -139,6 +172,11 @@ public class ViewPatientRecords extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    public void changeRecordInformationInTextField() {
+        txtEmpno.setText(patientList.get(index).getName());
+        txtEmpno1.setText(patientList.get(index).getEmail());
+    }
 
     private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpnoActionPerformed
         // TODO add your handling code here:
@@ -184,7 +222,7 @@ public class ViewPatientRecords extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton patientRecordButton;
     private javax.swing.JButton jButtonPrev;
     private javax.swing.JButton jButtonNext;
     private javax.swing.JLabel jLabel1;
@@ -193,6 +231,7 @@ public class ViewPatientRecords extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno1;
     private Doctor doctor;
-    private ArrayList<Patient> getPatientList;
+    private ArrayList<Patient> patientList;
+    private int index = 0;
     // End of variables declaration//GEN-END:variables
 }
