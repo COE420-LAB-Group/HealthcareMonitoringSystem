@@ -299,7 +299,15 @@ public class AddNewUser extends javax.swing.JFrame {
             userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
             userAddingErrorLabel.setText(ex.getMessage());
         }
-    }//GEN-LAST:event_btnAddNewEmpActionPerformed
+        
+        txtEmpno.setText("");
+        txtEmpno2.setText("");
+        txtEmpno3.setText("");
+        txtEmpno4.setText("");
+        txtEmpno5.setText("");
+        txtEmpno6.setText("");
+        userTypeSelect.setSelectedItem("Admin");
+    }                                            
 
     private void txtEmpno4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno4ActionPerformed
         // TODO add your handling code here:

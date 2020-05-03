@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 import recordManagement.Prescription;
 import recordManagement.Record;
@@ -348,6 +349,10 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         if (jRadioButton7.isSelected())
             daysrepeat += 'S';
         Date date = null;
+        if (txtEmpno3.getText().equals("dd/MM/yyyy HH:mm:ss"))
+        {
+            JOptionPane.showMessageDialog(null,"Please enter a proper date");
+        }
         try {
             date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(txtEmpno3.getText());
         } catch (ParseException ex) {
@@ -358,13 +363,25 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             newrecord = new Vital(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Character.getNumericValue(((String) cmbMgr1.getSelectedItem()).charAt(0)), 0, 0);
         else
             newrecord = new Prescription(txtEmpno1.getText(), date, txtEmpno.getText(), daysrepeat, false, Integer.parseInt(txtEmpno2.getText()) , Character.getNumericValue(((String) cmbMgr1.getSelectedItem()).charAt(0)), 0);
-        
+
         try {
             doctor.addRecord(newrecord);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        txtEmpno1.setText("");
+        txtEmpno2.setText("");
+        txtEmpno3.setText("dd/MM/yyyy HH:mm:ss");
+        jRadioButton1.setSelected(false);
+        jRadioButton2.setSelected(false);
+        jRadioButton3.setSelected(false);
+        jRadioButton4.setSelected(false);
+        jRadioButton5.setSelected(false);
+        jRadioButton6.setSelected(false);
+        jRadioButton7.setSelected(false);
+        cmbMgr.setSelectedItem("Vital");
+        cmbMgr1.setSelectedItem("1 hour");
     }//GEN-LAST:event_addRecordButtonActionPerformed
     
     private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {
