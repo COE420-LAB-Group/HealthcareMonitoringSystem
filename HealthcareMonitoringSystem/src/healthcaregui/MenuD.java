@@ -149,12 +149,8 @@ public class MenuD extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        try {
-            // TODO add your handling code here:
-            (new ViewPatientRecords(doctor)).setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(MenuD.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // TODO add your handling code here:
+        (new ViewPatientRecords(doctor)).setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**

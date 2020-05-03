@@ -52,6 +52,12 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         }
         initComponents();
         txtEmpno.setText(patientList.get(0).getEmail());
+        String items[] = {"Vitals", "Medications"};
+        for(int i = 0; i < items.length; ++i)
+            cmbMgr.addItem(items[i]);
+        String times[] = {"30 minutes", "1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours"};
+        for(int i = 0; i < times.length; ++i)
+            cmbMgr1.addItem(times[i]);
         //loadFields();
     }
 
@@ -83,12 +89,12 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         txtEmpno1 = new javax.swing.JTextField();
         txtEmpno2 = new javax.swing.JTextField();
         txtEmpno3 = new javax.swing.JTextField();
-        txtEmpno4 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         btnAddNewEmp = new javax.swing.JButton();
         cmbMgr = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        cmbMgr1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationByPlatform(true);
@@ -157,13 +163,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             }
         });
 
-        txtEmpno4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtEmpno4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmpno4ActionPerformed(evt);
-            }
-        });
-
         jButton3.setText(">>");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,6 +195,13 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("Record Type:");
 
+        cmbMgr1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cmbMgr1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMgr1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,45 +212,42 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(76, 76, 76)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel9)
-                                .addGap(70, 70, 70)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton3))
-                                .addComponent(jRadioButton2)
-                                .addComponent(jRadioButton1)
-                                .addComponent(jRadioButton3)
-                                .addComponent(jRadioButton4)
-                                .addComponent(jRadioButton5)
-                                .addComponent(jRadioButton6)
-                                .addComponent(jRadioButton7))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtEmpno4, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtEmpno3, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtEmpno2, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtEmpno1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cmbMgr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(320, 320, 320)
-                        .addComponent(btnAddNewEmp)))
+                        .addGap(76, 76, 76)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9)
+                        .addGap(70, 70, 70)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton3))
+                        .addComponent(jRadioButton2)
+                        .addComponent(jRadioButton1)
+                        .addComponent(jRadioButton3)
+                        .addComponent(jRadioButton5)
+                        .addComponent(jRadioButton6)
+                        .addComponent(jRadioButton7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnAddNewEmp)
+                            .addComponent(jRadioButton4)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtEmpno3, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtEmpno2, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtEmpno1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbMgr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbMgr1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(76, 76, 76))
         );
         layout.setVerticalGroup(
@@ -279,7 +282,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(txtEmpno4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cmbMgr1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -320,10 +323,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     private void txtEmpno3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno3ActionPerformed
-
-    private void txtEmpno4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmpno4ActionPerformed
 
     private void btnAddNewEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNewEmpActionPerformed
         /*String daysrepeat = "";
@@ -377,6 +376,10 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         txtEmpno.setText(patientList.get(patientIndex).getName());
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void cmbMgr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMgr1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMgr1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -416,6 +419,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNewEmp;
     private javax.swing.JComboBox<String> cmbMgr;
+    private javax.swing.JComboBox<String> cmbMgr1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -437,7 +441,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmpno1;
     private javax.swing.JTextField txtEmpno2;
     private javax.swing.JTextField txtEmpno3;
-    private javax.swing.JTextField txtEmpno4;
     // End of variables declaration//GEN-END:variables
 
     /*private void loadFields() {
