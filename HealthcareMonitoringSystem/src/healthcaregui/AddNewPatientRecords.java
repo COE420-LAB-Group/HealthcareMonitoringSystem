@@ -1,35 +1,19 @@
 package healthcaregui;
 
-import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import accountManagement.Admin;
 import accountManagement.Doctor;
 import accountManagement.Patient;
-import accountManagement.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-
 import recordManagement.Prescription;
 import recordManagement.Record;
 import recordManagement.Vital;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author dubs2
- */
 public class AddNewPatientRecords extends javax.swing.JFrame {
 
     private Doctor doctor;
@@ -50,7 +34,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
             patientList = doctor.getPatientList();
             patientIndex = 0;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         initComponents();
@@ -61,7 +44,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         String times[] = {"1 hour", "2 hours", "3 hours", "4 hours", "5 hours", "6 hours"};
         for(int i = 0; i < times.length; ++i)
             cmbMgr1.addItem(times[i]);
-        //loadFields();
     }
 
     /**
@@ -310,25 +292,16 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpnoActionPerformed
-        // TODO add your handling code here:
-    }                                        
-
+     
+    private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {      
+    }
     private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno1ActionPerformed
-
     private void txtEmpno2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno2ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno2ActionPerformed
-
     private void txtEmpno3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno3ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno3ActionPerformed
-
     private void txtEmpno4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno4ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno4ActionPerformed
 
     private void addRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addRecordButtonActionPerformed
@@ -367,7 +340,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         try {
             doctor.addRecord(newrecord);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         txtEmpno1.setText("");
@@ -384,12 +356,10 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
         cmbMgr1.setSelectedItem("1 hour");
     }//GEN-LAST:event_addRecordButtonActionPerformed
     
-    private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {
-        
+    private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {     
     }
     
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
         if(patientIndex != 0 )
             patientIndex--;
         else
@@ -398,7 +368,6 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
         if(patientIndex != (patientList.size()-1))
             patientIndex++;
         else
@@ -407,44 +376,7 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void cmbMgr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMgr1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_cmbMgr1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddNewPatientRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddNewPatientRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddNewPatientRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddNewPatientRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddNewPatientRecords().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addRecordButton;
@@ -472,9 +404,4 @@ public class AddNewPatientRecords extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmpno2;
     private javax.swing.JTextField txtEmpno3;
     // End of variables declaration//GEN-END:variables
-
-    /*private void loadFields() {
-        Doctor doc = new Doctor();
-        
-    }*/
 }

@@ -1,30 +1,19 @@
 package healthcaregui;
 
 import java.sql.SQLException;
-
 import accountManagement.*;
 import healthcareDatabase.UserNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- *
- * @author dubs2
- */
 public class LoginForm extends javax.swing.JFrame {
 
     /**
      * Creates new form LoginForm
      */
     public LoginForm() {
-        initComponents(); // TODO Auto-generated catch block
-        // TODO Auto-generated catch block
+        initComponents();
     }
 
     /**
@@ -162,52 +151,12 @@ public class LoginForm extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_btnLoginActionPerformed
 
-    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtUsernameActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtUsernameActionPerformed
-
-    private void txtUsername1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtUsername1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtUsername1ActionPerformed
-
-//    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) throws SQLException, UserNotFoundException {// GEN-FIRST:event_btnLoginActionPerformed
-//       
-//        
-//    }                                        
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginForm().setVisible(true);
-            }
-        });
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {
     }
+    private void txtUsername1ActionPerformed(java.awt.event.ActionEvent evt) {
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;

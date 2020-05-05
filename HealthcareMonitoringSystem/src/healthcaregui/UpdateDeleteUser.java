@@ -2,7 +2,6 @@ package healthcaregui;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import accountManagement.Admin;
 import accountManagement.Caretaker;
 import accountManagement.Doctor;
@@ -10,16 +9,7 @@ import accountManagement.Patient;
 import accountManagement.User;
 import healthcareDatabase.InputErrorException;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author dubs2
- */
 public class UpdateDeleteUser extends javax.swing.JFrame {
 
     /**
@@ -34,7 +24,6 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
         try {
             userList = admin.getUserList();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         initComponents();
@@ -356,26 +345,17 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmpno4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno4ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno4ActionPerformed
-
     private void txtEmpno5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno5ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno5ActionPerformed
-
     private void txtEmpno6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno6ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno6ActionPerformed
-
     private void txtEmpno7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno7ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno7ActionPerformed
-
     private void userTypeSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeSelectActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_userTypeSelectActionPerformed
 
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_updateButtonActionPerformed
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         String name = txtEmpno.getText();
         String email = txtEmpno2.getText();
         String contact = txtEmpno3.getText();
@@ -429,9 +409,9 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
             userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
             userAddingErrorLabel.setText(ex.getMessage());
         }
-    }//GEN-LAST:event_updateButtonActionPerformed
+    }                                            
 
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {// GEN-FIRST:event_deleteButtonActionPerformed
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) throws SQLException {
         int success = admin.deleteUser(txtEmpno2.getText());
         if (success == 1) {
             userAddingErrorLabel.setForeground(new java.awt.Color(0, 0, 255));
@@ -441,9 +421,7 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
             userAddingErrorLabel.setForeground(new java.awt.Color(255, 0, 0));
             userAddingErrorLabel.setText("This user was not found!");
         }
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_deleteButtonActionPerformed
+    }                                            
 
     private void changeUserInformationInTextField() {
         txtEmpno.setText(userList.get(index).getName());
@@ -466,7 +444,6 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
             index++;
 
         changeUserInformationInTextField();
-        
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
@@ -477,41 +454,6 @@ public class UpdateDeleteUser extends javax.swing.JFrame {
 
         changeUserInformationInTextField();
     }//GEN-LAST:event_prevButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UpdateDeleteUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UpdateDeleteUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UpdateDeleteUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UpdateDeleteUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UpdateDeleteUser().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton updateButton;

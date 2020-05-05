@@ -5,20 +5,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 import accountManagement.Patient;
 import recordManagement.Record;
-import recordManagement.Vital;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author dubs2
- */
 public class InsertVitalReadings extends javax.swing.JFrame {
 
     private int recordIndex;
@@ -196,7 +185,6 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
-        // TODO add your handling code here:
         if(recordIndex != 0 )
             recordIndex--;
         else
@@ -206,7 +194,6 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     }//GEN-LAST:event_prevButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        // TODO add your handling code here:
         if(recordIndex != (recordList.size()-1))
             recordIndex++;
         else
@@ -216,18 +203,13 @@ public class InsertVitalReadings extends javax.swing.JFrame {
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpno1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtEmpno1ActionPerformed
-
+    }
     private void txtEmpno2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpno2ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtEmpno2ActionPerformed
-
+    }
     private void txtEmpno3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpno3ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtEmpno3ActionPerformed
+    }
 
-    private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+    private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {
         Record record = recordList.get(recordIndex);
         String recordType = record.getClass().getSimpleName();
         double reading = Double.parseDouble(txtEmpno2.getText());
@@ -236,66 +218,18 @@ public class InsertVitalReadings extends javax.swing.JFrame {
                 System.out.println("Inserting " + reading);
                 System.out.println(patient.insertReading(record, reading));
             } catch (SQLException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
         else
             System.out.println("Record type must be a vital to insert reading!");
-        // TODO add your handling code here:
-    }// GEN-LAST:event_jButton1ActionPerformed
+    }
 
     public String dateToString(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String strDate = dateFormat.format(date);
         return strDate;
       }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InsertVitalReadings.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InsertVitalReadings.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InsertVitalReadings.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InsertVitalReadings.class.getName()).log(java.util.logging.Level.SEVERE,
-                    null, ex);
-        }
-        // </editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new InsertVitalReadings().setVisible(true);
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton insertButton;

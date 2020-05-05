@@ -2,20 +2,13 @@ package healthcaregui;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import accountManagement.Admin;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author dubs2
- */
 public class DeleteLink extends javax.swing.JFrame {
+
+    private Admin admin;
+    private ArrayList<String[]> linkedUsersEmailList;
+    private int index = 0;
 
     /**
      * Creates new form DeleteLink
@@ -29,10 +22,11 @@ public class DeleteLink extends javax.swing.JFrame {
         try {
             linkedUsersEmailList = admin.getAllLinkedUsersEmail();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         initComponents();
+        errorLabel.setText("");
+        changeUserInformationInTextField();
     }
 
     /**
@@ -43,18 +37,19 @@ public class DeleteLink extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        index = 0;
+
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtEmpno = new javax.swing.JTextField(linkedUsersEmailList.get(0)[0]);
+        txtEmpno = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        prevButton = new javax.swing.JButton();
-        txtEmpno1 = new javax.swing.JTextField(linkedUsersEmailList.get(0)[1]);
-        nextButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        txtEmpno1 = new javax.swing.JTextField();
+        jButton6 = new javax.swing.JButton();
+        btnAddNewEmp = new javax.swing.JButton();
         errorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Delete Link");
@@ -72,7 +67,12 @@ public class DeleteLink extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Caretaker Email:");
 
-        prevButton.setText("<<");
+        jButton5.setText("<<");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         txtEmpno1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txtEmpno1.addActionListener(new java.awt.event.ActionListener() {
@@ -81,56 +81,24 @@ public class DeleteLink extends javax.swing.JFrame {
             }
         });
 
-        nextButton.setText(">>");
+        jButton6.setText(">>");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
-        errorLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnAddNewEmp.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        btnAddNewEmp.setText("Delete");
+        btnAddNewEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddNewEmpActionPerformed(evt);
+            }
+        });
+
+        errorLabel.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
         errorLabel.setForeground(new java.awt.Color(255, 0, 0));
-        errorLabel.setText("");
-
-        deleteButton.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        deleteButton.setText("Delete");
-        deleteButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                String patientEmail = txtEmpno.getText();
-                String caretakerEmail = txtEmpno1.getText();
-                try {
-                    int success = admin.deleteLink(patientEmail, caretakerEmail);
-                    if (success == 1) {
-                        errorLabel.setForeground(new java.awt.Color(0, 0, 255));
-                        errorLabel.setText("Link deleted successfully");
-                    }
-                    else {
-                        errorLabel.setForeground(new java.awt.Color(255, 0, 0));
-                        errorLabel.setText("Link does not exist!");
-                    }
-                } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        nextButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                if (index >= linkedUsersEmailList.size() - 1)
-                    index = 0;
-                else
-                    index++;
-
-                changeUserInformationInTextField();
-            }
-        });
-
-        prevButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                if (index <= 0)
-                    index = linkedUsersEmailList.size() - 1;
-                else
-                    index--;
-
-                changeUserInformationInTextField();
-            }
-        });
+        errorLabel.setText("error label");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,27 +106,30 @@ public class DeleteLink extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1)
+                                .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(19, 19, 19)
+                            .addComponent(jLabel3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnAddNewEmp)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(prevButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(deleteButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(txtEmpno, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                        .addGap(78, 78, 78)
+                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,16 +144,14 @@ public class DeleteLink extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtEmpno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(prevButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                    .addComponent(btnAddNewEmp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -194,61 +163,54 @@ public class DeleteLink extends javax.swing.JFrame {
     }
 
     private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpnoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpnoActionPerformed
-
     private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if(index != 0 )
+            index--;
+        else
+            index = linkedUsersEmailList.size()-1;
+        changeUserInformationInTextField();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        if(index != (linkedUsersEmailList.size()-1))
+            index++;
+        else
+            index = 0;
+        changeUserInformationInTextField();
+    }//GEN-LAST:event_jButton6ActionPerformed
+    
+    private void btnAddNewEmpActionPerformed(java.awt.event.ActionEvent evt) {
+        String patientEmail = txtEmpno.getText();
+        String caretakerEmail = txtEmpno1.getText();
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+            int success = admin.deleteLink(patientEmail, caretakerEmail);
+            if (success == 1) {
+                errorLabel.setForeground(new java.awt.Color(0, 0, 255));
+                errorLabel.setText("Link deleted successfully");
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DeleteLink.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DeleteLink.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DeleteLink.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DeleteLink.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            else {
+                errorLabel.setForeground(new java.awt.Color(255, 0, 0));
+                errorLabel.setText("Link does not exist!");
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DeleteLink().setVisible(true);
-            }
-        });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton deleteButton;
-    private javax.swing.JButton prevButton;
-    private javax.swing.JButton nextButton;
+    private javax.swing.JButton btnAddNewEmp;
+    private javax.swing.JLabel errorLabel;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel errorLabel;
     private javax.swing.JTextField txtEmpno;
     private javax.swing.JTextField txtEmpno1;
-
-    private Admin admin;
-    private ArrayList<String[]> linkedUsersEmailList;
-    int index;
     // End of variables declaration//GEN-END:variables
 }

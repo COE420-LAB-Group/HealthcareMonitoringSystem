@@ -1,9 +1,7 @@
 package healthcaregui;
 
 import accountManagement.Doctor;
-import accountManagement.Patient;
 import healthcareDatabase.UserNotFoundException;
-
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,16 +14,6 @@ import recordManagement.Prescription;
 import recordManagement.Record;
 import recordManagement.Vital;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author dubs2
- */
 public class UpdateDeletePatientRecords extends javax.swing.JFrame {
 
     private Doctor doctor;
@@ -306,37 +294,26 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpnoActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtEmpnoActionPerformed
+    private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {
+    }
+    private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {
+    }
+    private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {
+    }
+    private void txtEmpno2ActionPerformed(java.awt.event.ActionEvent evt) {
+    }
+    private void txtEmpno3ActionPerformed(java.awt.event.ActionEvent evt) {
+    }
 
-    private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpno1ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtEmpno1ActionPerformed
-
-    private void cmbMgrActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_cmbMgrActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_cmbMgrActionPerformed
-
-    private void txtEmpno2ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpno2ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtEmpno2ActionPerformed
-
-    private void txtEmpno3ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_txtEmpno3ActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_txtEmpno3ActionPerformed
-
-    private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_prevButtonActionPerformed
-        // TODO add your handling code here:
+    private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {
         if (recordIndex != 0)
             recordIndex--;
         else
             recordIndex = recordList.size() - 1;
         changeValuesInGUI(recordIndex);
-    }// GEN-LAST:event_prevButtonActionPerformed
+    }
 
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
         String daysrepeat = "";
         String recordType = (String) cmbMgr.getSelectedItem();
         if (jRadioButton1.isSelected())
@@ -372,25 +349,21 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
         try {
             doctor.modifyRecord(newrecord);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }// GEN-LAST:event_updateButtonActionPerformed
+    }
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_deleteButtonActionPerformed
         try {
             doctor.deleteRecord(recordList.get(recordIndex));
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (UserNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }//GEN-LAST:event_deleteButtonActionPerformed
+    }                                            
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        // TODO add your handling code here:
         if(recordIndex != (recordList.size()-1))
             recordIndex++;
         else
@@ -437,46 +410,9 @@ public class UpdateDeletePatientRecords extends javax.swing.JFrame {
                 jRadioButton7.setSelected(true);
         }
     }
-    
-    
+  
     private void cmbMgr1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMgr1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_cmbMgr1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UpdateDeletePatientRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UpdateDeletePatientRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UpdateDeletePatientRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UpdateDeletePatientRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UpdateDeletePatientRecords().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cmbMgr;

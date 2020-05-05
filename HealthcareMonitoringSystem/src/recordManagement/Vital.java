@@ -9,11 +9,6 @@ public class Vital extends Record {
         this.reading = reading;
     }
 
-    // public Vital(String name, Date dateToTake, String patientEmail, int frequency) {
-    //     super(name, dateToTake, patientEmail, frequency);
-    //     this.reading = -1;
-    // }
-
     public double getReading() {
         return reading;
     }

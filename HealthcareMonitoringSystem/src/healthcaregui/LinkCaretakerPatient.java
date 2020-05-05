@@ -1,19 +1,9 @@
 package healthcaregui;
 
 import accountManagement.*;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author dubs2
- */
 public class LinkCaretakerPatient extends javax.swing.JFrame {
 
     /**
@@ -29,7 +19,6 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
            patientList = admin.getPatientList(); 
            caretakerList = admin.getCaretakerList();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         initComponents();
@@ -212,99 +201,11 @@ public class LinkCaretakerPatient extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmpnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpnoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpnoActionPerformed
-
     private void txtEmpno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmpno1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtEmpno1ActionPerformed
-
     private void linkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_linkButtonActionPerformed
-        // TODO add your handling code here:
-
-//        try {
-//            /*
-//            * you need also to verify that the empno is unique and not duplicate
-//            *
-//            */
-//            if (isValidData() && !isDuplicate(Integer.parseInt(txtEmpno.getText().trim()))) {
-//                // if new employee details are valid, then add new employee to DB
-//
-//                String prepSQL = "INSERT INTO emp (empno, ename, job, mgr, hiredate, sal, comm, deptno) VALUES ("
-//                + txtEmpno.getText().trim() + ", "
-//                + "'" + txtEname.getText().toUpperCase() + "', "
-//                + "'" + txtJob.getText().toUpperCase() + "', "
-//                + cmbMgr.getSelectedItem().toString() + ", "
-//                + "'" + ftxtHiredate.getText().trim() + "',"
-//                + txtSalary.getText() + ","
-//                + txtComm.getText() + ","
-//                + cmbDeptno.getSelectedItem() + ")";
-//
-//                int result = dbCon.executePrepared(prepSQL);
-//                if (result > 0) {
-//
-//                    javax.swing.JLabel label = new javax.swing.JLabel("New employee added successfully.");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-//                    clearInputBoxes();
-//                } else {
-//
-//                }
-//
-//                rs.close();
-//            } else {
-//                if (!isDuplicate(Integer.parseInt(txtEmpno.getText().trim()))) {
-//                    javax.swing.JLabel label = new javax.swing.JLabel("Please fix validation errors...");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.ERROR_MESSAGE);
-//                } else {
-//                    javax.swing.JLabel label = new javax.swing.JLabel("Empno Already exists. Use a different employee number.");
-//                    label.setFont(new java.awt.Font("Arial", java.awt.Font.BOLD, 18));
-//                    JOptionPane.showMessageDialog(null, label, "ERROR", JOptionPane.INFORMATION_MESSAGE);
-//                    // check validation errors
-//                }
-//
-//            }
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error adding new employee.");
-//        }
     }//GEN-LAST:event_linkButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        System.out.println("I am in link main");
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LinkCaretakerPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LinkCaretakerPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LinkCaretakerPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LinkCaretakerPatient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LinkCaretakerPatient().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton linkButton;

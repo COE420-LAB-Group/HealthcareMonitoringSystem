@@ -23,18 +23,11 @@ public abstract class Record implements Runnable {
                 // notify user
                 JPanel panel = new JPanel();
                 JOptionPane.showMessageDialog(panel, "take medication");
-                // Date newDateTime = getNextDate();
-               // startDateTime = newDateTime;
             }
         }
 
     }
-
-    // public Date getNextDate() {
-    //     for (int i = 0; i < daysRepeating.length(); i++) {
-    //     }
-    // }
-
+    
     public Date getStartDateTime() {
         return this.startDateTime;
     }
@@ -102,13 +95,6 @@ public abstract class Record implements Runnable {
             return true;
         return false;
     }
-    // public Date getDateToTake() {
-    //     return this.dateToTake;
-    // }
-
-    // public void setDateToTake(Date dateToTake) {
-    //     this.dateToTake = dateToTake;
-    // }
 
     public String getPatientEmail() {
         return this.patientEmail;
@@ -152,15 +138,6 @@ public abstract class Record implements Runnable {
         this.intervals = intervals;
         this.ID = ID;
     }
-
-    // public Record(String name, Date dateToTake, String patientEmail, int frequency) {
-    //     this.name = name;
-    //     this.patientEmail = patientEmail;
-    //     this.createdByPatientObject = true;
-    //     this.frequency = frequency;
-    //     this.ID = -1;
-    //     this.dateToTake = dateToTake;
-    // }
 
     //returns 1 if notifcation succesfully sent, -1 if failed
     protected abstract int sendNotification(); 

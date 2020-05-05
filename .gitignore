@@ -3,3 +3,4 @@ apache-tomcat-9.0.34/
 .metadata/
 tableCreation.sql/
 /HealthcareMonitoringSystem/.classpath
+/HealthcareMonitoringSystem/dist/
